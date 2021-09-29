@@ -7,7 +7,7 @@ vue2 暂时没有打包发布，可以进 vue2 文件夹用源码
 
 ## 挂载
 
-vue组件：
+vue 组件：
 
 在主文件`main.js`中引入并挂载即可
 
@@ -19,19 +19,19 @@ app.use(SDT);
 可以指定只挂载全局组件或全局指令
 
 ```javascript
-import { Components } from "sdt3" 
+import { Components } from "sdt3";
 ```
 
 甚至能指定某个组件挂载为全局组件
 
 ```javascript
-import { RollText } from "sdt3/components"
+import { RollText } from "sdt3/components";
 ```
 
-同时还支持在vue文件中按需引入
+同时还支持在 vue 文件中按需引入
 
 ```javascript
-import { RollText } from "sdt3/components"
+import { RollText } from "sdt3/components";
 ```
 
 函数：
@@ -39,7 +39,7 @@ import { RollText } from "sdt3/components"
 直接指定需要的函数或对象引入
 
 ```javascript
-import { LimitArray } from "sdt3"
+import { LimitArray } from "sdt3";
 ```
 
 ## 使用
@@ -70,5 +70,4 @@ import { LimitArray } from "sdt3"
 
 通过继承该类并在`super()`写入异步操作，该类实例化时将会异步实例`const instence = await new AsyncClass()`
 
-
-
+。。。好累 不写了 反正就自己用
