@@ -1,0 +1,37 @@
+{
+    "name": "sdt3",
+    "version": "1.0.4",
+    "description": "工具和组件库",
+    "main": "./dist/index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/shaddollxz/SDT.git"
+    },
+    "keywords": [
+        "vue3.x"
+    ],
+    "author": "shaddollxz",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/shaddollxz/SDT/issues"
+    },
+    "homepage": "https://github.com/shaddollxz/SDT#readme",
+    "scripts": {
+        "build": "webpack --mode production"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "@babel/core": "^7.11.5",
+        "@babel/plugin-transform-runtime": "^7.15.0",
+        "@babel/preset-env": "^7.11.5",
+        "@vue/compiler-sfc": "^3.0.0",
+        "babel-loader": "^8.1.0",
+        "css-loader": "^4.2.2",
+        "less": "^3.0.4",
+        "less-loader": "^5.0.0",
+        "style-loader": "^1.2.1",
+        "vue-loader": "^16.8.1",
+        "webpack": "^4.44.1",
+        "webpack-cli": "^3.3.12"
+    }
+}
