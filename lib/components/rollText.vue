@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { ref } from "@vue/reactivity";
+import { shallowRef, ref } from "@vue/reactivity";
 import { nextTick, watch } from "@vue/runtime-core";
 
 const props = defineProps({
@@ -34,8 +34,8 @@ const props = defineProps({
 });
 
 let state = ref("");
-const text = ref(null);
-const view = ref(null);
+const text = shallowRef(null);
+const view = shallowRef(null);
 
 //todo 如果传入异步获取的数据 则监听它改变后再设置动画
 if (props.asyncData !== null) {

@@ -1,11 +1,11 @@
 自己用的 vue3 组件库
 vue2 暂时没有打包发布，可以进 vue2 文件夹用源码
 
-## 下载
+# 下载
 
 `npm i -s sdt3`
 
-## 挂载
+# 使用
 
 vue 组件：
 
@@ -42,24 +42,22 @@ import { RollText } from "sdt3/components";
 import { LimitArray } from "sdt3";
 ```
 
-## 使用
+# 组件
 
-### 组件
-
-#### RollText
+## RollText
 
 将放入的元素滚动
 
 | props    | 说明           |
 | -------- | -------------- |
 | duration | 设置滚动的周期 |
-| type     | 设置滚动方式 |
+| type     | 设置滚动方式   |
 
-- `:type="1"`：默认，进行左到右的无限滚动
+-   `:type="1"`：默认，进行左到右的无限滚动
 
-- `:type="2"`：该模式下元素会移动到右边，然后又移动到左边，每次到顶点时暂停两秒
+-   `:type="2"`：该模式下元素会移动到右边，然后又移动到左边，每次到顶点时暂停两秒
 
-#### SliderBox
+## SliderBox
 
 当该组件出现在屏幕中时才会显示出来
 
@@ -68,7 +66,7 @@ import { LimitArray } from "sdt3";
 | duration  | 设置动画时间                             |
 | direction | 设置动画方向 支持`top bottom left right` |
 
-#### Message
+## Message
 
 通过函数调用使用，接收两个参数：text，options
 
@@ -83,15 +81,29 @@ import { LimitArray } from "sdt3";
 
 函数也有两个静态方法来快速指定弹框样式，如`Message.success("提示")`
 
-### 指令
+## Affix
 
-#### v-fill
+该元素包裹的元素超出视口时会被固定
+
+| props    | 说明                                                                |
+| -------- | ------------------------------------------------------------------- |
+| target   | css 选择器 选择的元素离开视口时会固定包裹元素                       |
+| position | 设置元素固定位置 如果是`top`会在元素顶部离开视口时固定 `bottom`反之 |
+| zIndex   | 固定元素的`z-index`                                                 |
+
+# 指令
+
+## v-fill
 
 该指令会将挂载元素中的元素从左到右按间隔排序，一排排满时换行
 
-### 函数或工具类
+## v-hidden
 
-#### AsyncConstructor
+该指令会根据参数 boolen 将挂载元素用`visibility`隐藏
+
+# 函数或工具类
+
+## AsyncConstructor
 
 通过继承该类并在`super()`写入异步操作，该类实例化时将会异步实例`const instence = await new AsyncClass()`
 

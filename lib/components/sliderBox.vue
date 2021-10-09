@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import { ref } from "@vue/reactivity";
+import { shallowRef, ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 
 const props = defineProps({
@@ -20,11 +20,12 @@ const props = defineProps({
     },
     direction: {
         type: String,
+        values: ["top", "bottom", "left", "right"],
         default: "bottom",
     },
 });
 
-const observer = ref(null);
+const observer = shallowRef(null);
 const animeClass = ref("");
 
 let io = new IntersectionObserver(([e]) => {
