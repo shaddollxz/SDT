@@ -18,8 +18,8 @@
     "homepage": "https://github.com/shaddollxz/SDT#readme",
     "scripts": {
         "build": "webpack --mode production",
-        "fixBug": "npm version patch",
-        "levelUp": "npm version minor"
+        "fixbug": "npm version patch",
+        "addnew": "npm version minor"
     },
     "dependencies": {},
     "devDependencies": {
