@@ -1,5 +1,5 @@
 <template>
-    <div class="rollText" ref="view">
+    <div class="rollText" ref="view" :style="{ justifyContent: $props.align }">
         <div class="move" :class="state" :style="{ animationDuration: $props.duration + 's' }">
             <template v-if="$props.asyncData === null">
                 <div class="text" ref="text"><slot></slot></div>
@@ -14,10 +14,13 @@
     </div>
 </template>
 
+<script>
+import { defineComponent, shallowRef, ref, nextTick, watch } from "@vue/runtime-core";
+export default defineComponent({
+    name: "rollText",
+});
+</script>
 <script setup>
-import { shallowRef, ref } from "@vue/reactivity";
-import { nextTick, watch } from "@vue/runtime-core";
-
 const props = defineProps({
     type: {
         type: Number,
@@ -30,6 +33,10 @@ const props = defineProps({
     asyncData: {
         type: String,
         default: null,
+    },
+    align: {
+        type: String,
+        default: "left",
     },
 });
 
@@ -46,21 +53,23 @@ if (props.asyncData !== null) {
 } else {
     nextTick(setAnime);
 }
-
 function setAnime() {
-    //todo 通过判断文字与视口的宽度和传入的运动方式 执行不同的动画
-    if (text.value.clientWidth > view.value.clientWidth) {
-        if (props.type == 1) {
-            state.value = "roll overView";
+    setTimeout(() => {
+        //todo 通过判断文字与视口的宽度和传入的运动方式 执行不同的动画
+        if (text.value.clientWidth > view.value.clientWidth) {
+            if (props.type == 1) {
+                state.value = "roll overView";
+            } else {
+                backAnime();
+            }
         } else {
-            backAnime();
+            if (props.type == 1) {
+                state.value = "roll notOverView";
+            }
         }
-    } else {
-        if (props.type == 1) {
-            state.value = "roll notOverView";
-        }
-    }
+    }, 1500);
 }
+
 function backAnime() {
     //! 左右横跳
     const moveLength = text.value.clientWidth - view.value.clientWidth;
@@ -87,9 +96,9 @@ function backAnime() {
 .rollText {
     position: relative;
     overflow: hidden;
+    display: flex;
     .move {
         width: max-content;
-        margin: 0 auto;
         display: flex;
         align-items: center;
         position: relative;

@@ -9,10 +9,13 @@
     </div>
 </template>
 
+<script>
+import { defineComponent, shallowRef, ref, onMounted } from "@vue/runtime-core";
+export default defineComponent({
+    name: "sliderBox",
+});
+</script>
 <script setup>
-import { shallowRef, ref } from "@vue/reactivity";
-import { onMounted } from "@vue/runtime-core";
-
 const props = defineProps({
     duration: {
         type: Number,
