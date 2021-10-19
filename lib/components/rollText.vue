@@ -7,7 +7,7 @@
             </template>
 
             <template v-else>
-                <div class="text" v-html="$props.asyncData" ref="text"></div>
+                <div class="text" ref="text" v-html="$props.asyncData"></div>
                 <div class="text" v-html="$props.asyncData" v-if="$props.type == 1"></div>
             </template>
         </div>
@@ -53,6 +53,7 @@ if (props.asyncData !== null) {
 } else {
     nextTick(setAnime);
 }
+
 function setAnime() {
     setTimeout(() => {
         //todo 通过判断文字与视口的宽度和传入的运动方式 执行不同的动画
@@ -70,6 +71,8 @@ function setAnime() {
     }, 1500);
 }
 
+let lock = true;
+onUnmounted(() => (lock = false));
 function backAnime() {
     //! 左右横跳
     const moveLength = text.value.clientWidth - view.value.clientWidth;
@@ -80,8 +83,11 @@ function backAnime() {
             moveLengthEveryStep = -moveLengthEveryStep; //? 到顶点转向
             //? 每到顶点时暂停两秒
             setTimeout(() => {
-                text.value.style.transform = `translateX(${(position += moveLengthEveryStep)})px`;
-                requestAnimationFrame(move);
+                if (lock) {
+                    text.value.style.transform = `translateX(${(position +=
+                        moveLengthEveryStep)})px`;
+                    requestAnimationFrame(move);
+                }
             }, 2000);
             return;
         }

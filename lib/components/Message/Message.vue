@@ -40,7 +40,7 @@ const props = defineProps({
     // 样式 用来修改框的宽，高，背景色，文字颜色
     style: {
         type: Object,
-        default: {},
+        default: () => {},
     },
     // 弹框颜色快捷
     type: {
