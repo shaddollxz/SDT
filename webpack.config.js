@@ -1,5 +1,19 @@
 const path = require("path");
 const { VueLoaderPlugin } = require("vue-loader");
+const TerserWebpackPlugin = require("terser-webpack-plugin");
+
+const terserPlugin = new TerserWebpackPlugin({
+    parallel: 4,
+    extractComments: true,
+    terserOptions: {
+        compress: {
+            warnings: false,
+            drop_console: true,
+            drop_debugger: true,
+            pure_funcs: ["console.log"], //移除console
+        },
+    },
+});
 
 module.exports = {
     entry: {
@@ -38,6 +52,6 @@ module.exports = {
             },
         ],
     },
-    plugins: [new VueLoaderPlugin()],
+    plugins: [new VueLoaderPlugin(), terserPlugin],
     externals: /^(@{0,1})vue/i,
 };

@@ -56,18 +56,17 @@ if (props.asyncData !== null) {
 
 function setAnime() {
     setTimeout(() => {
-        if (text.value) {
-            //todo 通过判断文字与视口的宽度和传入的运动方式 执行不同的动画
-            if (text.value.clientWidth > view.value.clientWidth) {
-                if (props.type == 1) {
-                    state.value = "roll overView";
-                } else {
-                    backAnime();
-                }
+        if (!text.value) return;
+        //todo 通过判断文字与视口的宽度和传入的运动方式 执行不同的动画
+        if (text.value.clientWidth > view.value.clientWidth) {
+            if (props.type == 1) {
+                state.value = "roll overView";
             } else {
-                if (props.type == 1) {
-                    state.value = "roll notOverView";
-                }
+                backAnime();
+            }
+        } else {
+            if (props.type == 1) {
+                state.value = "roll notOverView";
             }
         }
     }, 1300);
