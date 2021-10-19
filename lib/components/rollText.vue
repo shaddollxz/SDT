@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { defineComponent, shallowRef, ref, nextTick, watch, onUnmounted } from "@vue/runtime-core";
+import { defineComponent, shallowRef, ref, nextTick, watch } from "@vue/runtime-core";
 export default defineComponent({
     name: "rollText",
 });
@@ -68,33 +68,27 @@ function setAnime() {
                 state.value = "roll notOverView";
             }
         }
-    }, 1500);
+    }, 1300);
 }
 
-let lock = true;
-let timeout;
-onUnmounted(() => {
-    lock = false;
-    clearTimeout(timeout);
-});
 function backAnime() {
     //! 左右横跳
     const moveLength = text.value.clientWidth - view.value.clientWidth;
     let moveLengthEveryStep = moveLength / props.duration / 60; //? 每一动画帧运动的距离 同时用来改变方向
     let position = 0;
     function move(timeStamp) {
+        if (!text.value) return;
+
         if (position >= 0 || position <= -moveLength) {
             moveLengthEveryStep = -moveLengthEveryStep; //? 到顶点转向
             //? 每到顶点时暂停两秒
-            timeout = setTimeout(() => {
-                if (lock) {
-                    text.value.style.transform = `translateX(${(position +=
-                        moveLengthEveryStep)})px`;
-                    requestAnimationFrame(move);
-                }
+            setTimeout(() => {
+                text.value.style.transform = `translateX(${(position += moveLengthEveryStep)})px`;
+                requestAnimationFrame(move);
             }, 2000);
             return;
         }
+
         text.value.style.transform = `translateX(${(position += moveLengthEveryStep)}px)`;
         requestAnimationFrame(move);
     }
