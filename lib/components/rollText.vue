@@ -72,7 +72,11 @@ function setAnime() {
 }
 
 let lock = true;
-onUnmounted(() => (lock = false));
+let timeout;
+onUnmounted(() => {
+    lock = false;
+    clearTimeout(timeout);
+});
 function backAnime() {
     //! 左右横跳
     const moveLength = text.value.clientWidth - view.value.clientWidth;
@@ -82,7 +86,7 @@ function backAnime() {
         if (position >= 0 || position <= -moveLength) {
             moveLengthEveryStep = -moveLengthEveryStep; //? 到顶点转向
             //? 每到顶点时暂停两秒
-            setTimeout(() => {
+            timeout = setTimeout(() => {
                 if (lock) {
                     text.value.style.transform = `translateX(${(position +=
                         moveLengthEveryStep)})px`;
