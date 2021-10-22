@@ -76,6 +76,7 @@ onMounted(() => {
     border-radius: 0.4rem;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     position: relative;
     &.default {
         color: #909399;
@@ -90,6 +91,7 @@ onMounted(() => {
         background-color: #fde2e2;
     }
     .text {
+        margin-right: 1rem;
         font-size: 1rem;
         font-weight: 600;
         flex: 1;
