@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { defineComponent, shallowRef, ref, nextTick, watch, onUnmounted } from "@vue/runtime-core";
+import { defineComponent, shallowRef, ref, nextTick, watch } from "@vue/runtime-core";
 export default defineComponent({
     name: "rollText",
 });
@@ -54,24 +54,20 @@ if (props.asyncData !== null) {
     nextTick(setAnime);
 }
 
-let timeout;
-onUnmounted(() => clearTimeout(timeout));
 function setAnime() {
-    timeout = setTimeout(() => {
-        if (!text.value) return;
-        //todo 通过判断文字与视口的宽度和传入的运动方式 执行不同的动画
-        if (text.value.clientWidth > view.value.clientWidth) {
-            if (props.type == 1) {
-                state.value = "roll overView";
-            } else {
-                backAnime();
-            }
+    if (!text.value) return;
+    //todo 通过判断文字与视口的宽度和传入的运动方式 执行不同的动画
+    if (text.value.clientWidth > view.value.clientWidth) {
+        if (props.type == 1) {
+            state.value = "roll overView";
         } else {
-            if (props.type == 1) {
-                state.value = "roll notOverView";
-            }
+            backAnime();
         }
-    }, 1300);
+    } else {
+        if (props.type == 1) {
+            state.value = "roll notOverView";
+        }
+    }
 }
 
 function backAnime() {
