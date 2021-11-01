@@ -5,7 +5,9 @@
             <div
                 @click="isShow = !isShow"
                 :class="isCanClose || duration ? 'canClose' : 'cantClose'"
-            ></div>
+            >
+                ✖
+            </div>
         </div>
     </transition>
 </template>
@@ -50,7 +52,7 @@ const props = defineProps({
     // 关闭时的触发回调
     onClose: {
         type: Function,
-        default: () => {},
+        default: () => () => {},
     },
 });
 
@@ -104,26 +106,7 @@ onMounted(() => {
     }
     .canClose {
         // 叉叉
-        width: 1rem;
-        height: 1rem;
         cursor: pointer;
-        position: relative;
-        &::before,
-        &::after {
-            content: "";
-            position: absolute;
-            height: 1.2rem;
-            width: 3px;
-            top: 0;
-            right: 1rem;
-            background-color: #00000083 !important;
-        }
-        &::before {
-            transform: rotate(45deg);
-        }
-        &::after {
-            transform: rotate(-45deg);
-        }
     }
     .cantClose {
         display: none;

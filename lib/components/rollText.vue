@@ -76,7 +76,7 @@ function backAnime() {
     let moveLengthEveryStep = moveLength / props.duration / 60; //? 每一动画帧运动的距离 同时用来改变方向
     let position = 0;
     function move(timeStamp) {
-        if (!text.value) return;
+        if (!text.value?.style) return;
 
         if (position >= 0 || position <= -moveLength) {
             moveLengthEveryStep = -moveLengthEveryStep; //? 到顶点转向
