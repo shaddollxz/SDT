@@ -81,16 +81,16 @@ onMounted(() => {
     align-items: center;
     position: relative;
     &.default {
-        color: #909399;
-        background-color: #e9e9eb;
+        color: var(--color-bg-bland);
+        background-color: var(--color-text-default);
     }
     &.success {
-        color: #67c23a;
-        background-color: #e1f3d8;
+        color: var(--color-primary);
+        background-color: var(--color-primary-text);
     }
     &.error {
-        color: #f56c6c;
-        background-color: #fde2e2;
+        color: var(--color-error);
+        background-color: var(--color-error-text);
     }
     .text {
         margin-right: 1rem;
@@ -105,7 +105,6 @@ onMounted(() => {
         }
     }
     .canClose {
-        // 叉叉
         cursor: pointer;
     }
     .cantClose {

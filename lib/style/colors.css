@@ -1,0 +1,15 @@
+:root {
+    --color-text-theme: orange;
+
+    --color-primary: #238636;
+    --color-primary-bland: #2ea043;
+    --color-primary-text: #bce1c3;
+    --color-error: #f56c6c;
+    --color-error-bland: #ff9191;
+    --color-error-text: #ffdada;
+
+    --color-text-default: #adbac7;
+    --color-border: #444c56;
+    --color-bg-deep: #1c2128;
+    --color-bg-bland: #22272e;
+}
