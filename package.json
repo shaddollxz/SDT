@@ -1,6 +1,6 @@
 {
     "name": "sdt3",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "工具和组件库",
     "main": "./dist/index.js",
     "repository": {

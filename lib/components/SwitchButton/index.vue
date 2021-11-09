@@ -1,12 +1,12 @@
 <template>
     <div class="switchButton" :class="{ open: $props.modelValue }">
-        <div class="left">
+        <div :class="{ chosed: !$props.modelValue, notChosed: $props.modelValue }">
             <slot name="left"></slot>
         </div>
         <div class="center" @click="statuChange">
             <div></div>
         </div>
-        <div class="right">
+        <div :class="{ chosed: $props.modelValue, notChosed: !$props.modelValue }">
             <slot name="right"></slot>
         </div>
     </div>
@@ -56,25 +56,19 @@ function statuChange() {
             transition: all 0.3s;
         }
     }
-    .right {
-        color: var(--color-error-bland);
-    }
-    .left {
+    .chosed {
         color: var(--color-primary-bland);
+    }
+    .notChosed {
+        color: var(--color-error-bland);
     }
     // 选择右边时
     &.open {
         .center {
-            background-color: var(--color-primary);
+            background-color: var(--color-primary-bland);
             > div {
                 transform: translateX(calc(var(--width) - 100%));
             }
-        }
-        .right {
-            color: var(--color-primary-bland);
-        }
-        .left {
-            color: var(--color-error-bland);
         }
     }
 }
