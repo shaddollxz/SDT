@@ -13,8 +13,8 @@
 
 .gusto-clearFloat {
     &:after {
-        content: "";
         display: block;
+        content: "";
         height: 0;
         clear: both;
         visibility: hidden;
@@ -35,8 +35,9 @@
 }
 
 .gusto-limitTextRow {
+    --limit: 3; // 第三行后就省略
     display: -webkit-box;
-    -webkit-line-clamp: 3; // 第三行以后就省略
+    -webkit-line-clamp: var(--limit);
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;

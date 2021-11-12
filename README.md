@@ -15,22 +15,12 @@ import SDT from "sdt3";
 app.use(SDT);
 ```
 
-可以指定只挂载全局组件或全局指令
+
+可以指定某个组件或指令挂载为全局
 
 ```javascript
-import { Components } from "sdt3";
-```
-
-甚至能指定某个组件挂载为全局组件
-
-```javascript
-import { RollText } from "sdt3/components";
-```
-
-同时还支持在 vue 文件中按需引入
-
-```javascript
-import { RollText } from "sdt3/components";
+import { RollText } from "sdt3";
+app.use(RollText);
 ```
 
 函数：
