@@ -1,8 +1,50 @@
-import { defineComponent as defineComponent$1, openBlock, createElementBlock, isRef, normalizeStyle, createElementVNode, normalizeClass, unref, Fragment, renderSlot, createCommentVNode, renderList, toDisplayString, withDirectives, withKeys, vModelText, pushScopeId, popScopeId, createBlock, Transition, withCtx, vShow, createVNode, render } from 'vue';
-import { defineComponent, ref, shallowRef, watch, nextTick, onMounted } from '@vue/runtime-core';
-
-var gusto = '';
-
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+var __publicField = (obj, key, value) => {
+  __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+  return value;
+};
+var __async = (__this, __arguments, generator) => {
+  return new Promise((resolve, reject) => {
+    var fulfilled = (value) => {
+      try {
+        step(generator.next(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var rejected = (value) => {
+      try {
+        step(generator.throw(value));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    var step = (x) => x.done ? resolve(x.value) : Promise.resolve(x.value).then(fulfilled, rejected);
+    step((generator = generator.apply(__this, __arguments)).next());
+  });
+};
+var _a, _b;
+import { defineComponent as defineComponent$1, openBlock, createElementBlock, isRef, normalizeStyle, createElementVNode, normalizeClass, unref, Fragment, renderSlot, createCommentVNode, renderList, toDisplayString, withDirectives, withKeys, vModelText, pushScopeId, popScopeId, createBlock, Transition, withCtx, vShow, createVNode, render } from "vue";
+import { defineComponent, ref, shallowRef, watch, nextTick, onMounted } from "@vue/runtime-core";
+var gusto = "";
 var vFill = {
   install(app) {
     app.directive("fill", {
@@ -13,6 +55,7 @@ var vFill = {
 };
 const cache$1 = new WeakMap();
 function mounted$1(el) {
+  var _a2, _b2;
   let cacheData = cache$1.get(el);
   el.style.display = "flex";
   el.style.flexWrap = "wrap";
@@ -20,8 +63,8 @@ function mounted$1(el) {
   if (!cacheData) {
     cacheData = {
       width: el.clientWidth,
-      childWidth: el.firstElementChild?.offsetWidth,
-      maxNum: Math.floor(el.clientWidth / el.firstElementChild?.offsetWidth)
+      childWidth: (_a2 = el.firstElementChild) == null ? void 0 : _a2.offsetWidth,
+      maxNum: Math.floor(el.clientWidth / ((_b2 = el.firstElementChild) == null ? void 0 : _b2.offsetWidth))
     };
     cache$1.set(el, cacheData);
   }
@@ -52,7 +95,6 @@ function updateChild(el, cacheData) {
   }
   el.appendChild(fragment);
 }
-
 var vHidden = {
   install(app) {
     app.directive("hidden", {
@@ -67,25 +109,20 @@ function mounted(el, boolen) {
 function beforeUpdate(el, boolen) {
   el.style.visibility = boolen.value ? "" : "hidden";
 }
-
-var directives = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    [Symbol.toStringTag]: 'Module',
-    VFill: vFill,
-    VHidden: vHidden
+var directives = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  VFill: vFill,
+  VHidden: vHidden
 });
-
-var colors = '';
-
-var index_vue_vue_type_style_index_0_scoped_true_lang$3 = '';
-
+var colors = "";
+var index_vue_vue_type_style_index_0_scoped_true_lang$3 = "";
 var _export_sfc = (sfc, props) => {
   for (const [key, val] of props) {
     sfc[key] = val;
   }
-  return sfc
+  return sfc;
 };
-
 const _hoisted_1$2 = {
   key: 0,
   class: "text"
@@ -187,8 +224,7 @@ function setup$4(__props) {
     ], 4);
   };
 }
-const _sfc_main$4 = /* @__PURE__ */ defineComponent$1({
-  ...__default__$4,
+const _sfc_main$4 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues({}, __default__$4), {
   props: {
     type: { default: 1 },
     duration: { default: 8 },
@@ -196,11 +232,9 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent$1({
     align: { default: "left" }
   },
   setup: setup$4
-});
+}));
 var $RollText = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-608f225a"]]);
-
-var index_vue_vue_type_style_index_0_scoped_true_lang$2 = '';
-
+var index_vue_vue_type_style_index_0_scoped_true_lang$2 = "";
 const __default__$3 = defineComponent({
   name: "sliderBox"
 });
@@ -228,18 +262,15 @@ function setup$3(__props) {
     ], 6);
   };
 }
-const _sfc_main$3 = /* @__PURE__ */ defineComponent$1({
-  ...__default__$3,
+const _sfc_main$3 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues({}, __default__$3), {
   props: {
     duration: { default: 0.5 },
     direction: { default: "bottom" }
   },
   setup: setup$3
-});
+}));
 var $SliderBox = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-596ffdb9"]]);
-
-var index_vue_vue_type_style_index_0_scoped_true_lang$1 = '';
-
+var index_vue_vue_type_style_index_0_scoped_true_lang$1 = "";
 const _withScopeId$1 = (n) => (pushScopeId("data-v-353ad892"), n = n(), popScopeId(), n);
 const _hoisted_1$1 = {
   key: 0,
@@ -254,20 +285,21 @@ const __default__$2 = defineComponent({
   name: "splitPage"
 });
 function setup$2(__props, { emit }) {
+  var _a2;
   const props = __props;
   class BtnList {
-    max;
-    limit;
-    limitHalf;
-    _curr;
-    maxArr;
-    showArr;
     constructor(maxLen, limitLen) {
+      __publicField(this, "max");
+      __publicField(this, "limit");
+      __publicField(this, "limitHalf");
+      __publicField(this, "_curr");
+      __publicField(this, "maxArr");
+      __publicField(this, "showArr");
       this.max = maxLen;
       this.limit = limitLen;
       this.limitHalf = limitLen % 2 ? ~~(limitLen / 2) + 1 : limitLen / 2;
       this._curr = 1;
-      this.maxArr = Array.from({ length: maxLen }).map((item, index) => index + 1);
+      this.maxArr = Array.from({ length: maxLen }).map((item, index2) => index2 + 1);
       if (maxLen > limitLen) {
         this.showArr = this.maxArr.slice(0, this.limit - 2).concat("...", this.max);
       } else {
@@ -313,11 +345,12 @@ function setup$2(__props, { emit }) {
   }
   const pageCache = Object.create(null);
   const btns = ref(new BtnList(props.totalPage, props.limit));
-  btns.value.curr = props.currentPage ?? 1;
+  btns.value.curr = (_a2 = props.currentPage) != null ? _a2 : 1;
   pageCache[btns.value.curr] = props.modelValue;
   watch(() => props.totalPage, () => {
+    var _a3;
     btns.value = new BtnList(props.totalPage, props.limit);
-    btns.value.curr = props.currentPage ?? 1;
+    btns.value.curr = (_a3 = props.currentPage) != null ? _a3 : 1;
     pageCache[btns.value.curr] = props.modelValue;
   });
   let jumpPage = ref(btns.value.curr);
@@ -379,8 +412,7 @@ function setup$2(__props, { emit }) {
     ])) : createCommentVNode("", true);
   };
 }
-const _sfc_main$2 = /* @__PURE__ */ defineComponent$1({
-  ...__default__$2,
+const _sfc_main$2 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues({}, __default__$2), {
   props: {
     modelValue: null,
     limit: { default: 7 },
@@ -389,11 +421,9 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent$1({
   },
   emits: ["update:modelValue", "onPageChange", "getNewData"],
   setup: setup$2
-});
+}));
 var $SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-353ad892"]]);
-
-var index_vue_vue_type_style_index_0_scoped_true_lang = '';
-
+var index_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-c84fbafc"), n = n(), popScopeId(), n);
 const _hoisted_1 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createElementVNode("div", null, null, -1));
 const _hoisted_2 = [
@@ -429,16 +459,14 @@ function setup$1(__props, { emit }) {
     ], 2);
   };
 }
-const _sfc_main$1 = /* @__PURE__ */ defineComponent$1({
-  ...__default__$1,
+const _sfc_main$1 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues({}, __default__$1), {
   props: {
     modelValue: { type: Boolean }
   },
   emits: ["update:modelValue", "onStatuChange"],
   setup: setup$1
-});
+}));
 var $SwitchButton = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-c84fbafc"]]);
-
 const RollText = {
   install(app) {
     app.component("RollText", $RollText);
@@ -459,18 +487,15 @@ const SwitchButton = {
     app.component("SwitchButton", $SwitchButton);
   }
 };
-
-var components = /*#__PURE__*/Object.freeze({
-    __proto__: null,
-    [Symbol.toStringTag]: 'Module',
-    RollText: RollText,
-    SliderBox: SliderBox,
-    SplitPage: SplitPage,
-    SwitchButton: SwitchButton
+var components = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  RollText,
+  SliderBox,
+  SplitPage,
+  SwitchButton
 });
-
-var Message_vue_vue_type_style_index_0_scoped_true_lang = '';
-
+var Message_vue_vue_type_style_index_0_scoped_true_lang = "";
 const __default__ = defineComponent({
   name: "message"
 });
@@ -510,8 +535,7 @@ function setup(__props) {
     }, 8, ["onBeforeLeave"]);
   };
 }
-const _sfc_main = /* @__PURE__ */ defineComponent$1({
-  ...__default__,
+const _sfc_main = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues({}, __default__), {
   props: {
     text: null,
     duration: { default: 1300 },
@@ -522,9 +546,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent$1({
     onClose: null
   },
   setup
-});
+}));
 var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-e1497b42"]]);
-
 const messageBox = document.createElement("div");
 messageBox.style.cssText = `width:100%;height:0;position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;`;
 document.body.appendChild(messageBox);
@@ -536,46 +559,38 @@ function renderMessage(options) {
   vm.props.onDestroy = () => render(null, renderBody);
 }
 const Message = (text, options) => {
-  renderMessage({
-    ...options,
+  renderMessage(__spreadProps(__spreadValues({}, options), {
     text
-  });
+  }));
 };
 Message.success = (text, options) => {
-  renderMessage({
-    ...options,
+  renderMessage(__spreadProps(__spreadValues({}, options), {
     type: "success",
     text
-  });
+  }));
 };
 Message.error = (text, options) => {
-  renderMessage({
-    ...options,
+  renderMessage(__spreadProps(__spreadValues({}, options), {
     type: "error",
     text
-  });
+  }));
 };
-
 class AsyncConstructor {
-  then;
   constructor(asyncArrowFunction) {
-    const init = (async () => {
-      await Promise.resolve();
-      await asyncArrowFunction();
+    __publicField(this, "then");
+    const init = (() => __async(this, null, function* () {
+      yield Promise.resolve();
+      yield asyncArrowFunction();
       delete this.then;
       return this;
-    })();
+    }))();
     this.then = init.then.bind(init);
   }
 }
-
 const _files = Symbol("_files");
 class LocalFiles extends AsyncConstructor {
-  [_files];
-  text;
-  dataurl;
   constructor({ count = 1, type = [], maxSize = Number.MAX_VALUE } = {}) {
-    super(async () => {
+    super(() => __async(this, null, function* () {
       const limitSize = maxSize ? maxSize * 1024 : maxSize;
       const input = document.createElement("input");
       input.type = "file";
@@ -585,7 +600,7 @@ class LocalFiles extends AsyncConstructor {
       document.body.appendChild(input);
       input.click();
       document.body.removeChild(input);
-      this[_files] = await new Promise((resolve, reject) => {
+      this[_files] = yield new Promise((resolve, reject) => {
         input.addEventListener("change", function read(e) {
           let target = e.target;
           if (count == 1 || target.files.length == 1) {
@@ -608,7 +623,10 @@ class LocalFiles extends AsyncConstructor {
           this.removeEventListener("change", read);
         });
       });
-    });
+    }));
+    __publicField(this, _a);
+    __publicField(this, "text");
+    __publicField(this, "dataurl");
     this.text = ["txt", "md", "json", "js", "css", "less", "sass", "ts", "xml", "html"];
     this.dataurl = ["jpg", "png", "jpge", "gif", "mp4", "mp3", "flac"];
   }
@@ -622,20 +640,38 @@ class LocalFiles extends AsyncConstructor {
       return this[_files].map((item) => item.name);
     }
   }
-  async read(options = {}) {
-    if (this[_files].length == 0)
-      throw "\u6587\u4EF6\u8D85\u8FC7\u8BBE\u7F6E\u5927\u5C0F";
-    const { readAs = void 0, order = 0 } = options;
-    const reader = new FileReader();
-    if (this[_files].length > 1 && !order) {
-      const result = [];
-      for (const file of this[_files]) {
-        if (readAs) {
-          reader[readAs](file);
-        } else {
-          reader[this.readType(file)](file);
+  read() {
+    return __async(this, arguments, function* (options = {}) {
+      if (this[_files].length == 0)
+        throw "\u6587\u4EF6\u8D85\u8FC7\u8BBE\u7F6E\u5927\u5C0F";
+      const { readAs = void 0, order = 0 } = options;
+      const reader = new FileReader();
+      if (this[_files].length > 1 && !order) {
+        const result = [];
+        for (const file of this[_files]) {
+          if (readAs) {
+            reader[readAs](file);
+          } else {
+            reader[this.readType(file)](file);
+          }
+          const content = yield new Promise((resolve, reject) => {
+            reader.onerror = () => {
+              reject("\u8BFB\u53D6\u6587\u4EF6\u5931\u8D25");
+            };
+            reader.onload = (e) => {
+              resolve(e.target.result);
+            };
+          });
+          result.push(content);
         }
-        const content = await new Promise((resolve, reject) => {
+        return result;
+      } else {
+        if (readAs) {
+          reader[readAs](this[_files][order]);
+        } else {
+          reader[this.readType(this[_files][order])](this[_files][order]);
+        }
+        return new Promise((resolve, reject) => {
           reader.onerror = () => {
             reject("\u8BFB\u53D6\u6587\u4EF6\u5931\u8D25");
           };
@@ -643,24 +679,8 @@ class LocalFiles extends AsyncConstructor {
             resolve(e.target.result);
           };
         });
-        result.push(content);
       }
-      return result;
-    } else {
-      if (readAs) {
-        reader[readAs](this[_files][order]);
-      } else {
-        reader[this.readType(this[_files][order])](this[_files][order]);
-      }
-      return new Promise((resolve, reject) => {
-        reader.onerror = () => {
-          reject("\u8BFB\u53D6\u6587\u4EF6\u5931\u8D25");
-        };
-        reader.onload = (e) => {
-          resolve(e.target.result);
-        };
-      });
-    }
+    });
   }
   readType(file) {
     const regexp = /(?<=\.)\w+$/;
@@ -677,8 +697,8 @@ class LocalFiles extends AsyncConstructor {
     }
   }
 }
-
-class SDDate extends Date {
+_a = _files;
+const _SDDate = class extends Date {
   constructor(args) {
     args ? super(args) : super();
   }
@@ -723,12 +743,12 @@ class SDDate extends Date {
     }
   }
   add(add, precision = "ss") {
-    const newTime = this.getTime() + add * SDDate.timeTable[precision][1];
-    return new SDDate(newTime);
+    const newTime = this.getTime() + add * _SDDate.timeTable[precision][1];
+    return new _SDDate(newTime);
   }
   sub(sub, precision = "ss") {
-    const newTime = this.getTime() - sub * SDDate.timeTable[precision][1];
-    return new SDDate(newTime);
+    const newTime = this.getTime() - sub * _SDDate.timeTable[precision][1];
+    return new _SDDate(newTime);
   }
   difference(time, precision = "mm", formatStr = "mm:ss") {
     const now = this.getTime();
@@ -743,25 +763,26 @@ class SDDate extends Date {
     return transformTimeNumber(Math.abs(difference), precision, formatStr);
   }
   static formatNow(formatStr = "YYYY-MM-DD HH:mm:ss.ms TT \u5468W", useChinese = true) {
-    return new SDDate().format(formatStr, useChinese);
+    return new _SDDate().format(formatStr, useChinese);
   }
-  static timeTable = {
-    ms: ["Millisecond", 1],
-    ss: ["Second", 1e3],
-    mm: ["Minute", 1e3 * 60],
-    hh: ["Hour", 1e3 * 60 * 60],
-    DD: ["Day", 1e3 * 60 * 60 * 24],
-    W: ["Week", 1e3 * 60 * 60 * 24 * 7],
-    MM: ["Month", 1e3 * 60 * 60 * 24 * 30],
-    YYYY: ["Year", 1e3 * 60 * 60 * 24 * 365],
-    setYear(newvalue) {
-      return this.YYYY = ["Year", 1e3 * 60 * 60 * 24 * newvalue];
-    },
-    setMonth(newvalue) {
-      return this.MM = ["Month", 1e3 * 60 * 60 * 24 * newvalue];
-    }
-  };
-}
+};
+let SDDate = _SDDate;
+__publicField(SDDate, "timeTable", {
+  ms: ["Millisecond", 1],
+  ss: ["Second", 1e3],
+  mm: ["Minute", 1e3 * 60],
+  hh: ["Hour", 1e3 * 60 * 60],
+  DD: ["Day", 1e3 * 60 * 60 * 24],
+  W: ["Week", 1e3 * 60 * 60 * 24 * 7],
+  MM: ["Month", 1e3 * 60 * 60 * 24 * 30],
+  YYYY: ["Year", 1e3 * 60 * 60 * 24 * 365],
+  setYear(newvalue) {
+    return this.YYYY = ["Year", 1e3 * 60 * 60 * 24 * newvalue];
+  },
+  setMonth(newvalue) {
+    return this.MM = ["Month", 1e3 * 60 * 60 * 24 * newvalue];
+  }
+});
 function transformTimeNumber(timeNumber, precision = "mm", formatStr = "mm:ss") {
   const TimeTable = SDDate.timeTable;
   const result = {};
@@ -809,13 +830,11 @@ function transformTimeNumber(timeNumber, precision = "mm", formatStr = "mm:ss") 
 const transformChinese = ["\u5929", "\u4E00", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u4E03", "\u516B", "\u4E5D", "\u5341", "\u5341\u4E00", "\u5341\u4E8C"];
 const transformEnglish_Week = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 const transformEnglish_Month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-
 const isSymbol = (arg) => typeof arg == "symbol";
 const isNull = (arg) => arg === null;
 const isBaseType = (arg) => typeof arg !== "object";
 const isObject = (arg) => typeof arg == "object" && !Array.isArray(arg) && typeof arg !== "function" && arg !== null && !(arg instanceof RegExp);
 const isRegExp = (arg) => arg instanceof RegExp;
-
 function isLimitItem(arg) {
   if (Array.isArray(arg) && isObject(arg[1]) && "__LIMIT__" in arg[1]) {
     return true;
@@ -826,8 +845,8 @@ function isLimitItem(arg) {
 let cache = null;
 const _localStorage = Symbol("_localStorage");
 class LocalStorage {
-  [_localStorage];
   constructor() {
+    __publicField(this, _b);
     if (cache)
       return cache;
     this[_localStorage] = window.localStorage;
@@ -864,7 +883,7 @@ class LocalStorage {
     return Object.keys(this[_localStorage]);
   }
 }
-
+_b = _localStorage;
 function mathBase(methods) {
   const method = Math[methods];
   return function(number, precision = 0) {
@@ -914,15 +933,14 @@ function operateBase(type) {
   };
 }
 class SDMath {
-  static round = mathBase("round");
-  static ceil = mathBase("ceil");
-  static floor = mathBase("floor");
-  static add = operateBase("ADD");
-  static sub = operateBase("SUB");
-  static mul = operateBase("MUL");
-  static div = operateBase("DIV");
 }
-
+__publicField(SDMath, "round", mathBase("round"));
+__publicField(SDMath, "ceil", mathBase("ceil"));
+__publicField(SDMath, "floor", mathBase("floor"));
+__publicField(SDMath, "add", operateBase("ADD"));
+__publicField(SDMath, "sub", operateBase("SUB"));
+__publicField(SDMath, "mul", operateBase("MUL"));
+__publicField(SDMath, "div", operateBase("DIV"));
 const charMap = {
   char: [33, 126],
   lower: [97, 122],
@@ -968,7 +986,6 @@ class Random {
     }
   }
 }
-
 function isSame(F, S, deep = false) {
   if (F === S)
     return true;
@@ -999,18 +1016,17 @@ function isSame(F, S, deep = false) {
   }
   return true;
 }
-
-function deepClone(o, cache = new WeakMap()) {
+function deepClone(o, cache2 = new WeakMap()) {
   if (isRegExp(o) || isNull(o))
     throw "\u4F20\u5165\u7C7B\u578B\u9519\u8BEF";
   let result = Array.isArray(o) ? [] : Object.create(null);
-  if (cache.get(o)) {
-    return cache.get(o);
+  if (cache2.get(o)) {
+    return cache2.get(o);
   } else {
-    cache.set(o, result);
+    cache2.set(o, result);
     for (const key in o) {
       if (isObject(o[key])) {
-        result[key] = deepClone(o[key], cache);
+        result[key] = deepClone(o[key], cache2);
       } else {
         result[key] = o[key];
       }
@@ -1019,7 +1035,6 @@ function deepClone(o, cache = new WeakMap()) {
     return result;
   }
 }
-
 function removeItem(array, target, pullOrigin = false) {
   const arr = pullOrigin ? array : deepClone(array);
   if (Array.isArray(target)) {
@@ -1042,59 +1057,66 @@ function removeItem(array, target, pullOrigin = false) {
   }
   return arr;
 }
-
 let __DB__;
 class SDIDB extends AsyncConstructor {
   constructor(name) {
-    super(async () => {
-      await this.openDB();
-    });
+    super(() => __async(this, null, function* () {
+      yield this.openDB();
+    }));
+    __publicField(this, "_version");
+    __publicField(this, "_tableList");
     this.name = name;
   }
-  _version;
-  _tableList;
-  async openDB(type, tableName, settings = {}) {
-    let DBRequest = type && this._version ? window.indexedDB.open(this.name, ++this._version) : window.indexedDB.open(this.name);
-    DBRequest.onerror = () => {
-      throw "\u6570\u636E\u5E93\u6253\u5F00\u5931\u8D25";
-    };
-    if (type && tableName) {
-      await onupgradeneeded.call(this, DBRequest, type, tableName, settings);
-    }
-    await onsuccess.call(this, DBRequest);
-  }
-  async createTable(tableName, settings = {}) {
-    if (this._tableList.includes(tableName))
-      throw "\u6570\u636E\u5E93\u540D\u91CD\u590D";
-    await this.openDB("create", tableName, settings);
-    return new IDBTable(tableName, settings);
-  }
-  async useTable(tableName) {
-    if (this._tableList.includes(tableName)) {
-      const settings = {};
-      const IDBObjectStore = __DB__.transaction([tableName], "readonly").objectStore(tableName);
-      settings.keyPath = IDBObjectStore.keyPath;
-      const indexNames = IDBObjectStore.indexNames;
-      if (indexNames.length) {
-        const indexs = [];
-        Array.prototype.forEach.call(indexNames, (value) => {
-          const { keyPath, multiEntry, unique, name } = IDBObjectStore.index(value);
-          indexs.push({ keyPath, multiEntry, unique, name });
-        });
-        settings.index = indexs;
+  openDB(_0, _1) {
+    return __async(this, arguments, function* (type, tableName, settings = {}) {
+      let DBRequest = type && this._version ? window.indexedDB.open(this.name, ++this._version) : window.indexedDB.open(this.name);
+      DBRequest.onerror = () => {
+        throw "\u6570\u636E\u5E93\u6253\u5F00\u5931\u8D25";
+      };
+      if (type && tableName) {
+        yield onupgradeneeded.call(this, DBRequest, type, tableName, settings);
       }
-      return new IDBTable(tableName, settings);
-    } else {
-      throw "\u6CA1\u6709\u6307\u5B9A\u7684\u8868";
-    }
+      yield onsuccess.call(this, DBRequest);
+    });
   }
-  async removeTable(tableName) {
-    if (this._tableList.includes(tableName)) {
-      await this.openDB("remove", tableName);
-    } else {
-      throw "\u6CA1\u6709\u6307\u5B9A\u7684\u8868";
-    }
-    return this;
+  createTable(_0) {
+    return __async(this, arguments, function* (tableName, settings = {}) {
+      if (this._tableList.includes(tableName))
+        throw "\u6570\u636E\u5E93\u540D\u91CD\u590D";
+      yield this.openDB("create", tableName, settings);
+      return new IDBTable(tableName, settings);
+    });
+  }
+  useTable(tableName) {
+    return __async(this, null, function* () {
+      if (this._tableList.includes(tableName)) {
+        const settings = {};
+        const IDBObjectStore = __DB__.transaction([tableName], "readonly").objectStore(tableName);
+        settings.keyPath = IDBObjectStore.keyPath;
+        const indexNames = IDBObjectStore.indexNames;
+        if (indexNames.length) {
+          const indexs = [];
+          Array.prototype.forEach.call(indexNames, (value) => {
+            const { keyPath, multiEntry, unique, name } = IDBObjectStore.index(value);
+            indexs.push({ keyPath, multiEntry, unique, name });
+          });
+          settings.index = indexs;
+        }
+        return new IDBTable(tableName, settings);
+      } else {
+        throw "\u6CA1\u6709\u6307\u5B9A\u7684\u8868";
+      }
+    });
+  }
+  removeTable(tableName) {
+    return __async(this, null, function* () {
+      if (this._tableList.includes(tableName)) {
+        yield this.openDB("remove", tableName);
+      } else {
+        throw "\u6CA1\u6709\u6307\u5B9A\u7684\u8868";
+      }
+      return this;
+    });
   }
   static deleteDB(dbname) {
     window.indexedDB.deleteDatabase(dbname);
@@ -1106,143 +1128,166 @@ class SDIDB extends AsyncConstructor {
     return this._tableList;
   }
 }
-async function onupgradeneeded(DBRequest, type, tableName, settings) {
-  return new Promise((resolve, reject) => {
-    DBRequest.onupgradeneeded = (e) => {
-      const DB = e.target.result;
-      if (type == "create" && tableName) {
-        const store = DB.createObjectStore(tableName, settings.keyPath ? { keyPath: settings.keyPath } : { autoIncrement: true });
-        if (settings.index) {
-          for (const value of settings.index) {
-            store.createIndex(Array.isArray(value.keyPath) ? value.name : value.name ? value.name : value.keyPath, value.keyPath, {
-              unique: value.unique ?? false,
-              multiEntry: value.multiEntry ?? Array.isArray(value.keyPath) ? false : true
-            });
+function onupgradeneeded(DBRequest, type, tableName, settings) {
+  return __async(this, null, function* () {
+    return new Promise((resolve, reject) => {
+      DBRequest.onupgradeneeded = (e) => {
+        var _a2, _b2;
+        const DB = e.target.result;
+        if (type == "create" && tableName) {
+          const store = DB.createObjectStore(tableName, settings.keyPath ? { keyPath: settings.keyPath } : { autoIncrement: true });
+          if (settings.index) {
+            for (const value of settings.index) {
+              store.createIndex(Array.isArray(value.keyPath) ? value.name : value.name ? value.name : value.keyPath, value.keyPath, {
+                unique: (_a2 = value.unique) != null ? _a2 : false,
+                multiEntry: ((_b2 = value.multiEntry) != null ? _b2 : Array.isArray(value.keyPath)) ? false : true
+              });
+            }
           }
+        } else if (type == "remove" && tableName) {
+          DB.deleteObjectStore(tableName);
         }
-      } else if (type == "remove" && tableName) {
-        DB.deleteObjectStore(tableName);
-      }
-      resolve(true);
-    };
+        resolve(true);
+      };
+    });
   });
 }
-async function onsuccess(DBRequest) {
-  return new Promise((resolve, reject) => {
-    DBRequest.onsuccess = (e) => {
-      const DB = e.target.result;
-      DB.onversionchange = () => DB.close();
-      __DB__ = DB;
-      this._version = DB.version;
-      this._tableList = Array.from(DB.objectStoreNames);
-      resolve(true);
-    };
+function onsuccess(DBRequest) {
+  return __async(this, null, function* () {
+    return new Promise((resolve, reject) => {
+      DBRequest.onsuccess = (e) => {
+        const DB = e.target.result;
+        DB.onversionchange = () => DB.close();
+        __DB__ = DB;
+        this._version = DB.version;
+        this._tableList = Array.from(DB.objectStoreNames);
+        resolve(true);
+      };
+    });
   });
 }
 class IDBTable {
   constructor(tableName, tableSetting) {
+    __publicField(this, "store");
     this.tableName = tableName;
     this.tableSetting = tableSetting;
     this.store = __DB__.transaction(this.tableName, "readwrite").objectStore(this.tableName);
   }
-  store;
-  async insert(value, key) {
-    let IDBrequest = this.store.add(value, key);
-    return await CURDHandler.call(this, IDBrequest);
-  }
-  async remove(keyPath) {
-    let IDBrequest = this.store.delete(keyPath);
-    return await CURDHandler.call(this, IDBrequest);
-  }
-  async update(query, update, key) {
-    let value = (await this.find(query))[0];
-    for (const item in update) {
-      changeProperties(value, update[item], item);
-    }
-    let IDBrequest = this.store.put(value, key);
-    return await CURDHandler.call(this, IDBrequest);
-  }
-  async findByKeypath(query) {
-    const IDBrequest = query.keyPath ? this.store.index(query.keyPath).getAll(query.query, query.count) : this.store.get(query.query);
-    return await CURDHandler.call(this, IDBrequest);
-  }
-  async find(query) {
-    const cursorFinder = this.store.openCursor();
-    const keys = Object.keys(query);
-    return new Promise((resolve, reject) => {
-      const result = [];
-      cursorFinder.onerror = () => {
-        reject("\u67E5\u8BE2\u5931\u8D25");
-      };
-      cursorFinder.onsuccess = (e) => {
-        const cursor = e.target.result;
-        if (cursor) {
-          const value = cursor.value;
-          let isFind = true;
-          for (const key of keys) {
-            if (!isSame(value[key], query[key])) {
-              isFind = false;
-            }
-          }
-          if (isFind)
-            result.push(cursor.value);
-          cursor.continue();
-        } else {
-          resolve(result);
-        }
-      };
+  insert(value, key) {
+    return __async(this, null, function* () {
+      let IDBrequest = this.store.add(value, key);
+      return yield CURDHandler.call(this, IDBrequest);
     });
   }
-  async findAll(index) {
-    const cursorFinder = this.store.openCursor();
-    return new Promise((resolve, reject) => {
-      const result = [];
-      cursorFinder.onerror = () => {
-        reject("\u67E5\u8BE2\u5931\u8D25");
-      };
-      if (index) {
-        cursorFinder.onsuccess = (e) => {
-          let cursor = e.target.result;
-          if (cursor) {
-            if (cursor.value[index]) {
-              result.push(cursor.value);
-            }
-            cursor.continue();
-          } else {
-            resolve(result);
-          }
-        };
-      } else {
-        cursorFinder.onsuccess = (e) => {
-          let cursor = e.target.result;
-          if (cursor) {
-            result.push(cursor.value);
-            cursor.continue();
-          } else {
-            resolve(result);
-          }
-        };
+  remove(keyPath) {
+    return __async(this, null, function* () {
+      let IDBrequest = this.store.delete(keyPath);
+      return yield CURDHandler.call(this, IDBrequest);
+    });
+  }
+  update(query, update, key) {
+    return __async(this, null, function* () {
+      let value = (yield this.find(query))[0];
+      for (const item in update) {
+        changeProperties(value, update[item], item);
       }
+      let IDBrequest = this.store.put(value, key);
+      return yield CURDHandler.call(this, IDBrequest);
     });
   }
-  async count(key) {
-    let IDBrequest = this.store.count(key);
-    return await CURDHandler.call(this, IDBrequest);
+  findByKeypath(query) {
+    return __async(this, null, function* () {
+      const IDBrequest = query.keyPath ? this.store.index(query.keyPath).getAll(query.query, query.count) : this.store.get(query.query);
+      return yield CURDHandler.call(this, IDBrequest);
+    });
   }
-  async clear() {
-    let IDBrequest = this.store.clear();
-    let result = await CURDHandler.call(this, IDBrequest);
-    return result ? false : true;
+  find(query) {
+    return __async(this, null, function* () {
+      const cursorFinder = this.store.openCursor();
+      const keys = Object.keys(query);
+      return new Promise((resolve, reject) => {
+        const result = [];
+        cursorFinder.onerror = () => {
+          reject("\u67E5\u8BE2\u5931\u8D25");
+        };
+        cursorFinder.onsuccess = (e) => {
+          const cursor = e.target.result;
+          if (cursor) {
+            const value = cursor.value;
+            let isFind = true;
+            for (const key of keys) {
+              if (!isSame(value[key], query[key])) {
+                isFind = false;
+              }
+            }
+            if (isFind)
+              result.push(cursor.value);
+            cursor.continue();
+          } else {
+            resolve(result);
+          }
+        };
+      });
+    });
+  }
+  findAll(index2) {
+    return __async(this, null, function* () {
+      const cursorFinder = this.store.openCursor();
+      return new Promise((resolve, reject) => {
+        const result = [];
+        cursorFinder.onerror = () => {
+          reject("\u67E5\u8BE2\u5931\u8D25");
+        };
+        if (index2) {
+          cursorFinder.onsuccess = (e) => {
+            let cursor = e.target.result;
+            if (cursor) {
+              if (cursor.value[index2]) {
+                result.push(cursor.value);
+              }
+              cursor.continue();
+            } else {
+              resolve(result);
+            }
+          };
+        } else {
+          cursorFinder.onsuccess = (e) => {
+            let cursor = e.target.result;
+            if (cursor) {
+              result.push(cursor.value);
+              cursor.continue();
+            } else {
+              resolve(result);
+            }
+          };
+        }
+      });
+    });
+  }
+  count(key) {
+    return __async(this, null, function* () {
+      let IDBrequest = this.store.count(key);
+      return yield CURDHandler.call(this, IDBrequest);
+    });
+  }
+  clear() {
+    return __async(this, null, function* () {
+      let IDBrequest = this.store.clear();
+      let result = yield CURDHandler.call(this, IDBrequest);
+      return result ? false : true;
+    });
   }
 }
-async function CURDHandler(IDBRequest) {
-  return new Promise((resolve, reject) => {
-    IDBRequest.onsuccess = (e) => {
-      resolve(e.target.result);
-    };
-    IDBRequest.onerror = (e) => {
-      reject(e.target.result);
-    };
+function CURDHandler(IDBRequest) {
+  return __async(this, null, function* () {
+    return new Promise((resolve, reject) => {
+      IDBRequest.onsuccess = (e) => {
+        resolve(e.target.result);
+      };
+      IDBRequest.onerror = (e) => {
+        reject(e.target.result);
+      };
+    });
   });
 }
 function changeProperties(changed, changedTo, methods) {
@@ -1269,7 +1314,6 @@ function changeProperties(changed, changedTo, methods) {
       break;
   }
 }
-
 function replaceObj(old, ...news) {
   if (isRegExp(old))
     throw "\u4E0D\u80FD\u66FF\u6362\u6B63\u5219\u5BF9\u8C61";
@@ -1285,7 +1329,6 @@ function replaceObj(old, ...news) {
     Object.assign(old, ...news);
   }
 }
-
 function debounce(callback, delay = 300, style = true) {
   let timeoutId = void 0;
   if (style) {
@@ -1308,7 +1351,6 @@ function debounce(callback, delay = 300, style = true) {
     };
   }
 }
-
 function isEmpty(value, isCheckZero = false) {
   if (typeof value !== "object" || value == null) {
     return value == 0 ? isCheckZero ? false : true : !!value;
@@ -1337,7 +1379,6 @@ function isEmpty(value, isCheckZero = false) {
     }
   }
 }
-
 function deleteEmpty(value, isCheckZero = false) {
   if (Array.isArray(value)) {
     const result = [];
@@ -1365,7 +1406,6 @@ function deleteEmpty(value, isCheckZero = false) {
     return result;
   }
 }
-
 function throttle(callback, delay = 500, style = true) {
   let timeoutId = void 0;
   if (style) {
@@ -1388,7 +1428,6 @@ function throttle(callback, delay = 500, style = true) {
     };
   }
 }
-
 const browerList = ["edge", "opera", "chrome", "safari", "firefox"];
 function userBrowers() {
   const regexp = /((?<opera>OPR)|(?<safari>Safari)|(?<chrome>Chrome)|(?<edge>Edg)|(?<ie>NET)|(?<firefox>Firefox))\/(?<version>(\d|\.)*)/g;
@@ -1405,13 +1444,12 @@ function userBrowers() {
   }
   return result;
 }
-
 let instancePoor = null;
 class Validator {
-  checkArr;
-  data;
   constructor(data) {
-    if (instancePoor?.length) {
+    __publicField(this, "checkArr");
+    __publicField(this, "data");
+    if (instancePoor == null ? void 0 : instancePoor.length) {
       let instance = instancePoor.pop();
       instance.data = "" + data;
       instance.checkArr = [];
@@ -1504,8 +1542,7 @@ class Validator {
     return this;
   }
 }
-
-const plugins = { ...directives, ...components };
+const plugins = __spreadValues(__spreadValues({}, directives), components);
 var index = {
   install(app) {
     for (const name in plugins) {
@@ -1513,5 +1550,4 @@ var index = {
     }
   }
 };
-
 export { AsyncConstructor, LocalFiles, LocalStorage, Message, Random, RollText, SDDate, SDIDB, SDMath, SliderBox, SplitPage, SwitchButton, vFill as VFill, vHidden as VHidden, Validator, debounce, deepClone, index as default, deleteEmpty, isEmpty, isSame, removeItem, replaceObj, throttle, userBrowers };

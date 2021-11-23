@@ -11,7 +11,7 @@ plugins.push(dts());
 export default defineConfig({
     build: {
         outDir: path.join(__dirname, "/dist"),
-        target: "esnext", // 这里是库模式 自然直接打包为最新es规范的包，减少polyfill代码
+        target: "es2015", // 这里是库模式 发布到npm用es2015 否则webpack无法使用
 
         lib: {
             entry: path.join(__dirname, "/src/index.ts"),
