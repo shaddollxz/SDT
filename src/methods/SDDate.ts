@@ -39,7 +39,7 @@ export default class SDDate extends Date {
     format(formatStr: string = "/YYYY/-/MM/-/DD/ /HH/:/mm/:/ss/./ms/ /TT/ 周/W/", useChinese: boolean = true) {
         //* 上下午单独判断 不然如果在小时之前或没有小时会无法判断出
         formatStr = formatStr.replace(
-            /TT/g,
+            /\/TT\//g,
             this.getHours() > 12 ? (useChinese ? "下午" : "p.m.") : useChinese ? "上午" : "a.m."
         );
 
@@ -51,15 +51,20 @@ export default class SDDate extends Date {
             let data: string = "" + this[("get" + key) as GetTimeFuncs]();
             switch (key) {
                 case "month":
-                    if (groups.month.length === 3) {
+                    if (groups.month.length === 5) {
                         return useChinese ? transformChinese[data] : transformEnglish_Month[+data - 1];
                     }
+                    return data.length < 2 ? "0" + data : data;
                 case "Day":
                     return useChinese ? transformChinese[data] : transformEnglish_Week[data];
                 case "Hours":
-                    return /hh/g.test(formatStr) ? (+data > 12 ? +data - 12 : data) : data;
+                    return /\/hh\//g.test(formatStr) ? (+data > 12 ? +data - 12 : data) : data;
                 case "Milliseconds":
-                    return data.length < 3 ? "0" + data : data;
+                    if (data.length < 3) {
+                        return 3 - data.length == 1 ? "0" + data : "00" + data;
+                    } else {
+                        return data;
+                    }
                 default:
                     return data.length < 2 ? "0" + data : data;
             }
@@ -172,7 +177,7 @@ export default class SDDate extends Date {
  */
 function transformTimeNumber(timeNumber: number, precision: Precision = "mm", formatStr = "/mm/:/ss/") {
     const TimeTable = SDDate.timeTable;
-    const result: any = {};
+    const result: { [key: string]: number } = {};
     const detailPrecision: string = TimeTable[precision][0];
     switch (detailPrecision) {
         case "Year":
@@ -204,13 +209,19 @@ function transformTimeNumber(timeNumber: number, precision: Precision = "mm", fo
         /(?<FullYear>\/YYYY\/)|(?<month>\/M{2,3}\/)|(?<Date>\/DD\/)|(?<Hours>\/(h|H){2}\/)|(?<Minutes>\/mm\/)|(?<Seconds>\/ss\/)|(?<Day>\/W\/)|(?<Milliseconds>\/ms\/)/g;
 
     return formatStr.replace(regexp, (...args) => {
-        const groups = args.pop();
-        const key = Object.keys(JSON.parse(JSON.stringify(groups)))[0];
+        const key = Object.keys(JSON.parse(JSON.stringify(args.pop())))[0];
         //? 毫秒以外的时间不足两位补零
-        if (key != "Millisecond" && ("" + result[key]).length < 2) {
-            return "0" + result[key];
+        if (key == "Millisecond") {
+            let data = "" + result[key];
+            if (data.length < 3) {
+                return 3 - data.length == 1 ? "0" + data : "00" + data;
+            }
+        } else {
+            if (("" + result[key]).length < 2) {
+                return "0" + result[key];
+            }
         }
-        return result[key];
+        return "" + result[key];
     });
 }
 

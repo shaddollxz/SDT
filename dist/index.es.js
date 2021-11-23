@@ -703,7 +703,7 @@ const _SDDate = class extends Date {
     args ? super(args) : super();
   }
   format(formatStr = "/YYYY/-/MM/-/DD/ /HH/:/mm/:/ss/./ms/ /TT/ \u5468/W/", useChinese = true) {
-    formatStr = formatStr.replace(/TT/g, this.getHours() > 12 ? useChinese ? "\u4E0B\u5348" : "p.m." : useChinese ? "\u4E0A\u5348" : "a.m.");
+    formatStr = formatStr.replace(/\/TT\//g, this.getHours() > 12 ? useChinese ? "\u4E0B\u5348" : "p.m." : useChinese ? "\u4E0A\u5348" : "a.m.");
     const regexp = /(?<FullYear>\/YYYY\/)|(?<month>\/M{2,3}\/)|(?<Date>\/DD\/)|(?<Hours>\/(h|H){2}\/)|(?<Minutes>\/mm\/)|(?<Seconds>\/ss\/)|(?<Day>\/W\/)|(?<Milliseconds>\/ms\/)/g;
     return formatStr.replace(regexp, (...args) => {
       const groups = args.pop();
@@ -711,15 +711,20 @@ const _SDDate = class extends Date {
       let data = "" + this["get" + key]();
       switch (key) {
         case "month":
-          if (groups.month.length === 3) {
+          if (groups.month.length === 5) {
             return useChinese ? transformChinese[data] : transformEnglish_Month[+data - 1];
           }
+          return data.length < 2 ? "0" + data : data;
         case "Day":
           return useChinese ? transformChinese[data] : transformEnglish_Week[data];
         case "Hours":
-          return /hh/g.test(formatStr) ? +data > 12 ? +data - 12 : data : data;
+          return /\/hh\//g.test(formatStr) ? +data > 12 ? +data - 12 : data : data;
         case "Milliseconds":
-          return data.length < 3 ? "0" + data : data;
+          if (data.length < 3) {
+            return 3 - data.length == 1 ? "0" + data : "00" + data;
+          } else {
+            return data;
+          }
         default:
           return data.length < 2 ? "0" + data : data;
       }
@@ -809,12 +814,18 @@ function transformTimeNumber(timeNumber, precision = "mm", formatStr = "/mm/:/ss
   }
   const regexp = /(?<FullYear>\/YYYY\/)|(?<month>\/M{2,3}\/)|(?<Date>\/DD\/)|(?<Hours>\/(h|H){2}\/)|(?<Minutes>\/mm\/)|(?<Seconds>\/ss\/)|(?<Day>\/W\/)|(?<Milliseconds>\/ms\/)/g;
   return formatStr.replace(regexp, (...args) => {
-    const groups = args.pop();
-    const key = Object.keys(JSON.parse(JSON.stringify(groups)))[0];
-    if (key != "Millisecond" && ("" + result[key]).length < 2) {
-      return "0" + result[key];
+    const key = Object.keys(JSON.parse(JSON.stringify(args.pop())))[0];
+    if (key == "Millisecond") {
+      let data = "" + result[key];
+      if (data.length < 3) {
+        return 3 - data.length == 1 ? "0" + data : "00" + data;
+      }
+    } else {
+      if (("" + result[key]).length < 2) {
+        return "0" + result[key];
+      }
     }
-    return result[key];
+    return "" + result[key];
   });
 }
 const transformChinese = ["\u5929", "\u4E00", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u4E03", "\u516B", "\u4E5D", "\u5341", "\u5341\u4E00", "\u5341\u4E8C"];
