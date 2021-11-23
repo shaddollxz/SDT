@@ -702,34 +702,28 @@ const _SDDate = class extends Date {
   constructor(args) {
     args ? super(args) : super();
   }
-  format(formatStr = "YYYY-MM-DD HH:mm:ss.ms TT \u5468W", useChinese = true) {
-    const isHaveTT = /TT/g.test(formatStr);
-    if (isHaveTT) {
-      formatStr = formatStr.replace(/TT/g, this.getHours() > 12 ? useChinese ? "\u4E0B\u5348" : "p.m." : useChinese ? "\u4E0A\u5348" : "a.m.");
-    }
-    const regexp = /(?<FullYear>Y{4})|(?<month>M{2,3})|(?<Date>D{2})|(?<Hours>(h|H){2})|(?<Minutes>m{2})|(?<Seconds>s{2})|(?<Day>W{1})|(?<Milliseconds>ms)/g;
-    if (regexp.test(formatStr) || isHaveTT) {
-      const isHour12 = /hh/g.test(formatStr);
-      return formatStr.replace(regexp, (...args) => {
-        const groups = args.pop();
-        const key = Object.keys(JSON.parse(JSON.stringify(groups)))[0];
-        let data = this["get" + key]();
-        if (key == "month" && groups.month.length === 3) {
-          data = useChinese ? transformChinese[data] : transformEnglish_Month[data + 1];
-        } else if (key == "Day") {
-          data = useChinese ? transformChinese[data] : transformEnglish_Week[data];
-        } else if (key == "Hours") {
-          data = isHour12 ? data > 12 ? data - 12 : data : data;
-        } else {
-          if (data.length < 2) {
-            data = "0" + data;
+  format(formatStr = "/YYYY/-/MM/-/DD/ /HH/:/mm/:/ss/./ms/ /TT/ \u5468/W/", useChinese = true) {
+    formatStr = formatStr.replace(/TT/g, this.getHours() > 12 ? useChinese ? "\u4E0B\u5348" : "p.m." : useChinese ? "\u4E0A\u5348" : "a.m.");
+    const regexp = /(?<FullYear>\/YYYY\/)|(?<month>\/M{2,3}\/)|(?<Date>\/DD\/)|(?<Hours>\/(h|H){2}\/)|(?<Minutes>\/mm\/)|(?<Seconds>\/ss\/)|(?<Day>\/W\/)|(?<Milliseconds>\/ms\/)/g;
+    return formatStr.replace(regexp, (...args) => {
+      const groups = args.pop();
+      const key = Object.keys(JSON.parse(JSON.stringify(groups)))[0];
+      let data = "" + this["get" + key]();
+      switch (key) {
+        case "month":
+          if (groups.month.length === 3) {
+            return useChinese ? transformChinese[data] : transformEnglish_Month[+data - 1];
           }
-        }
-        return data;
-      });
-    } else {
-      throw new TypeError("\u683C\u5F0F\u5316\u5B57\u7B26\u4E32\u4E0D\u6B63\u786E");
-    }
+        case "Day":
+          return useChinese ? transformChinese[data] : transformEnglish_Week[data];
+        case "Hours":
+          return /hh/g.test(formatStr) ? +data > 12 ? +data - 12 : data : data;
+        case "Milliseconds":
+          return data.length < 3 ? "0" + data : data;
+        default:
+          return data.length < 2 ? "0" + data : data;
+      }
+    });
   }
   getmonth(useChinese) {
     if (useChinese == void 0) {
@@ -750,19 +744,19 @@ const _SDDate = class extends Date {
     const newTime = this.getTime() - sub * _SDDate.timeTable[precision][1];
     return new _SDDate(newTime);
   }
-  difference(time, precision = "mm", formatStr = "mm:ss") {
+  difference(time, precision = "mm", formatStr = "/mm/:/ss/") {
     const now = this.getTime();
     const timeNumber = new Date(time).getTime();
     const difference = now - timeNumber;
     return transformTimeNumber(Math.abs(difference), precision, formatStr);
   }
-  static difference(timeOne, timeTwo, precision = "mm", formatStr = "mm:ss") {
+  static difference(timeOne, timeTwo, precision = "mm", formatStr = "/mm/:/ss/") {
     const TimeOne = new Date(timeOne).getTime();
     const TimeTwo = new Date(timeTwo).getTime();
     const difference = TimeOne - TimeTwo;
     return transformTimeNumber(Math.abs(difference), precision, formatStr);
   }
-  static formatNow(formatStr = "YYYY-MM-DD HH:mm:ss.ms TT \u5468W", useChinese = true) {
+  static formatNow(formatStr = "/YYYY/-/MM/-/DD/ /HH/:/mm/:/ss/./ms/ /TT/ \u5468/W/", useChinese = true) {
     return new _SDDate().format(formatStr, useChinese);
   }
 };
@@ -776,14 +770,14 @@ __publicField(SDDate, "timeTable", {
   W: ["Week", 1e3 * 60 * 60 * 24 * 7],
   MM: ["Month", 1e3 * 60 * 60 * 24 * 30],
   YYYY: ["Year", 1e3 * 60 * 60 * 24 * 365],
-  setYear(newvalue) {
-    return this.YYYY = ["Year", 1e3 * 60 * 60 * 24 * newvalue];
+  setYear(value) {
+    return this.YYYY = ["Year", 1e3 * 60 * 60 * 24 * value];
   },
-  setMonth(newvalue) {
-    return this.MM = ["Month", 1e3 * 60 * 60 * 24 * newvalue];
+  setMonth(value) {
+    return this.MM = ["Month", 1e3 * 60 * 60 * 24 * value];
   }
 });
-function transformTimeNumber(timeNumber, precision = "mm", formatStr = "mm:ss") {
+function transformTimeNumber(timeNumber, precision = "mm", formatStr = "/mm/:/ss/") {
   const TimeTable = SDDate.timeTable;
   const result = {};
   const detailPrecision = TimeTable[precision][0];
@@ -813,19 +807,15 @@ function transformTimeNumber(timeNumber, precision = "mm", formatStr = "mm:ss") 
     case "Millisecond":
       result.Millisecond = timeNumber;
   }
-  const regexp = /(?<Year>Y{4})|(?<Month>M{2})|(?<Day>D{2})|(?<Hour>h{2})|(?<Minute>m{2})|(?<Second>s{2})|(?<Millisecond>ms)/g;
-  if (regexp.test(formatStr)) {
-    return formatStr.replace(regexp, (...args) => {
-      const groups = args.pop();
-      const key = Object.keys(JSON.parse(JSON.stringify(groups)))[0];
-      if (key != "Millisecond" && ("" + result[key]).length < 2) {
-        return "0" + result[key];
-      }
-      return result[key];
-    });
-  } else {
-    throw "\u683C\u5F0F\u5316\u5B57\u7B26\u4E32\u4E0D\u6B63\u786E";
-  }
+  const regexp = /(?<FullYear>\/YYYY\/)|(?<month>\/M{2,3}\/)|(?<Date>\/DD\/)|(?<Hours>\/(h|H){2}\/)|(?<Minutes>\/mm\/)|(?<Seconds>\/ss\/)|(?<Day>\/W\/)|(?<Milliseconds>\/ms\/)/g;
+  return formatStr.replace(regexp, (...args) => {
+    const groups = args.pop();
+    const key = Object.keys(JSON.parse(JSON.stringify(groups)))[0];
+    if (key != "Millisecond" && ("" + result[key]).length < 2) {
+      return "0" + result[key];
+    }
+    return result[key];
+  });
 }
 const transformChinese = ["\u5929", "\u4E00", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u4E03", "\u516B", "\u4E5D", "\u5341", "\u5341\u4E00", "\u5341\u4E8C"];
 const transformEnglish_Week = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];

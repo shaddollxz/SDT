@@ -227,6 +227,7 @@ export class SDDate extends Date {
      * @param useChinese 是否将月份和周数转换为中文 默认为true
      *
      * @description 可以支持YYYY MM MMM DD HH hh mm ss ms TT W 几种时间类型，MMM指用文字返回月份 hh指用12小时制返回小时
+     * @example const time = date.format("/YYYY/-/MM/-/DD/ /HH/:/mm/:/ss/./ms/ /TT/ 周/W/")
      */
     format(formatStr?: string, useChinese?: boolean): string;
     /**

@@ -34,40 +34,36 @@ export default class SDDate extends Date {
      * @param useChinese 是否将月份和周数转换为中文 默认为true
      *
      * @description 可以支持YYYY MM MMM DD HH hh mm ss ms TT W 几种时间类型，MMM指用文字返回月份 hh指用12小时制返回小时
+     * @example const time = date.format("/YYYY/-/MM/-/DD/ /HH/:/mm/:/ss/./ms/ /TT/ 周/W/")
      */
-    format(formatStr: string = "YYYY-MM-DD HH:mm:ss.ms TT 周W", useChinese: boolean = true) {
-        //* 上下午分开判断 不然如果在小时之前或没有小时会无法判断出
-        const isHaveTT = /TT/g.test(formatStr);
-        if (isHaveTT) {
-            formatStr = formatStr.replace(
-                /TT/g,
-                this.getHours() > 12 ? (useChinese ? "下午" : "p.m.") : useChinese ? "上午" : "a.m."
-            );
-        }
+    format(formatStr: string = "/YYYY/-/MM/-/DD/ /HH/:/mm/:/ss/./ms/ /TT/ 周/W/", useChinese: boolean = true) {
+        //* 上下午单独判断 不然如果在小时之前或没有小时会无法判断出
+        formatStr = formatStr.replace(
+            /TT/g,
+            this.getHours() > 12 ? (useChinese ? "下午" : "p.m.") : useChinese ? "上午" : "a.m."
+        );
+
         const regexp =
-            /(?<FullYear>Y{4})|(?<month>M{2,3})|(?<Date>D{2})|(?<Hours>(h|H){2})|(?<Minutes>m{2})|(?<Seconds>s{2})|(?<Day>W{1})|(?<Milliseconds>ms)/g;
-        if (regexp.test(formatStr) || isHaveTT) {
-            const isHour12 = /hh/g.test(formatStr);
-            return formatStr.replace(regexp, (...args) => {
-                const groups = args.pop();
-                const key = Object.keys(JSON.parse(JSON.stringify(groups)))[0]; //? 取得groups里的有效值，即当前遍历到的项
-                let data: number | string = this[("get" + key) as GetTimeFuncs]();
-                if (key == "month" && groups.month.length === 3) {
-                    data = useChinese ? transformChinese[data] : transformEnglish_Month[data + 1];
-                } else if (key == "Day") {
-                    data = useChinese ? transformChinese[data] : transformEnglish_Week[data];
-                } else if (key == "Hours") {
-                    data = isHour12 ? (data > 12 ? data - 12 : data) : data;
-                } else {
-                    if ((data as unknown as string).length < 2) {
-                        data = "0" + data;
+            /(?<FullYear>\/YYYY\/)|(?<month>\/M{2,3}\/)|(?<Date>\/DD\/)|(?<Hours>\/(h|H){2}\/)|(?<Minutes>\/mm\/)|(?<Seconds>\/ss\/)|(?<Day>\/W\/)|(?<Milliseconds>\/ms\/)/g;
+        return formatStr.replace(regexp, (...args) => {
+            const groups = args.pop();
+            const key = Object.keys(JSON.parse(JSON.stringify(groups)))[0]; //? 取得groups里的有效值，即当前遍历到的项
+            let data: string = "" + this[("get" + key) as GetTimeFuncs]();
+            switch (key) {
+                case "month":
+                    if (groups.month.length === 3) {
+                        return useChinese ? transformChinese[data] : transformEnglish_Month[+data - 1];
                     }
-                }
-                return data as string;
-            });
-        } else {
-            throw new TypeError("格式化字符串不正确");
-        }
+                case "Day":
+                    return useChinese ? transformChinese[data] : transformEnglish_Week[data];
+                case "Hours":
+                    return /hh/g.test(formatStr) ? (+data > 12 ? +data - 12 : data) : data;
+                case "Milliseconds":
+                    return data.length < 3 ? "0" + data : data;
+                default:
+                    return data.length < 2 ? "0" + data : data;
+            }
+        });
     }
 
     /**
@@ -111,7 +107,7 @@ export default class SDDate extends Date {
      * 获得输入时间到实例时间的时间差
      * 输入时间必须能被Date实例化
      */
-    difference(time: SDDateConstructorArgs, precision: Precision = "mm", formatStr = "mm:ss") {
+    difference(time: SDDateConstructorArgs, precision: Precision = "mm", formatStr = "/mm/:/ss/") {
         const now = this.getTime();
         const timeNumber = new Date(time).getTime();
         const difference = now - timeNumber;
@@ -126,7 +122,7 @@ export default class SDDate extends Date {
         timeOne: SDDateConstructorArgs,
         timeTwo: SDDateConstructorArgs,
         precision: Precision = "mm",
-        formatStr = "mm:ss"
+        formatStr = "/mm/:/ss/"
     ) {
         const TimeOne = new Date(timeOne).getTime();
         const TimeTwo = new Date(timeTwo).getTime();
@@ -139,7 +135,10 @@ export default class SDDate extends Date {
      * @param formatStr 格式化字符串
      * @param useChinese 是否将月份和周数转换为中文 默认为true
      */
-    static formatNow(formatStr: string = "YYYY-MM-DD HH:mm:ss.ms TT 周W", useChinese: boolean = true) {
+    static formatNow(
+        formatStr: string = "/YYYY/-/MM/-/DD/ /HH/:/mm/:/ss/./ms/ /TT/ 周/W/",
+        useChinese: boolean = true
+    ) {
         return new SDDate().format(formatStr, useChinese);
     }
 
@@ -156,11 +155,11 @@ export default class SDDate extends Date {
         W: ["Week", 1000 * 60 * 60 * 24 * 7],
         MM: ["Month", 1000 * 60 * 60 * 24 * 30],
         YYYY: ["Year", 1000 * 60 * 60 * 24 * 365],
-        setYear(newvalue: number) {
-            return (this.YYYY = ["Year", 1000 * 60 * 60 * 24 * newvalue]);
+        setYear(value: number) {
+            return (this.YYYY = ["Year", 1000 * 60 * 60 * 24 * value]);
         },
-        setMonth(newvalue: number) {
-            return (this.MM = ["Month", 1000 * 60 * 60 * 24 * newvalue]);
+        setMonth(value: number) {
+            return (this.MM = ["Month", 1000 * 60 * 60 * 24 * value]);
         },
     };
 }
@@ -171,7 +170,7 @@ export default class SDDate extends Date {
  * @param precision 转换后的时间精度 即到了指定位时不会进位
  * @param formatStr 格式化字符串
  */
-function transformTimeNumber(timeNumber: number, precision: Precision = "mm", formatStr = "mm:ss") {
+function transformTimeNumber(timeNumber: number, precision: Precision = "mm", formatStr = "/mm/:/ss/") {
     const TimeTable = SDDate.timeTable;
     const result: any = {};
     const detailPrecision: string = TimeTable[precision][0];
@@ -202,20 +201,17 @@ function transformTimeNumber(timeNumber: number, precision: Precision = "mm", fo
             result.Millisecond = timeNumber;
     }
     const regexp =
-        /(?<Year>Y{4})|(?<Month>M{2})|(?<Day>D{2})|(?<Hour>h{2})|(?<Minute>m{2})|(?<Second>s{2})|(?<Millisecond>ms)/g;
-    if (regexp.test(formatStr)) {
-        return formatStr.replace(regexp, (...args) => {
-            const groups = args.pop();
-            const key = Object.keys(JSON.parse(JSON.stringify(groups)))[0];
-            //? 毫秒以外的时间不足两位补零
-            if (key != "Millisecond" && ("" + result[key]).length < 2) {
-                return "0" + result[key];
-            }
-            return result[key];
-        });
-    } else {
-        throw "格式化字符串不正确";
-    }
+        /(?<FullYear>\/YYYY\/)|(?<month>\/M{2,3}\/)|(?<Date>\/DD\/)|(?<Hours>\/(h|H){2}\/)|(?<Minutes>\/mm\/)|(?<Seconds>\/ss\/)|(?<Day>\/W\/)|(?<Milliseconds>\/ms\/)/g;
+
+    return formatStr.replace(regexp, (...args) => {
+        const groups = args.pop();
+        const key = Object.keys(JSON.parse(JSON.stringify(groups)))[0];
+        //? 毫秒以外的时间不足两位补零
+        if (key != "Millisecond" && ("" + result[key]).length < 2) {
+            return "0" + result[key];
+        }
+        return result[key];
+    });
 }
 
 const transformChinese = ["天", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"];
