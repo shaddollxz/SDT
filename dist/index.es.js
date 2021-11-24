@@ -538,20 +538,23 @@ function setup(__props) {
 const _sfc_main = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues({}, __default__), {
   props: {
     text: null,
-    duration: null,
-    align: null,
-    isCanClose: { type: Boolean },
-    style: null,
     type: null,
+    duration: null,
+    isCanClose: { type: Boolean },
+    align: null,
+    style: null,
     onClose: null
   },
   setup
 }));
-var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-0912762d"]]);
-const messageBox = document.createElement("div");
-messageBox.style.cssText = `position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;width:100%;height:0;`;
-document.body.appendChild(messageBox);
+var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-5127e1a5"]]);
+let messageBox = null;
 function renderMessage(options) {
+  {
+    const messageBox2 = document.createElement("div");
+    messageBox2.style.cssText = `position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;width:100%;height:0;`;
+    document.body.appendChild(messageBox2);
+  }
   const vm = createVNode(messageComp, options);
   const renderBody = document.createElement("div");
   render(vm, renderBody);

@@ -1,20 +1,26 @@
 import { createVNode, render } from "vue";
 import type { VNodeProps } from "vue";
 import messageComp from "./Message.vue";
-import type { Props as MessageProps } from "./Message.vue";
+import type { Props } from "./Message.vue";
 
-const messageBox = document.createElement("div");
-messageBox.style.cssText = `position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;width:100%;height:0;`;
-document.body.appendChild(messageBox);
+type MessageProps = Partial<Props>;
+
+let messageBox: HTMLDivElement | null = null;
 
 function renderMessage(options: MessageProps) {
+    if (!messageBox) {
+        const messageBox = document.createElement("div");
+        messageBox.style.cssText = `position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;width:100%;height:0;`;
+        document.body.appendChild(messageBox);
+    }
+
     //todo 获得组件的实例
     const vm = createVNode(messageComp, options as VNodeProps);
 
     //todo 创建一个新元素并将组件渲染到上面，最后添加到messageBox中
     const renderBody = document.createElement("div");
     render(vm, renderBody);
-    messageBox.appendChild(renderBody.firstElementChild!);
+    messageBox!.appendChild(renderBody.firstElementChild!);
 
     //todo 为了保证不会有内存泄漏所以手动卸载
     //todo 通过该方法卸载，该方法会作为emit放入message.vue 并且不需要在组件内声明

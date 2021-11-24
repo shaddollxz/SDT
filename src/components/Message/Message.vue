@@ -17,11 +17,11 @@ export default defineComponent({
 <script setup lang="ts">
 export interface Props {
     text: string;
-    duration: number; // 显示的事件 如果为零会无视isCanClose显示删除按钮
-    align: "left" | "right" | "center";
-    isCanClose: boolean; // 是否显示删除按钮
-    style?: StyleValue;
     type: "default" | "success" | "error";
+    duration: number; // 显示的事件 如果为零会无视isCanClose显示删除按钮
+    isCanClose: boolean; // 是否显示删除按钮
+    align: "left" | "right" | "center";
+    style?: StyleValue;
     onClose?: (el: Element) => void;
 }
 const props = defineProps<Props>();

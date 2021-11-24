@@ -26,12 +26,12 @@ declare type TupleToUnion<T> = T extends Array<infer U> ? U : never;
 
 //#region Message
 interface MessageProps {
-    text: string;
-    duration: number;
-    align: "left" | "right" | "center";
-    isCanClose: boolean;
+    text?: string;
+    type?: "default" | "success" | "error";
+    duration?: number;
+    align?: "left" | "right" | "center";
+    isCanClose?: boolean;
     style?: StyleValue;
-    type: "default" | "success" | "error";
     onClose?: (el: Element) => void;
 }
 interface MessageFunc {
