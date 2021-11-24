@@ -550,10 +550,10 @@ const _sfc_main = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues
 var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-5127e1a5"]]);
 let messageBox = null;
 function renderMessage(options) {
-  {
-    const messageBox2 = document.createElement("div");
-    messageBox2.style.cssText = `position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;width:100%;height:0;`;
-    document.body.appendChild(messageBox2);
+  if (!messageBox) {
+    messageBox = document.createElement("div");
+    messageBox.style.cssText = `position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;width:100%;height:0;`;
+    document.body.appendChild(messageBox);
   }
   const vm = createVNode(messageComp, options);
   const renderBody = document.createElement("div");

@@ -201,7 +201,7 @@ export function removeItem(array: any[], target: any, pullOrigin?: boolean): any
  * 不通过修改内存地址将一个对象或数组替换为另一个对象或数组
  * 在需要重写`const`定义的对象或在vue里需要改写对象或数组时有用
  */
-export function replaceObj<T extends Object>(old: T, ...news: T[]): void;
+export function replaceObj(old: object, ...news: object[]): void;
 //#endregion
 
 //#region SDDate

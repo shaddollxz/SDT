@@ -9,7 +9,7 @@ let messageBox: HTMLDivElement | null = null;
 
 function renderMessage(options: MessageProps) {
     if (!messageBox) {
-        const messageBox = document.createElement("div");
+        messageBox = document.createElement("div");
         messageBox.style.cssText = `position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;width:100%;height:0;`;
         document.body.appendChild(messageBox);
     }
