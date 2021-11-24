@@ -1,10 +1,10 @@
 import { createVNode, render } from "vue";
-import type { StyleValue, VNodeProps } from "vue";
+import type { VNodeProps } from "vue";
 import messageComp from "./Message.vue";
 import type { Props as MessageProps } from "./Message.vue";
 
 const messageBox = document.createElement("div");
-messageBox.style.cssText = `width:100%;height:0;position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;`;
+messageBox.style.cssText = `position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;width:100%;height:0;`;
 document.body.appendChild(messageBox);
 
 function renderMessage(options: MessageProps) {
@@ -22,30 +22,26 @@ function renderMessage(options: MessageProps) {
 }
 
 interface MessageFunc {
-    (text: string, options: Omit<MessageProps, "text">): void;
-    success: (text: string, options: Omit<MessageProps, "type" | "text">) => void;
-    error: (text: string, options: Omit<MessageProps, "type" | "text">) => void;
+    (text: string, options?: Omit<MessageProps, "text">): void;
+    success: (text: string, options?: Omit<MessageProps, "type" | "text">) => void;
+    error: (text: string, options?: Omit<MessageProps, "type" | "text">) => void;
 }
 
+const defaultProps: any = {
+    duration: 1300,
+    align: "left",
+    isCanClose: true,
+    type: "default",
+};
+
 const Message: MessageFunc = ((text, options) => {
-    renderMessage({
-        ...options,
-        text,
-    });
+    renderMessage(Object.assign(defaultProps, options, { text }));
 }) as MessageFunc;
 Message.success = (text, options) => {
-    renderMessage({
-        ...options,
-        type: "success",
-        text,
-    });
+    renderMessage(Object.assign(defaultProps, options, { text, type: "success" }));
 };
 Message.error = (text, options) => {
-    renderMessage({
-        ...options,
-        type: "error",
-        text,
-    });
+    renderMessage(Object.assign(defaultProps, options, { text, type: "error" }));
 };
 
 export default Message;

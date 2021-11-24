@@ -503,7 +503,7 @@ function setup(__props) {
   const props = __props;
   const isShow = ref(true);
   onMounted(() => {
-    if (props.duration) {
+    if (props.duration > 0) {
       setTimeout(() => {
         isShow.value = false;
       }, props.duration);
@@ -525,7 +525,7 @@ function setup(__props) {
           }, toDisplayString(__props.text), 3),
           createElementVNode("div", {
             onClick: _cache[0] || (_cache[0] = ($event) => isShow.value = !isShow.value),
-            class: normalizeClass(__props.isCanClose || !__props.duration ? "canClose" : "cantClose")
+            class: normalizeClass(__props.isCanClose || !(__props.duration > 0) ? "canClose" : "cantClose")
           }, "\u2716", 2)
         ], 6), [
           [vShow, isShow.value]
@@ -538,18 +538,18 @@ function setup(__props) {
 const _sfc_main = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues({}, __default__), {
   props: {
     text: null,
-    duration: { default: 1300 },
-    align: { default: "left" },
-    isCanClose: { type: Boolean, default: true },
+    duration: null,
+    align: null,
+    isCanClose: { type: Boolean },
     style: null,
-    type: { default: "default" },
+    type: null,
     onClose: null
   },
   setup
 }));
-var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-e1497b42"]]);
+var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-0912762d"]]);
 const messageBox = document.createElement("div");
-messageBox.style.cssText = `width:100%;height:0;position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;`;
+messageBox.style.cssText = `position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;width:100%;height:0;`;
 document.body.appendChild(messageBox);
 function renderMessage(options) {
   const vm = createVNode(messageComp, options);
@@ -558,22 +558,20 @@ function renderMessage(options) {
   messageBox.appendChild(renderBody.firstElementChild);
   vm.props.onDestroy = () => render(null, renderBody);
 }
+const defaultProps = {
+  duration: 1300,
+  align: "left",
+  isCanClose: true,
+  type: "default"
+};
 const Message = (text, options) => {
-  renderMessage(__spreadProps(__spreadValues({}, options), {
-    text
-  }));
+  renderMessage(Object.assign(defaultProps, options, { text }));
 };
 Message.success = (text, options) => {
-  renderMessage(__spreadProps(__spreadValues({}, options), {
-    type: "success",
-    text
-  }));
+  renderMessage(Object.assign(defaultProps, options, { text, type: "success" }));
 };
 Message.error = (text, options) => {
-  renderMessage(__spreadProps(__spreadValues({}, options), {
-    type: "error",
-    text
-  }));
+  renderMessage(Object.assign(defaultProps, options, { text, type: "error" }));
 };
 class AsyncConstructor {
   constructor(asyncArrowFunction) {

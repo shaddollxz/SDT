@@ -35,9 +35,9 @@ interface MessageProps {
     onClose?: (el: Element) => void;
 }
 interface MessageFunc {
-    (text: string, options: Omit<MessageProps, "text">): void;
-    success: (text: string, options: Omit<MessageProps, "type" | "text">) => void;
-    error: (text: string, options: Omit<MessageProps, "type" | "text">) => void;
+    (text: string, options?: Omit<MessageProps, "text">): void;
+    success: (text: string, options?: Omit<MessageProps, "type" | "text">) => void;
+    error: (text: string, options?: Omit<MessageProps, "type" | "text">) => void;
 }
 export declare const Message: MessageFunc;
 //#endregion

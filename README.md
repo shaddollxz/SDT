@@ -8,18 +8,19 @@
 
 vue 组件：
 
-在主文件`main.js`中引入并挂载即可
+在主文件`main.js`中引入下载方法和 css 并挂载
 
 ```javascript
 import SDT from "sdt3";
+import "sdt3/dist/style.css";
 app.use(SDT);
 ```
-
 
 可以指定某个组件或指令挂载为全局
 
 ```javascript
 import { RollText } from "sdt3";
+import "sdt3/dist/style.css";
 app.use(RollText);
 ```
 

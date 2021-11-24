@@ -2,7 +2,7 @@
     <transition name="message" @before-leave="onClose" @after-leave="$emit('destroy')">
         <div class="message" v-show="isShow" :class="type" :style="style">
             <div :class="['text', align]">{{ text }}</div>
-            <div @click="isShow = !isShow" :class="isCanClose || !duration ? 'canClose' : 'cantClose'">✖</div>
+            <div @click="isShow = !isShow" :class="isCanClose || !(duration > 0) ? 'canClose' : 'cantClose'">✖</div>
         </div>
     </transition>
 </template>
@@ -24,18 +24,13 @@ export interface Props {
     type: "default" | "success" | "error";
     onClose?: (el: Element) => void;
 }
-const props = withDefaults(defineProps<Props>(), {
-    duration: 1300,
-    align: "left",
-    isCanClose: true,
-    type: "default",
-});
+const props = defineProps<Props>();
 
 // 定义时间之后消失
 const isShow = ref(true);
 // 如果持续设为零 则不会定时删除
 onMounted(() => {
-    if (props.duration) {
+    if (props.duration > 0) {
         setTimeout(() => {
             isShow.value = false;
         }, props.duration);
@@ -45,16 +40,16 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .message {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     width: 33%;
     height: max-content;
     box-sizing: border-box;
     padding: 1rem 1.8rem;
     margin-bottom: 0.6rem;
     border-radius: 0.4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
     &.default {
         color: var(--color-bg-bland);
         background-color: var(--color-text-default);
