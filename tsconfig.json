@@ -10,6 +10,7 @@
         "resolveJsonModule": true,
         "esModuleInterop": true,
         "suppressImplicitAnyIndexErrors": true, // for-in 中不会报错
+        "preserveValueImports": true,
         "lib": [
             "esnext",
             "dom"

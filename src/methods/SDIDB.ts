@@ -20,7 +20,7 @@ interface TableSetting {
     index?: (IndexSetting | IndexSetting2)[]; //? 索引
 }
 
-let __DB__: IDBDatabase; //? 数据库，增删改查都在它身上进行
+let __DB__: { [dbName: string]: IDBDatabase }; //? 数据库，增删改查都在它身上进行
 
 /**
  * indexDB的封装 该类支持异步实例化
@@ -32,7 +32,7 @@ let __DB__: IDBDatabase; //? 数据库，增删改查都在它身上进行
 export default class SDIDB extends AsyncConstructor {
     protected _version!: number; //? 数据库版本 打开数据库时异步获取
     protected _tableList!: string[]; //? 表名列表
-    constructor(public name: string) {
+    constructor(readonly name: string) {
         super(async () => {
             await this.openDB();
         });
@@ -77,7 +77,7 @@ export default class SDIDB extends AsyncConstructor {
         //// if (this.__DB__) {this.__DB__.close(); this.__DB__ = null;}
         if (this._tableList.includes(tableName)) throw "数据库名重复";
         await this.openDB("create", tableName, settings);
-        return new IDBTable(tableName, settings);
+        return new IDBTable(this.name, tableName, settings);
     }
     /**
      * 返回一个现有的表，并获取表结构
@@ -86,7 +86,7 @@ export default class SDIDB extends AsyncConstructor {
         if (this._tableList.includes(tableName)) {
             const settings: TableSetting = {};
 
-            const IDBObjectStore = __DB__.transaction([tableName], "readonly").objectStore(tableName);
+            const IDBObjectStore = __DB__[this.name].transaction([tableName], "readonly").objectStore(tableName);
             settings.keyPath = IDBObjectStore.keyPath as string;
 
             const indexNames: DOMStringList = IDBObjectStore.indexNames;
@@ -100,7 +100,7 @@ export default class SDIDB extends AsyncConstructor {
                 settings.index = indexs;
             }
 
-            return new IDBTable(tableName, settings);
+            return new IDBTable(this.name, tableName, settings);
         } else {
             throw "没有指定的表";
         }
@@ -147,7 +147,7 @@ async function onupgradeneeded(
         DBRequest.onupgradeneeded = (e) => {
             const DB: IDBDatabase = (e.target as any).result;
 
-            if (type == "create" && tableName) {
+            if (type == "create") {
                 const store = DB.createObjectStore(
                     tableName,
                     settings.keyPath ? { keyPath: settings.keyPath } : { autoIncrement: true }
@@ -166,7 +166,7 @@ async function onupgradeneeded(
                         );
                     }
                 }
-            } else if (type == "remove" && tableName) {
+            } else if (type == "remove") {
                 DB.deleteObjectStore(tableName);
             }
 
@@ -181,7 +181,7 @@ async function onsuccess(this: SDIDB, DBRequest: IDBOpenDBRequest): Promise<bool
             const DB: IDBDatabase = (e.target as any).result;
             //? 在升级数据库时触发 关闭数据库 然后会用新版本重新打开 重新触发onsuccess
             DB.onversionchange = () => DB.close();
-            __DB__ = DB; //? 如果更新 DBcatch会关闭 要给它重新赋值
+            __DB__[this.name] = DB; //? 如果更新 DBcatch会关闭 要给它重新赋值
             this._version = DB.version;
             this._tableList = Array.from(DB.objectStoreNames);
             resolve(true);
@@ -204,8 +204,8 @@ interface UpdateOptions {
 /** 数据库表 通过调用SDIDB的create use方法获得 */
 class IDBTable {
     protected store: IDBObjectStore;
-    constructor(readonly tableName: string, readonly tableSetting: TableSetting) {
-        this.store = __DB__.transaction(this.tableName, "readwrite").objectStore(this.tableName);
+    constructor(readonly dbName: string, readonly tableName: string, readonly tableSetting: TableSetting) {
+        this.store = __DB__[this.dbName].transaction(this.tableName, "readwrite").objectStore(this.tableName);
     }
     /**
      * 给指定的表添加数据

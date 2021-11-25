@@ -12,7 +12,6 @@ interface ReadOptions {
 }
 type ReadResult = string | string[] | ArrayBuffer | ArrayBuffer[] | (string | ArrayBuffer | null)[] | null;
 
-const _files = Symbol("_files");
 /**
  * 异步实例化时跳出文件选择框 并根据read方法读取选择的文件
  * @param options 设置选择文件的大小 熟练 后缀
@@ -23,7 +22,7 @@ const _files = Symbol("_files");
  * let result = files.read()
  */
 export default class LocalFiles extends AsyncConstructor {
-    private [_files]!: File[];
+    private _files!: File[];
     text: string[];
     dataurl: string[];
     constructor({ count = 1, type = [], maxSize = Number.MAX_VALUE }: ConstructorOptions = {}) {
@@ -38,7 +37,7 @@ export default class LocalFiles extends AsyncConstructor {
             input.click();
             document.body.removeChild(input);
 
-            this[_files] = await new Promise((resolve, reject) => {
+            this._files = await new Promise((resolve, reject) => {
                 input.addEventListener("change", function read(e) {
                     let target = e.target as HTMLInputElement;
                     if (count == 1 || target.files!.length == 1) {
@@ -67,14 +66,22 @@ export default class LocalFiles extends AsyncConstructor {
     }
 
     get file() {
-        return this[_files].length == 1 ? this[_files][0] : this[_files];
+        return this._files.length == 1 ? this._files[0] : this._files;
     }
 
     get name() {
-        if (this[_files].length == 1) {
-            return this[_files][0].name;
+        if (this._files.length == 1) {
+            return this._files[0].name;
         } else {
-            return this[_files].map((item) => item.name);
+            return this._files.map((item) => item.name);
+        }
+    }
+
+    get size() {
+        if (this._files.length == 1) {
+            return this._files[0].size;
+        } else {
+            return this._files.map((item) => item.size);
         }
     }
 
@@ -84,13 +91,13 @@ export default class LocalFiles extends AsyncConstructor {
      * @param options 设置读取文件的方式和读取第几个文件
      */
     async read(options: ReadOptions = {}): Promise<ReadResult> {
-        if (this[_files].length == 0) throw "文件超过设置大小";
+        if (this._files.length == 0) throw "文件超过设置大小";
         const { readAs = undefined, order = 0 } = options;
         const reader = new FileReader();
         // 传入多个文件时默认读全部文件
-        if (this[_files].length > 1 && !order) {
+        if (this._files.length > 1 && !order) {
             const result: ReadResult = [];
-            for (const file of this[_files]) {
+            for (const file of this._files) {
                 if (readAs) {
                     reader[readAs](file);
                 } else {
@@ -111,9 +118,9 @@ export default class LocalFiles extends AsyncConstructor {
         } else {
             // 只有一个文件或指定了读取文件位置时读取一个文件
             if (readAs) {
-                reader[readAs](this[_files][order]);
+                reader[readAs](this._files[order]);
             } else {
-                reader[this.readType(this[_files][order])](this[_files][order]);
+                reader[this.readType(this._files[order])](this._files[order]);
             }
             return new Promise((resolve, reject) => {
                 reader.onerror = () => {

@@ -1,4 +1,4 @@
-import "./components.d";
+import "./components";
 import type { StyleValue } from "vue";
 
 //#region globalTypes
@@ -102,6 +102,10 @@ export function deleteEmpty(value: object, isCheckZero?: boolean): object;
 export function isEmpty(value: unknown, isCheckZero?: boolean): boolean;
 //#endregion
 
+//#region isMobile
+export declare const isMobile: boolean;
+//#endregion
+
 //#region isSame
 /**
  * 判断两个值是否相等 (无法判断set,map是否相同)
@@ -125,7 +129,6 @@ interface ReadOptions {
     order?: number;
 }
 declare type ReadResult = string | string[] | ArrayBuffer | ArrayBuffer[] | (string | ArrayBuffer | null)[] | null;
-declare const _files: unique symbol;
 /**
  * 异步实例化时跳出文件选择框 并根据read方法读取选择的文件
  * @param options 设置选择文件的大小 熟练 后缀
@@ -136,12 +139,13 @@ declare const _files: unique symbol;
  * let result = files.read()
  */
 export class LocalFiles extends AsyncConstructor {
-    private [_files];
+    private _files;
     text: string[];
     dataurl: string[];
     constructor({ count, type, maxSize }?: ConstructorOptions);
     get file(): File | File[];
     get name(): string | string[];
+    get size(): number | number[];
     /**
      * 不传入参数会读取所有文件并返回文件内容的数组
      * 方法会自己推断部分文件的读取返回类型 也能通过options自己设置返回类型

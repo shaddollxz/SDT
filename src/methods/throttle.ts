@@ -5,13 +5,13 @@
  * @param style 默认为true true为第一次触发时触发回调 false为最后次触发时触发回调
  */
 export default function throttle(callback: (...arg: unknown[]) => unknown, delay = 500, style = true) {
-    let timeoutId: number | undefined = undefined;
+    let timeoutId: number | undefined = void 0;
     if (style) {
         return function (this: any, ...args: unknown[]) {
             if (!timeoutId) {
                 callback.apply(this, args);
                 timeoutId = window.setTimeout(() => {
-                    timeoutId = undefined;
+                    timeoutId = void 0;
                 }, delay);
             }
         };
@@ -19,7 +19,7 @@ export default function throttle(callback: (...arg: unknown[]) => unknown, delay
         return function (this: any, ...args: unknown[]) {
             if (!timeoutId) {
                 timeoutId = window.setTimeout(() => {
-                    timeoutId = undefined;
+                    timeoutId = void 0;
                     callback.apply(this, args);
                 }, delay);
             }

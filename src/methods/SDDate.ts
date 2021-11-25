@@ -1,13 +1,6 @@
 type SDDateConstructorArgs = string | number | Date;
-type GetTimeFuncs =
-    | "getFullYear"
-    | "getmonth"
-    | "getDate"
-    | "getHours"
-    | "getMinutes"
-    | "getSeconds"
-    | "getDay"
-    | "getMilliseconds";
+type GetTimeFuncName = "FullYear" | "month" | "Date" | "Hours" | "Minutes" | "Seconds" | "Day" | "Milliseconds";
+type GetTimeFuncs = `get${GetTimeFuncName}`;
 type TimeTupl = [string, number];
 const TimeTableList = ["YYYY", "MM", "W", "DD", "hh", "mm", "ss", "ms"] as const;
 export type Precision = typeof TimeTableList[number];

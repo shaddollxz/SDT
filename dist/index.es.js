@@ -41,7 +41,7 @@ var __async = (__this, __arguments, generator) => {
     step((generator = generator.apply(__this, __arguments)).next());
   });
 };
-var _a, _b;
+var _a;
 import { defineComponent as defineComponent$1, openBlock, createElementBlock, isRef, normalizeStyle, createElementVNode, normalizeClass, unref, Fragment, renderSlot, createCommentVNode, renderList, toDisplayString, withDirectives, withKeys, vModelText, pushScopeId, popScopeId, createBlock, Transition, withCtx, vShow, createVNode, render } from "vue";
 import { defineComponent, ref, shallowRef, watch, nextTick, onMounted } from "@vue/runtime-core";
 var gusto = "";
@@ -55,7 +55,7 @@ var vFill = {
 };
 const cache$1 = new WeakMap();
 function mounted$1(el) {
-  var _a2, _b2;
+  var _a2, _b;
   let cacheData = cache$1.get(el);
   el.style.display = "flex";
   el.style.flexWrap = "wrap";
@@ -64,7 +64,7 @@ function mounted$1(el) {
     cacheData = {
       width: el.clientWidth,
       childWidth: (_a2 = el.firstElementChild) == null ? void 0 : _a2.offsetWidth,
-      maxNum: Math.floor(el.clientWidth / ((_b2 = el.firstElementChild) == null ? void 0 : _b2.offsetWidth))
+      maxNum: Math.floor(el.clientWidth / ((_b = el.firstElementChild) == null ? void 0 : _b.offsetWidth))
     };
     cache$1.set(el, cacheData);
   }
@@ -588,7 +588,6 @@ class AsyncConstructor {
     this.then = init.then.bind(init);
   }
 }
-const _files = Symbol("_files");
 class LocalFiles extends AsyncConstructor {
   constructor({ count = 1, type = [], maxSize = Number.MAX_VALUE } = {}) {
     super(() => __async(this, null, function* () {
@@ -601,7 +600,7 @@ class LocalFiles extends AsyncConstructor {
       document.body.appendChild(input);
       input.click();
       document.body.removeChild(input);
-      this[_files] = yield new Promise((resolve, reject) => {
+      this._files = yield new Promise((resolve, reject) => {
         input.addEventListener("change", function read(e) {
           let target = e.target;
           if (count == 1 || target.files.length == 1) {
@@ -625,31 +624,38 @@ class LocalFiles extends AsyncConstructor {
         });
       });
     }));
-    __publicField(this, _a);
+    __publicField(this, "_files");
     __publicField(this, "text");
     __publicField(this, "dataurl");
     this.text = ["txt", "md", "json", "js", "css", "less", "sass", "ts", "xml", "html"];
     this.dataurl = ["jpg", "png", "jpge", "gif", "mp4", "mp3", "flac"];
   }
   get file() {
-    return this[_files].length == 1 ? this[_files][0] : this[_files];
+    return this._files.length == 1 ? this._files[0] : this._files;
   }
   get name() {
-    if (this[_files].length == 1) {
-      return this[_files][0].name;
+    if (this._files.length == 1) {
+      return this._files[0].name;
     } else {
-      return this[_files].map((item) => item.name);
+      return this._files.map((item) => item.name);
+    }
+  }
+  get size() {
+    if (this._files.length == 1) {
+      return this._files[0].size;
+    } else {
+      return this._files.map((item) => item.size);
     }
   }
   read() {
     return __async(this, arguments, function* (options = {}) {
-      if (this[_files].length == 0)
+      if (this._files.length == 0)
         throw "\u6587\u4EF6\u8D85\u8FC7\u8BBE\u7F6E\u5927\u5C0F";
       const { readAs = void 0, order = 0 } = options;
       const reader = new FileReader();
-      if (this[_files].length > 1 && !order) {
+      if (this._files.length > 1 && !order) {
         const result = [];
-        for (const file of this[_files]) {
+        for (const file of this._files) {
           if (readAs) {
             reader[readAs](file);
           } else {
@@ -668,9 +674,9 @@ class LocalFiles extends AsyncConstructor {
         return result;
       } else {
         if (readAs) {
-          reader[readAs](this[_files][order]);
+          reader[readAs](this._files[order]);
         } else {
-          reader[this.readType(this[_files][order])](this[_files][order]);
+          reader[this.readType(this._files[order])](this._files[order]);
         }
         return new Promise((resolve, reject) => {
           reader.onerror = () => {
@@ -698,7 +704,6 @@ class LocalFiles extends AsyncConstructor {
     }
   }
 }
-_a = _files;
 const _SDDate = class extends Date {
   constructor(args) {
     args ? super(args) : super();
@@ -848,7 +853,7 @@ let cache = null;
 const _localStorage = Symbol("_localStorage");
 class LocalStorage {
   constructor() {
-    __publicField(this, _b);
+    __publicField(this, _a);
     if (cache)
       return cache;
     this[_localStorage] = window.localStorage;
@@ -885,7 +890,7 @@ class LocalStorage {
     return Object.keys(this[_localStorage]);
   }
 }
-_b = _localStorage;
+_a = _localStorage;
 function mathBase(methods) {
   const method = Math[methods];
   return function(number, precision = 0) {
@@ -1086,14 +1091,14 @@ class SDIDB extends AsyncConstructor {
       if (this._tableList.includes(tableName))
         throw "\u6570\u636E\u5E93\u540D\u91CD\u590D";
       yield this.openDB("create", tableName, settings);
-      return new IDBTable(tableName, settings);
+      return new IDBTable(this.name, tableName, settings);
     });
   }
   useTable(tableName) {
     return __async(this, null, function* () {
       if (this._tableList.includes(tableName)) {
         const settings = {};
-        const IDBObjectStore = __DB__.transaction([tableName], "readonly").objectStore(tableName);
+        const IDBObjectStore = __DB__[this.name].transaction([tableName], "readonly").objectStore(tableName);
         settings.keyPath = IDBObjectStore.keyPath;
         const indexNames = IDBObjectStore.indexNames;
         if (indexNames.length) {
@@ -1104,7 +1109,7 @@ class SDIDB extends AsyncConstructor {
           });
           settings.index = indexs;
         }
-        return new IDBTable(tableName, settings);
+        return new IDBTable(this.name, tableName, settings);
       } else {
         throw "\u6CA1\u6709\u6307\u5B9A\u7684\u8868";
       }
@@ -1134,19 +1139,19 @@ function onupgradeneeded(DBRequest, type, tableName, settings) {
   return __async(this, null, function* () {
     return new Promise((resolve, reject) => {
       DBRequest.onupgradeneeded = (e) => {
-        var _a2, _b2;
+        var _a2, _b;
         const DB = e.target.result;
-        if (type == "create" && tableName) {
+        if (type == "create") {
           const store = DB.createObjectStore(tableName, settings.keyPath ? { keyPath: settings.keyPath } : { autoIncrement: true });
           if (settings.index) {
             for (const value of settings.index) {
               store.createIndex(Array.isArray(value.keyPath) ? value.name : value.name ? value.name : value.keyPath, value.keyPath, {
                 unique: (_a2 = value.unique) != null ? _a2 : false,
-                multiEntry: ((_b2 = value.multiEntry) != null ? _b2 : Array.isArray(value.keyPath)) ? false : true
+                multiEntry: ((_b = value.multiEntry) != null ? _b : Array.isArray(value.keyPath)) ? false : true
               });
             }
           }
-        } else if (type == "remove" && tableName) {
+        } else if (type == "remove") {
           DB.deleteObjectStore(tableName);
         }
         resolve(true);
@@ -1160,7 +1165,7 @@ function onsuccess(DBRequest) {
       DBRequest.onsuccess = (e) => {
         const DB = e.target.result;
         DB.onversionchange = () => DB.close();
-        __DB__ = DB;
+        __DB__[this.name] = DB;
         this._version = DB.version;
         this._tableList = Array.from(DB.objectStoreNames);
         resolve(true);
@@ -1169,11 +1174,12 @@ function onsuccess(DBRequest) {
   });
 }
 class IDBTable {
-  constructor(tableName, tableSetting) {
+  constructor(dbName, tableName, tableSetting) {
     __publicField(this, "store");
+    this.dbName = dbName;
     this.tableName = tableName;
     this.tableSetting = tableSetting;
-    this.store = __DB__.transaction(this.tableName, "readwrite").objectStore(this.tableName);
+    this.store = __DB__[this.dbName].transaction(this.tableName, "readwrite").objectStore(this.tableName);
   }
   insert(value, key) {
     return __async(this, null, function* () {
