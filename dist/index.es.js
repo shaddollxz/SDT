@@ -271,7 +271,7 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValu
 }));
 var $SliderBox = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-596ffdb9"]]);
 var index_vue_vue_type_style_index_0_scoped_true_lang$1 = "";
-const _withScopeId$1 = (n) => (pushScopeId("data-v-353ad892"), n = n(), popScopeId(), n);
+const _withScopeId$1 = (n) => (pushScopeId("data-v-cb4cee10"), n = n(), popScopeId(), n);
 const _hoisted_1$1 = {
   key: 0,
   class: "splitPage"
@@ -285,7 +285,6 @@ const __default__$2 = defineComponent({
   name: "splitPage"
 });
 function setup$2(__props, { emit }) {
-  var _a2;
   const props = __props;
   class BtnList {
     constructor(maxLen, limitLen) {
@@ -295,12 +294,12 @@ function setup$2(__props, { emit }) {
       __publicField(this, "_curr");
       __publicField(this, "maxArr");
       __publicField(this, "showArr");
-      this.max = maxLen;
-      this.limit = limitLen;
-      this.limitHalf = limitLen % 2 ? ~~(limitLen / 2) + 1 : limitLen / 2;
+      this.max = +maxLen;
+      this.limit = +limitLen;
+      this.limitHalf = this.limit % 2 ? ~~(this.limit / 2) + 1 : this.limit / 2;
       this._curr = 1;
-      this.maxArr = Array.from({ length: maxLen }).map((item, index2) => index2 + 1);
-      if (maxLen > limitLen) {
+      this.maxArr = Array.from({ length: this.max }).map((item, index2) => index2 + 1);
+      if (this.max > limitLen) {
         this.showArr = this.maxArr.slice(0, this.limit - 2).concat("...", this.max);
       } else {
         this.showArr = this.maxArr;
@@ -345,12 +344,11 @@ function setup$2(__props, { emit }) {
   }
   const pageCache = Object.create(null);
   const btns = ref(new BtnList(props.totalPage, props.limit));
-  btns.value.curr = (_a2 = props.currentPage) != null ? _a2 : 1;
+  btns.value.curr = props.currentPage ? +props.currentPage : 1;
   pageCache[btns.value.curr] = props.modelValue;
   watch(() => props.totalPage, () => {
-    var _a3;
     btns.value = new BtnList(props.totalPage, props.limit);
-    btns.value.curr = (_a3 = props.currentPage) != null ? _a3 : 1;
+    btns.value.curr = props.currentPage ? +props.currentPage : 1;
     pageCache[btns.value.curr] = props.modelValue;
   });
   let jumpPage = ref(btns.value.curr);
@@ -422,7 +420,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValu
   emits: ["update:modelValue", "onPageChange", "getNewData"],
   setup: setup$2
 }));
-var $SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-353ad892"]]);
+var $SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-cb4cee10"]]);
 var index_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _withScopeId = (n) => (pushScopeId("data-v-c84fbafc"), n = n(), popScopeId(), n);
 const _hoisted_1 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createElementVNode("div", null, null, -1));
@@ -587,6 +585,155 @@ class AsyncConstructor {
     }))();
     this.then = init.then.bind(init);
   }
+}
+function debounce(callback, delay = 300, style = true) {
+  let timeoutId = void 0;
+  if (style) {
+    return function(...args) {
+      if (!timeoutId) {
+        callback.apply(this, args);
+      } else {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = window.setTimeout(() => {
+        timeoutId = void 0;
+      }, delay);
+    };
+  } else {
+    return function(...args) {
+      window.clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => {
+        callback.apply(this, args);
+      }, delay);
+    };
+  }
+}
+const isSymbol = (arg) => typeof arg == "symbol";
+const isNull = (arg) => arg === null;
+const isBaseType = (arg) => typeof arg !== "object";
+const isObject = (arg) => typeof arg == "object" && !Array.isArray(arg) && typeof arg !== "function" && arg !== null && !(arg instanceof RegExp);
+const isRegExp = (arg) => arg instanceof RegExp;
+function deepClone(o, cache2 = new WeakMap()) {
+  if (isRegExp(o) || isNull(o))
+    throw "\u4F20\u5165\u7C7B\u578B\u9519\u8BEF";
+  let result = Array.isArray(o) ? [] : Object.create(null);
+  if (cache2.get(o)) {
+    return cache2.get(o);
+  } else {
+    cache2.set(o, result);
+    for (const key in o) {
+      if (isObject(o[key])) {
+        result[key] = deepClone(o[key], cache2);
+      } else {
+        result[key] = o[key];
+      }
+    }
+    Object.setPrototypeOf(result, Object.getPrototypeOf(o));
+    return result;
+  }
+}
+function isEmpty(value, isCheckZero = false) {
+  if (typeof value !== "object" || value == null) {
+    return value == 0 ? isCheckZero ? false : true : !!value;
+  }
+  if (Array.isArray(value)) {
+    if (value.length === 0) {
+      return true;
+    } else {
+      for (const item of value) {
+        if (!isEmpty(item, isCheckZero)) {
+          return false;
+        }
+      }
+      return true;
+    }
+  } else {
+    if (Object.keys(value).length === 0) {
+      return true;
+    } else {
+      for (const key in value) {
+        if (!isEmpty(value[key], isCheckZero)) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+}
+function deleteEmpty(value, isCheckZero = false) {
+  if (Array.isArray(value)) {
+    const result = [];
+    value.forEach((item) => {
+      if (!isEmpty(item, isCheckZero)) {
+        if (typeof item != "object") {
+          result.push(item);
+        } else {
+          result.push(deleteEmpty(item));
+        }
+      }
+    });
+    return result;
+  } else {
+    const result = Object.create(Object.getPrototypeOf(value));
+    for (const key in value) {
+      if (!isEmpty(value[key], isCheckZero)) {
+        if (typeof value[key] != "object") {
+          result[key] = value[key];
+        } else {
+          result[key] = deleteEmpty(value[key]);
+        }
+      }
+    }
+    return result;
+  }
+}
+function havaEmpty(value, isCheckZero = false) {
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      if (isEmpty(item, isCheckZero)) {
+        return true;
+      }
+    }
+    return false;
+  } else {
+    for (const key in value) {
+      if (isEmpty(value[key], isCheckZero)) {
+        return true;
+      }
+    }
+    return false;
+  }
+}
+var isMobile = /Mobile/i.test(navigator.userAgent);
+function isSame(F, S, deep = false) {
+  if (F === S)
+    return true;
+  if (Number.isNaN(F) && Number.isNaN(S))
+    return true;
+  if (isSymbol(F) && isSymbol(S)) {
+    if (F.toString() === S.toString()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  if (isRegExp(F) && isRegExp(S)) {
+    if (!(F.source === S.source))
+      return false;
+  }
+  let FF = F, SS = S;
+  const Fkeys = deep ? Reflect.ownKeys(FF) : Object.keys(FF);
+  const Skeys = deep ? Reflect.ownKeys(SS) : Object.keys(SS);
+  if (Fkeys.length != Skeys.length)
+    return false;
+  for (const key of Fkeys) {
+    if (!Skeys.includes(key))
+      return false;
+    if (!isSame(FF[key], SS[key])) {
+      return false;
+    }
+  }
+  return true;
 }
 class LocalFiles extends AsyncConstructor {
   constructor({ count = 1, type = [], maxSize = Number.MAX_VALUE } = {}) {
@@ -837,11 +984,6 @@ function transformTimeNumber(timeNumber, precision = "mm", formatStr = "/mm/:/ss
 const transformChinese = ["\u5929", "\u4E00", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u4E03", "\u516B", "\u4E5D", "\u5341", "\u5341\u4E00", "\u5341\u4E8C"];
 const transformEnglish_Week = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 const transformEnglish_Month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-const isSymbol = (arg) => typeof arg == "symbol";
-const isNull = (arg) => arg === null;
-const isBaseType = (arg) => typeof arg !== "object";
-const isObject = (arg) => typeof arg == "object" && !Array.isArray(arg) && typeof arg !== "function" && arg !== null && !(arg instanceof RegExp);
-const isRegExp = (arg) => arg instanceof RegExp;
 function isLimitItem(arg) {
   if (Array.isArray(arg) && isObject(arg[1]) && "__LIMIT__" in arg[1]) {
     return true;
@@ -993,55 +1135,6 @@ class Random {
     }
   }
 }
-function isSame(F, S, deep = false) {
-  if (F === S)
-    return true;
-  if (Number.isNaN(F) && Number.isNaN(S))
-    return true;
-  if (isSymbol(F) && isSymbol(S)) {
-    if (F.toString() === S.toString()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-  if (isRegExp(F) && isRegExp(S)) {
-    if (!(F.source === S.source))
-      return false;
-  }
-  let FF = F, SS = S;
-  const Fkeys = deep ? Reflect.ownKeys(FF) : Object.keys(FF);
-  const Skeys = deep ? Reflect.ownKeys(SS) : Object.keys(SS);
-  if (Fkeys.length != Skeys.length)
-    return false;
-  for (const key of Fkeys) {
-    if (!Skeys.includes(key))
-      return false;
-    if (!isSame(FF[key], SS[key])) {
-      return false;
-    }
-  }
-  return true;
-}
-function deepClone(o, cache2 = new WeakMap()) {
-  if (isRegExp(o) || isNull(o))
-    throw "\u4F20\u5165\u7C7B\u578B\u9519\u8BEF";
-  let result = Array.isArray(o) ? [] : Object.create(null);
-  if (cache2.get(o)) {
-    return cache2.get(o);
-  } else {
-    cache2.set(o, result);
-    for (const key in o) {
-      if (isObject(o[key])) {
-        result[key] = deepClone(o[key], cache2);
-      } else {
-        result[key] = o[key];
-      }
-    }
-    Object.setPrototypeOf(result, Object.getPrototypeOf(o));
-    return result;
-  }
-}
 function removeItem(array, target, pullOrigin = false) {
   const arr = pullOrigin ? array : deepClone(array);
   if (Array.isArray(target)) {
@@ -1063,6 +1156,21 @@ function removeItem(array, target, pullOrigin = false) {
     }
   }
   return arr;
+}
+function replaceObj(old, ...news) {
+  if (isRegExp(old))
+    throw "\u4E0D\u80FD\u66FF\u6362\u6B63\u5219\u5BF9\u8C61";
+  if (Array.isArray(old)) {
+    old.length = 0;
+    news.flat(2).forEach((value) => {
+      old.push(value);
+    });
+  } else {
+    for (const key in old) {
+      delete old[key];
+    }
+    Object.assign(old, ...news);
+  }
 }
 let __DB__;
 class SDIDB extends AsyncConstructor {
@@ -1322,98 +1430,6 @@ function changeProperties(changed, changedTo, methods) {
       break;
   }
 }
-function replaceObj(old, ...news) {
-  if (isRegExp(old))
-    throw "\u4E0D\u80FD\u66FF\u6362\u6B63\u5219\u5BF9\u8C61";
-  if (Array.isArray(old)) {
-    old.length = 0;
-    news.flat(2).forEach((value) => {
-      old.push(value);
-    });
-  } else {
-    for (const key in old) {
-      delete old[key];
-    }
-    Object.assign(old, ...news);
-  }
-}
-function debounce(callback, delay = 300, style = true) {
-  let timeoutId = void 0;
-  if (style) {
-    return function(...args) {
-      if (!timeoutId) {
-        callback.apply(this, args);
-      } else {
-        clearTimeout(timeoutId);
-      }
-      timeoutId = window.setTimeout(() => {
-        timeoutId = void 0;
-      }, delay);
-    };
-  } else {
-    return function(...args) {
-      window.clearTimeout(timeoutId);
-      timeoutId = window.setTimeout(() => {
-        callback.apply(this, args);
-      }, delay);
-    };
-  }
-}
-function isEmpty(value, isCheckZero = false) {
-  if (typeof value !== "object" || value == null) {
-    return value == 0 ? isCheckZero ? false : true : !!value;
-  }
-  if (Array.isArray(value)) {
-    if (value.length === 0) {
-      return true;
-    } else {
-      for (const item of value) {
-        if (!isEmpty(item, isCheckZero)) {
-          return false;
-        }
-      }
-      return true;
-    }
-  } else {
-    if (Object.keys(value).length === 0) {
-      return true;
-    } else {
-      for (const key in value) {
-        if (!isEmpty(value[key], isCheckZero)) {
-          return false;
-        }
-      }
-      return true;
-    }
-  }
-}
-function deleteEmpty(value, isCheckZero = false) {
-  if (Array.isArray(value)) {
-    const result = [];
-    value.forEach((item) => {
-      if (!isEmpty(item, isCheckZero)) {
-        if (typeof item != "object") {
-          result.push(item);
-        } else {
-          result.push(deleteEmpty(item));
-        }
-      }
-    });
-    return result;
-  } else {
-    const result = Object.create(Object.getPrototypeOf(value));
-    for (const key in value) {
-      if (!isEmpty(value[key], isCheckZero)) {
-        if (typeof value[key] != "object") {
-          result[key] = value[key];
-        } else {
-          result[key] = deleteEmpty(value[key]);
-        }
-      }
-    }
-    return result;
-  }
-}
 function throttle(callback, delay = 500, style = true) {
   let timeoutId = void 0;
   if (style) {
@@ -1558,4 +1574,4 @@ var index = {
     }
   }
 };
-export { AsyncConstructor, LocalFiles, LocalStorage, Message, Random, RollText, SDDate, SDIDB, SDMath, SliderBox, SplitPage, SwitchButton, vFill as VFill, vHidden as VHidden, Validator, debounce, deepClone, index as default, deleteEmpty, isEmpty, isSame, removeItem, replaceObj, throttle, userBrowers };
+export { AsyncConstructor, LocalFiles, LocalStorage, Message, Random, RollText, SDDate, SDIDB, SDMath, SliderBox, SplitPage, SwitchButton, vFill as VFill, vHidden as VHidden, Validator, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, removeItem, replaceObj, throttle, userBrowers };

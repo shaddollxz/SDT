@@ -23,19 +23,21 @@ export { default as Message } from "./components/Message";
 
 // 导出方法
 export { default as AsyncConstructor } from "./methods/AsyncConstructor";
+export { default as debounce } from "./methods/debounce";
+export { default as deepClone } from "./methods/deepClone";
+export { default as deleteEmpty } from "./methods/deleteEmpty";
+export { default as haveEmpth } from "./methods/haveEmpty";
+export { default as isEmpty } from "./methods/isEmpty";
+export { default as isMobile } from "./methods/isMobile";
+export { default as isSame } from "./methods/isSame";
 export { default as LocalFiles } from "./methods/LocalFiles";
 export { default as LocalStorage } from "./methods/LocalStorage";
 export { default as Random } from "./methods/Random";
+export { default as removeItem } from "./methods/removeItem";
+export { default as replaceObj } from "./methods/replaceObj";
 export { default as SDDate } from "./methods/SDDate";
 export { default as SDIDB } from "./methods/SDIDB";
 export { default as SDMath } from "./methods/SDMath";
-export { default as removeItem } from "./methods/removeItem";
-export { default as replaceObj } from "./methods/replaceObj";
-export { default as deepClone } from "./methods/deepClone";
-export { default as debounce } from "./methods/debounce";
-export { default as deleteEmpty } from "./methods/deleteEmpty";
-export { default as isSame } from "./methods/isSame";
-export { default as isEmpty } from "./methods/isEmpty";
 export { default as throttle } from "./methods/throttle";
 export { default as userBrowers } from "./methods/userBrowers";
 export { default as Validator } from "./methods/Validator";

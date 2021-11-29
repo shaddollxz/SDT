@@ -60,9 +60,9 @@ export default defineComponent({
 <script setup lang="ts">
 interface Props {
     modelValue?: Array<any>;
-    limit: number;
-    totalPage: number;
-    currentPage?: number;
+    limit: number | NumberString;
+    totalPage: number | NumberString;
+    currentPage?: number | NumberString;
 }
 interface Emit {
     (e: "update:modelValue", v: Array<any>): void;
@@ -82,13 +82,13 @@ class BtnList {
     private _curr: number;
     private maxArr: number[];
     showArr: (number | string)[];
-    constructor(maxLen: number, limitLen: number) {
-        this.max = maxLen;
-        this.limit = limitLen;
-        this.limitHalf = limitLen % 2 ? ~~(limitLen / 2) + 1 : limitLen / 2;
+    constructor(maxLen: number | NumberString, limitLen: number | NumberString) {
+        this.max = +maxLen;
+        this.limit = +limitLen;
+        this.limitHalf = this.limit % 2 ? ~~(this.limit / 2) + 1 : this.limit / 2;
         this._curr = 1;
-        this.maxArr = Array.from({ length: maxLen }).map((item, index) => index + 1);
-        if (maxLen > limitLen) {
+        this.maxArr = Array.from({ length: this.max }).map((item, index) => index + 1);
+        if (this.max > limitLen) {
             this.showArr = (this.maxArr as typeof this.showArr).slice(0, this.limit - 2).concat("...", this.max);
         } else {
             this.showArr = this.maxArr;
@@ -116,7 +116,7 @@ class BtnList {
     get curr() {
         return this._curr;
     }
-    set curr(value) {
+    set curr(value: number) {
         if (value == this._curr) return;
 
         if (value > this.max) {
@@ -144,14 +144,14 @@ class BtnList {
 const pageCache = Object.create(null);
 //todo 是同步数据时setup时就计算页面显示
 const btns = ref(new BtnList(props.totalPage, props.limit));
-btns.value.curr = props.currentPage ?? 1;
+btns.value.curr = props.currentPage ? +props.currentPage : 1;
 pageCache[btns.value.curr] = props.modelValue;
 //todo 是异步数据或者总页数改变时重新计算页面显示
 watch(
     () => props.totalPage, //? totalPage可能是异步得到的，只在父组件获得了数据后才会执行一次
     () => {
         btns.value = new BtnList(props.totalPage, props.limit);
-        btns.value.curr = props.currentPage ?? 1;
+        btns.value.curr = props.currentPage ? +props.currentPage : 1;
         pageCache[btns.value.curr] = props.modelValue;
     }
 );

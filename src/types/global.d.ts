@@ -3,11 +3,10 @@
  */
 declare type BaseType = number | string | boolean | bigint | symbol | null | undefined;
 
-declare type AddProperty<T extends object, U extends object> = {
-    [K in keyof T]: T[K];
-} & {
-    [L in keyof U]: U[L];
-};
+/**
+ * 只有数字的字符串
+ */
+declare type NumberString = `${number}`;
 
 /**
  * 返回泛型的value组成的联合类型

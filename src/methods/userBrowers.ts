@@ -2,7 +2,7 @@ import deleteEmpty from "./deleteEmpty";
 
 const browerList = ["edge", "opera", "chrome", "safari", "firefox"] as const;
 
-type Result = AddProperty<{ [key in typeof browerList[number]]?: string }, { main: string }>;
+type Result = { [key in typeof browerList[number]]?: string } & { main: string };
 
 /**
  * 用户使用时的浏览器及版本号

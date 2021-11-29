@@ -2,15 +2,17 @@ import isEmpty from "./isEmpty";
 
 let instancePoor: Validator[] | null = null; // 因为可能用不上对象池，所以初始化为null 当需要放入实例时再初始化为数组
 
-type CheckRule = [() => boolean, string];
-type CheckFunc = ((data: string) => boolean) | RegExp;
+export namespace Validator {
+    export type CheckRule = [() => boolean, string];
+    export type CheckFunc = ((data: string) => boolean) | RegExp;
+}
 /**
  * 对包装数据进行检查
  * 该实例方法均支持链式调用
  * 内置了不为空，邮箱检查，不含空格，密码等级限制，长度限制六个检测函数
  */
 export default class Validator {
-    checkArr!: CheckRule[];
+    checkArr!: Validator.CheckRule[];
     data!: string;
     constructor(data: string | number) {
         if (instancePoor?.length) {
@@ -23,7 +25,13 @@ export default class Validator {
         this.checkArr = [];
     }
     /**
-     * 开始检测 并抛出第一个错误
+     * 开始检测 并以数组形式抛出第一个错误
+     * @example
+     * try{
+     *    validator.check()
+     * } catch (e){
+     *    console.log(e.errorMsg[0])
+     * }
      */
     check() {
         this.checkArr.reduce((pre, cur) => {
@@ -69,7 +77,7 @@ export default class Validator {
      * @param checkFunc 检测函数或正则 该函数必须返回一个布尔值表示检测是否通过
      * @param errorMsg 错误信息
      */
-    addCheck(checkFunc: CheckFunc, errorMsg: string) {
+    addCheck(checkFunc: Validator.CheckFunc, errorMsg: string) {
         if (typeof checkFunc == "function") {
             this.checkArr.push([() => checkFunc(this.data), errorMsg]);
         } else {

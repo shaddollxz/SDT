@@ -7,11 +7,10 @@ import type { StyleValue } from "vue";
  */
 declare type BaseType = number | string | boolean | bigint | symbol | null | undefined;
 
-declare type AddProperty<T extends object, U extends object> = {
-    [K in keyof T]: T[K];
-} & {
-    [L in keyof U]: U[L];
-};
+/**
+ * 只有数字的字符串
+ */
+declare type NumberString = `${number}`;
 
 /**
  * 返回泛型的value组成的联合类型
@@ -448,14 +447,11 @@ export function throttle(
 
 //#region userBrowers
 declare const browerList: readonly ["edge", "opera", "chrome", "safari", "firefox"];
-declare type Result = AddProperty<
-    {
-        [key in typeof browerList[number]]?: string;
-    },
-    {
-        main: string;
-    }
->;
+declare type Result = {
+    [key in typeof browerList[number]]?: string;
+} & {
+    main: string;
+};
 /**
  * 用户使用时的浏览器及版本号
  */
@@ -463,19 +459,27 @@ export function userBrowers(): Result;
 //#endregion
 
 //#region Validator
-declare type CheckRule = [() => boolean, string];
-declare type CheckFunc = ((data: string) => boolean) | RegExp;
+export namespace Validator {
+    export type CheckRule = [() => boolean, string];
+    export type CheckFunc = ((data: string) => boolean) | RegExp;
+}
 /**
  * 对包装数据进行检查
  * 该实例方法均支持链式调用
  * 内置了不为空，邮箱检查，不含空格，密码等级限制，长度限制六个检测函数
  */
 export class Validator {
-    checkArr: CheckRule[];
+    checkArr: Validator.CheckRule[];
     data: string;
     constructor(data: string | number);
     /**
-     * 开始检测 并抛出第一个错误
+     * 开始检测 并以数组形式抛出第一个错误
+     * @example
+     * try{
+     *    validator.check()
+     * } catch (e){
+     *    console.log(e.errorMsg[0])
+     * }
      */
     check(): void;
     /**
@@ -497,7 +501,7 @@ export class Validator {
      * @param checkFunc 检测函数或正则 该函数必须返回一个布尔值表示检测是否通过
      * @param errorMsg 错误信息
      */
-    addCheck(checkFunc: CheckFunc, errorMsg: string): this;
+    addCheck(checkFunc: Validator.CheckFunc, errorMsg: string): this;
     /**
      * 限制密码的等级 最多五级 默认有五级才能通过检测
      * 要求长度大于10 有特殊符号 有数字 有小写字母 有大写字母
