@@ -566,13 +566,13 @@ const defaultProps = {
   type: "default"
 };
 const Message = (text, options) => {
-  renderMessage(Object.assign(defaultProps, options, { text }));
+  renderMessage(Object.assign(Object.assign({}, defaultProps), options, { text }));
 };
 Message.success = (text, options) => {
-  renderMessage(Object.assign(defaultProps, options, { text, type: "success" }));
+  renderMessage(Object.assign(Object.assign({}, defaultProps), options, { text, type: "success" }));
 };
 Message.error = (text, options) => {
-  renderMessage(Object.assign(defaultProps, options, { text, type: "error" }));
+  renderMessage(Object.assign(Object.assign({}, defaultProps), options, { text, type: "error" }));
 };
 class AsyncConstructor {
   constructor(asyncArrowFunction) {

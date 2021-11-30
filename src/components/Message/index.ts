@@ -41,13 +41,13 @@ const defaultProps: any = {
 };
 
 const Message: MessageFunc = ((text, options) => {
-    renderMessage(Object.assign(defaultProps, options, { text }));
+    renderMessage(Object.assign(Object.assign({}, defaultProps), options, { text }));
 }) as MessageFunc;
 Message.success = (text, options) => {
-    renderMessage(Object.assign(defaultProps, options, { text, type: "success" }));
+    renderMessage(Object.assign(Object.assign({}, defaultProps), options, { text, type: "success" }));
 };
 Message.error = (text, options) => {
-    renderMessage(Object.assign(defaultProps, options, { text, type: "error" }));
+    renderMessage(Object.assign(Object.assign({}, defaultProps), options, { text, type: "error" }));
 };
 
 export default Message;
