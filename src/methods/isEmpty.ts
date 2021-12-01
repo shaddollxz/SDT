@@ -6,7 +6,7 @@
  */
 export default function isEmpty(value: unknown, isCheckZero: boolean = false) {
     if (typeof value !== "object" || value == null) {
-        return value == 0 ? (isCheckZero ? false : true) : !!value;
+        return value == 0 ? (isCheckZero ? true : false) : !value;
     }
 
     if (Array.isArray(value)) {

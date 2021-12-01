@@ -566,13 +566,13 @@ const defaultProps = {
   type: "default"
 };
 const Message = (text, options) => {
-  renderMessage(Object.assign(Object.assign({}, defaultProps), options, { text }));
+  renderMessage(Object.assign({}, defaultProps, options, { text }));
 };
 Message.success = (text, options) => {
-  renderMessage(Object.assign(Object.assign({}, defaultProps), options, { text, type: "success" }));
+  renderMessage(Object.assign({}, defaultProps, options, { text, type: "success" }));
 };
 Message.error = (text, options) => {
-  renderMessage(Object.assign(Object.assign({}, defaultProps), options, { text, type: "error" }));
+  renderMessage(Object.assign({}, defaultProps, options, { text, type: "error" }));
 };
 class AsyncConstructor {
   constructor(asyncArrowFunction) {
@@ -634,7 +634,7 @@ function deepClone(o, cache2 = new WeakMap()) {
 }
 function isEmpty(value, isCheckZero = false) {
   if (typeof value !== "object" || value == null) {
-    return value == 0 ? isCheckZero ? false : true : !!value;
+    return value == 0 ? isCheckZero ? true : false : !value;
   }
   if (Array.isArray(value)) {
     if (value.length === 0) {
