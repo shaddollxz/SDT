@@ -22,6 +22,7 @@ export interface Props {
     isCanClose: boolean; // 是否显示删除按钮
     align: "left" | "right" | "center";
     style?: StyleValue;
+    leaveTo: "top" | "left" | "bottom" | "right";
     onClose?: (el: Element) => void;
 }
 const props = defineProps<Props>();
@@ -36,6 +37,18 @@ onMounted(() => {
         }, props.duration);
     }
 });
+
+type Direction = {
+    [key in Props["leaveTo"]]: string;
+};
+const directionMap: Direction = {
+    top: "translateY(-100%)",
+    bottom: "translateY(100%)",
+    left: "translateX(-100%)",
+    right: "translateX(100%)",
+};
+
+const direction = ref(directionMap[props.leaveTo]);
 </script>
 
 <style lang="less" scoped>
@@ -86,6 +99,6 @@ onMounted(() => {
 }
 .message-leave-to {
     opacity: 0;
-    transform: translateY(-100%);
+    transform: v-bind(direction);
 }
 </style>

@@ -42,7 +42,7 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 var _a;
-import { defineComponent as defineComponent$1, openBlock, createElementBlock, isRef, normalizeStyle, createElementVNode, normalizeClass, unref, Fragment, renderSlot, createCommentVNode, renderList, toDisplayString, withDirectives, withKeys, vModelText, pushScopeId, popScopeId, createBlock, Transition, withCtx, vShow, createVNode, render } from "vue";
+import { defineComponent as defineComponent$1, openBlock, createElementBlock, isRef, normalizeStyle, createElementVNode, normalizeClass, unref, Fragment, renderSlot, createCommentVNode, renderList, toDisplayString, withDirectives, withKeys, vModelText, pushScopeId, popScopeId, useCssVars, createBlock, Transition, withCtx, vShow, createVNode, render } from "vue";
 import { defineComponent, ref, shallowRef, watch, nextTick, onMounted } from "@vue/runtime-core";
 var gusto = "";
 var vFill = {
@@ -499,6 +499,9 @@ const __default__ = defineComponent({
 });
 function setup(__props) {
   const props = __props;
+  useCssVars((_ctx) => ({
+    "0e8ec0fe": direction.value
+  }));
   const isShow = ref(true);
   onMounted(() => {
     if (props.duration > 0) {
@@ -507,6 +510,13 @@ function setup(__props) {
       }, props.duration);
     }
   });
+  const directionMap = {
+    top: "translateY(-100%)",
+    bottom: "translateY(100%)",
+    left: "translateX(-100%)",
+    right: "translateX(100%)"
+  };
+  const direction = ref(directionMap[props.leaveTo]);
   return (_ctx, _cache) => {
     return openBlock(), createBlock(Transition, {
       name: "message",
@@ -541,11 +551,12 @@ const _sfc_main = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues
     isCanClose: { type: Boolean },
     align: null,
     style: null,
+    leaveTo: null,
     onClose: null
   },
   setup
 }));
-var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-5127e1a5"]]);
+var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-1881f2fe"]]);
 let messageBox = null;
 function renderMessage(options) {
   if (!messageBox) {
@@ -563,7 +574,8 @@ const defaultProps = {
   duration: 1300,
   align: "left",
   isCanClose: true,
-  type: "default"
+  type: "default",
+  leaveTo: "top"
 };
 const Message = (text, options) => {
   renderMessage(Object.assign({}, defaultProps, options, { text }));

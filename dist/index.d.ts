@@ -31,6 +31,7 @@ interface MessageProps {
     align?: "left" | "right" | "center";
     isCanClose?: boolean;
     style?: StyleValue;
+    leaveTo?: "top" | "left" | "bottom" | "right";
     onClose?: (el: Element) => void;
 }
 interface MessageFunc {
