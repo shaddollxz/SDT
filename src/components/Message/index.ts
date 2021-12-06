@@ -38,6 +38,7 @@ const defaultProps: any = {
     align: "left",
     isCanClose: true,
     type: "default",
+    leaveTo: "top",
 };
 
 const Message: MessageFunc = ((text, options) => {
