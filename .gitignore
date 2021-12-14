@@ -2,7 +2,6 @@
 node_modules
 test
 package-lock.json
-dist/src
 
 
 # local env files

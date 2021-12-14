@@ -44,7 +44,6 @@ var __async = (__this, __arguments, generator) => {
 var _a;
 import { defineComponent as defineComponent$1, openBlock, createElementBlock, isRef, normalizeStyle, createElementVNode, normalizeClass, unref, Fragment, renderSlot, createCommentVNode, renderList, toDisplayString, withDirectives, withKeys, vModelText, pushScopeId, popScopeId, useCssVars, createBlock, Transition, withCtx, vShow, createVNode, render } from "vue";
 import { defineComponent, ref, shallowRef, watch, nextTick, onMounted } from "@vue/runtime-core";
-var gusto = "";
 var vFill = {
   install(app) {
     app.directive("fill", {
@@ -116,7 +115,7 @@ var directives = /* @__PURE__ */ Object.freeze({
   VHidden: vHidden
 });
 var colors = "";
-var index_vue_vue_type_style_index_0_scoped_true_lang$3 = "";
+var RollText_vue_vue_type_style_index_0_scoped_true_lang = "";
 var _export_sfc = (sfc, props) => {
   for (const [key, val] of props) {
     sfc[key] = val;
@@ -233,8 +232,13 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValu
   },
   setup: setup$4
 }));
-var $RollText = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-608f225a"]]);
-var index_vue_vue_type_style_index_0_scoped_true_lang$2 = "";
+var RollText = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-455910ec"]]);
+var index$4 = {
+  install(app) {
+    app.component("RollText", RollText);
+  }
+};
+var SliderBox_vue_vue_type_style_index_0_scoped_true_lang = "";
 const __default__$3 = defineComponent({
   name: "sliderBox"
 });
@@ -269,9 +273,14 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValu
   },
   setup: setup$3
 }));
-var $SliderBox = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-596ffdb9"]]);
-var index_vue_vue_type_style_index_0_scoped_true_lang$1 = "";
-const _withScopeId$1 = (n) => (pushScopeId("data-v-cb4cee10"), n = n(), popScopeId(), n);
+var SliderBox = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-6cf5a071"]]);
+var index$3 = {
+  install(app) {
+    app.component("SliderBox", SliderBox);
+  }
+};
+var SplitPage_vue_vue_type_style_index_0_scoped_true_lang = "";
+const _withScopeId$1 = (n) => (pushScopeId("data-v-33cb74c1"), n = n(), popScopeId(), n);
 const _hoisted_1$1 = {
   key: 0,
   class: "splitPage"
@@ -420,9 +429,14 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValu
   emits: ["update:modelValue", "onPageChange", "getNewData"],
   setup: setup$2
 }));
-var $SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-cb4cee10"]]);
-var index_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _withScopeId = (n) => (pushScopeId("data-v-c84fbafc"), n = n(), popScopeId(), n);
+var SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-33cb74c1"]]);
+var index$2 = {
+  install(app) {
+    app.component("SplitPage", SplitPage);
+  }
+};
+var SwitchButton_vue_vue_type_style_index_0_scoped_true_lang = "";
+const _withScopeId = (n) => (pushScopeId("data-v-6d476758"), n = n(), popScopeId(), n);
 const _hoisted_1 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createElementVNode("div", null, null, -1));
 const _hoisted_2 = [
   _hoisted_1
@@ -464,34 +478,19 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValu
   emits: ["update:modelValue", "onStatuChange"],
   setup: setup$1
 }));
-var $SwitchButton = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-c84fbafc"]]);
-const RollText = {
+var SwitchButton = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-6d476758"]]);
+var index$1 = {
   install(app) {
-    app.component("RollText", $RollText);
-  }
-};
-const SliderBox = {
-  install(app) {
-    app.component("SliderBox", $SliderBox);
-  }
-};
-const SplitPage = {
-  install(app) {
-    app.component("SplitPage", $SplitPage);
-  }
-};
-const SwitchButton = {
-  install(app) {
-    app.component("SwitchButton", $SwitchButton);
+    app.component("SwitchButton", SwitchButton);
   }
 };
 var components = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  RollText,
-  SliderBox,
-  SplitPage,
-  SwitchButton
+  RollText: index$4,
+  SliderBox: index$3,
+  SplitPage: index$2,
+  SwitchButton: index$1
 });
 var Message_vue_vue_type_style_index_0_scoped_true_lang = "";
 const __default__ = defineComponent({
@@ -1169,22 +1168,7 @@ function removeItem(array, target, pullOrigin = false) {
   }
   return arr;
 }
-function replaceObj(old, ...news) {
-  if (isRegExp(old))
-    throw "\u4E0D\u80FD\u66FF\u6362\u6B63\u5219\u5BF9\u8C61";
-  if (Array.isArray(old)) {
-    old.length = 0;
-    news.flat(2).forEach((value) => {
-      old.push(value);
-    });
-  } else {
-    for (const key in old) {
-      delete old[key];
-    }
-    Object.assign(old, ...news);
-  }
-}
-let __DB__;
+let __DB__ = {};
 class SDIDB extends AsyncConstructor {
   constructor(name) {
     super(() => __async(this, null, function* () {
@@ -1206,43 +1190,19 @@ class SDIDB extends AsyncConstructor {
       yield onsuccess.call(this, DBRequest);
     });
   }
-  createTable(_0) {
-    return __async(this, arguments, function* (tableName, settings = {}) {
-      if (this._tableList.includes(tableName))
-        throw "\u6570\u636E\u5E93\u540D\u91CD\u590D";
-      yield this.openDB("create", tableName, settings);
-      return new IDBTable(this.name, tableName, settings);
-    });
-  }
-  useTable(tableName) {
-    return __async(this, null, function* () {
-      if (this._tableList.includes(tableName)) {
-        const settings = {};
-        const IDBObjectStore = __DB__[this.name].transaction([tableName], "readonly").objectStore(tableName);
-        settings.keyPath = IDBObjectStore.keyPath;
-        const indexNames = IDBObjectStore.indexNames;
-        if (indexNames.length) {
-          const indexs = [];
-          Array.prototype.forEach.call(indexNames, (value) => {
-            const { keyPath, multiEntry, unique, name } = IDBObjectStore.index(value);
-            indexs.push({ keyPath, multiEntry, unique, name });
-          });
-          settings.index = indexs;
-        }
-        return new IDBTable(this.name, tableName, settings);
-      } else {
-        throw "\u6CA1\u6709\u6307\u5B9A\u7684\u8868";
-      }
-    });
-  }
   removeTable(tableName) {
     return __async(this, null, function* () {
       if (this._tableList.includes(tableName)) {
         yield this.openDB("remove", tableName);
-      } else {
-        throw "\u6CA1\u6709\u6307\u5B9A\u7684\u8868";
       }
-      return this;
+    });
+  }
+  defineTable(_0, _1) {
+    return __async(this, arguments, function* (tableName, _keys, indexs = {}) {
+      if (!this._tableList.includes(tableName)) {
+        yield this.openDB("create", tableName, indexs);
+      }
+      return () => new IDBTable(this.name, tableName, indexs);
     });
   }
   static deleteDB(dbname) {
@@ -1251,7 +1211,7 @@ class SDIDB extends AsyncConstructor {
   get version() {
     return this._version;
   }
-  get tableList() {
+  get tables() {
     return this._tableList;
   }
 }
@@ -1259,15 +1219,16 @@ function onupgradeneeded(DBRequest, type, tableName, settings) {
   return __async(this, null, function* () {
     return new Promise((resolve, reject) => {
       DBRequest.onupgradeneeded = (e) => {
-        var _a2, _b;
+        var _a2, _b, _c;
         const DB = e.target.result;
         if (type == "create") {
-          const store = DB.createObjectStore(tableName, settings.keyPath ? { keyPath: settings.keyPath } : { autoIncrement: true });
+          const store = DB.createObjectStore(tableName, settings.keypath ? { keyPath: settings.keypath } : { autoIncrement: true });
           if (settings.index) {
-            for (const value of settings.index) {
-              store.createIndex(Array.isArray(value.keyPath) ? value.name : value.name ? value.name : value.keyPath, value.keyPath, {
-                unique: (_a2 = value.unique) != null ? _a2 : false,
-                multiEntry: ((_b = value.multiEntry) != null ? _b : Array.isArray(value.keyPath)) ? false : true
+            const indexNames = Object.keys(settings.index);
+            for (const name of indexNames) {
+              store.createIndex(name, (_a2 = settings.index[name].path) != null ? _a2 : name, {
+                unique: (_b = settings.index[name].unique) != null ? _b : false,
+                multiEntry: ((_c = settings.index[name].multiEntry) != null ? _c : Array.isArray(settings.index[name].path)) ? false : true
               });
             }
           }
@@ -1320,13 +1281,31 @@ class IDBTable {
         changeProperties(value, update[item], item);
       }
       let IDBrequest = this.store.put(value, key);
-      return yield CURDHandler.call(this, IDBrequest);
+      yield CURDHandler.call(this, IDBrequest);
+      return value;
+    });
+  }
+  updateByKeypath(query, update) {
+    return __async(this, null, function* () {
+      let value = (yield this.findByKeypath(query))[0];
+      for (const item in update) {
+        changeProperties(value, update[item], item);
+      }
+      let IDBrequest = this.store.put(value);
+      yield CURDHandler.call(this, IDBrequest);
+      return value;
     });
   }
   findByKeypath(query) {
     return __async(this, null, function* () {
-      const IDBrequest = query.keyPath ? this.store.index(query.keyPath).getAll(query.query, query.count) : this.store.get(query.query);
-      return yield CURDHandler.call(this, IDBrequest);
+      let IDBrequest;
+      if (typeof query == "string") {
+        IDBrequest = this.store.get(query);
+      } else {
+        IDBrequest = query.index ? this.store.index(query.index).getAll(query.query, query.count) : this.store.get(query.query);
+      }
+      const result = yield CURDHandler.call(this, IDBrequest);
+      return Array.isArray(result) ? result : [result];
     });
   }
   find(query) {
@@ -1586,4 +1565,4 @@ var index = {
     }
   }
 };
-export { AsyncConstructor, LocalFiles, LocalStorage, Message, Random, RollText, SDDate, SDIDB, SDMath, SliderBox, SplitPage, SwitchButton, vFill as VFill, vHidden as VHidden, Validator, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, removeItem, replaceObj, throttle, userBrowers };
+export { AsyncConstructor, LocalFiles, LocalStorage, Message, Random, index$4 as RollText, SDDate, SDIDB, SDMath, index$3 as SliderBox, index$2 as SplitPage, index$1 as SwitchButton, vFill as VFill, vHidden as VHidden, Validator, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, removeItem, throttle, userBrowers };

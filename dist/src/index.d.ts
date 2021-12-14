@@ -1,26 +1,11 @@
 import type { App } from "vue";
-
-import * as directives from "./directives";
-import * as components from "./components";
-
-// 默认导出全局的组件和指令
-const plugins = { ...directives, ...components };
-export default {
-    install(app: App) {
-        for (const name in plugins) {
-            app.use(plugins[name]);
-        }
-    },
+declare const _default: {
+    install(app: App): void;
 };
-
-// 按需导出全局组件或指令
+export default _default;
 export { RollText, SliderBox, SplitPage, SwitchButton } from "./components";
 export { VFill, VHidden } from "./directives";
-
-// 导出需要函数渲染的组件
 export { default as Message } from "./components/Message";
-
-// 导出方法
 export { default as AsyncConstructor } from "./methods/AsyncConstructor";
 export { default as debounce } from "./methods/debounce";
 export { default as deepClone } from "./methods/deepClone";
