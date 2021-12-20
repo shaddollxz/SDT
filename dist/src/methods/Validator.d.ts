@@ -1,4 +1,4 @@
-export declare namespace Validator {
+declare namespace Validator {
     type CheckRule = [() => boolean, string];
     type CheckFunc = ((data: string) => boolean) | RegExp;
 }
@@ -7,7 +7,7 @@ export declare namespace Validator {
  * 该实例方法均支持链式调用
  * 内置了不为空，邮箱检查，不含空格，密码等级限制，长度限制六个检测函数
  */
-export default class Validator {
+declare class Validator {
     checkArr: Validator.CheckRule[];
     data: string;
     constructor(data: string | number);
@@ -69,3 +69,4 @@ export default class Validator {
      */
     minLength(len: number): this;
 }
+export default Validator;
