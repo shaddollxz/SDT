@@ -42,8 +42,8 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 var _a;
-import { defineComponent as defineComponent$1, openBlock, createElementBlock, isRef, normalizeStyle, createElementVNode, normalizeClass, unref, Fragment, renderSlot, createCommentVNode, renderList, toDisplayString, withDirectives, withKeys, vModelText, pushScopeId, popScopeId, useCssVars, createBlock, Transition, withCtx, vShow, createVNode, render } from "vue";
-import { defineComponent, ref, shallowRef, watch, nextTick, onMounted } from "@vue/runtime-core";
+import { nextTick, defineComponent, resolveComponent, resolveDirective, withDirectives, openBlock, createElementBlock, Fragment, renderList, unref, createTextVNode, toDisplayString, createBlock, createCommentVNode, isRef, normalizeStyle, createElementVNode, normalizeClass, renderSlot, withKeys, vModelText, pushScopeId, popScopeId, useCssVars, Transition, withCtx, vShow, createVNode, render } from "vue";
+import { reactive, defineComponent as defineComponent$1, ref, shallowRef, watch, nextTick as nextTick$1, onMounted } from "@vue/runtime-core";
 var vFill = {
   install(app) {
     app.directive("fill", {
@@ -108,27 +108,230 @@ function mounted(el, boolen) {
 function beforeUpdate(el, boolen) {
   el.style.visibility = boolen.value ? "" : "hidden";
 }
+var vDrag = {
+  install(app) {
+    app.directive("draggable", {
+      mounted: draggableMounted,
+      updated: draggableUpdated
+    });
+    app.directive("dragtraget", {
+      mounted: targetMounted
+    });
+  }
+};
+const map = new WeakMap();
+let dragging;
+function draggableMounted(el, options) {
+  var _a2;
+  el.draggable = (_a2 = options.value.draggable) != null ? _a2 : true;
+  map.set(el, options.value.data);
+  function dragstartHandler(e) {
+    var _a3;
+    if (e.target !== el)
+      return;
+    dragging = el;
+    e.dataTransfer.effectAllowed = "all";
+    (_a3 = options.value.onDragstart) == null ? void 0 : _a3.call(this, e);
+    nextTick(() => {
+      var _a4;
+      if (options.value.img) {
+        let { pic, x = 0, y = 0 } = options.value.img.call(this);
+        let img;
+        if (typeof pic == "string") {
+          img = new Image();
+          img.src = pic;
+        } else {
+          img = pic;
+        }
+        (_a4 = e.dataTransfer) == null ? void 0 : _a4.setDragImage(img, x, y);
+      }
+    });
+  }
+  function dragHandler(e) {
+    e.preventDefault();
+    options.value.onDrag.call(this, e);
+  }
+  function dragendHandler(e) {
+    e.preventDefault();
+    options.value.onDragend.call(this, e);
+  }
+  el.addEventListener("dragstart", dragstartHandler);
+  options.value.onDrag ? el.addEventListener("drag", dragHandler) : null;
+  options.value.onDragend ? el.addEventListener("dragend", dragendHandler) : null;
+}
+function draggableUpdated(el, options) {
+  var _a2;
+  el.draggable = (_a2 = options.value.draggable) != null ? _a2 : true;
+  map.set(el, options.value.data);
+}
+function targetMounted(el, options) {
+  let data;
+  function dragenterHandler(e) {
+    var _a2, _b;
+    e.preventDefault();
+    data = map.get(dragging);
+    (_b = (_a2 = options.value) == null ? void 0 : _a2.onDragenter) == null ? void 0 : _b.call(this, data, e, dragging);
+  }
+  function dragoverHandler(e) {
+    var _a2;
+    e.preventDefault();
+    if (options.value.style) {
+      e.dataTransfer.dropEffect = options.value.style;
+    }
+    (_a2 = options.value.onDragover) == null ? void 0 : _a2.call(this, data, e, dragging);
+  }
+  function dragleaveHandler(e) {
+    options.value.onDragleave.call(this, data, e, dragging);
+  }
+  function dropHandler(e) {
+    e.preventDefault();
+    options.value.onDrop.call(this, data, e, dragging);
+    dragging = null;
+  }
+  el.addEventListener("dragenter", dragenterHandler);
+  options.value.onDragover || options.value.style ? el.addEventListener("dragover", dragoverHandler) : el.ondragover = () => false;
+  options.value.onDragleave ? el.addEventListener("dragleave", dragleaveHandler) : null;
+  options.value.onDrop ? el.addEventListener("drop", dropHandler) : null;
+}
 var directives = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   VFill: vFill,
-  VHidden: vHidden
+  VHidden: vHidden,
+  VDrag: vDrag
 });
 var colors = "";
-var RollText_vue_vue_type_style_index_0_scoped_true_lang = "";
+var DraggableList_vue_vue_type_style_index_0_scoped_true_lang = "";
 var _export_sfc = (sfc, props) => {
   for (const [key, val] of props) {
     sfc[key] = val;
   }
   return sfc;
 };
+const _hoisted_1$3 = { class: "draggableList" };
+const _sfc_main$5 = /* @__PURE__ */ defineComponent({
+  props: {
+    modelValue: null,
+    onDragstart: null,
+    onDragend: null,
+    onDrag: null,
+    onDragover: null,
+    onDragleave: null,
+    onDragenter: null,
+    onDrop: null,
+    onTargetChanged: null
+  },
+  emits: ["update:modelValue"],
+  setup(__props, { emit }) {
+    const props = __props;
+    let items = reactive(props.modelValue.map((item, index2) => {
+      var _a2;
+      return __spreadProps(__spreadValues({}, item), {
+        _key: (_a2 = item._key) != null ? _a2 : `${index2}`
+      });
+    }));
+    let chosedEle, chosedIndex = { value: 0 }, copyEle;
+    function getOptions(item, index2) {
+      return {
+        draggable: item.draggable,
+        data: { index: index2, item, items, chosedIndex },
+        onDragstart(e) {
+          var _a2;
+          e.stopPropagation();
+          chosedEle = this;
+          copyEle = this.cloneNode(true);
+          copyEle.className = this.className += " dragging";
+          (_a2 = props.onDragstart) == null ? void 0 : _a2.call(this, e);
+        },
+        onDragend(e) {
+          var _a2, _b;
+          e.stopPropagation();
+          this.className = "item";
+          chosedEle.className = "item";
+          (_a2 = this.parentElement) == null ? void 0 : _a2.removeChild(copyEle);
+          (_b = props.onDragend) == null ? void 0 : _b.call(this, e);
+        },
+        onDrag: props.onDrag,
+        img: item.img
+      };
+    }
+    const targetOptions = {
+      onDragover(data, e, dragging2) {
+        var _a2, _b, _c;
+        if (chosedEle && chosedEle !== e.target && e.target !== copyEle) {
+          const curChosedIndex = Array.from(dragging2.parentElement.children).indexOf(e.target);
+          if (~curChosedIndex) {
+            chosedEle.className = chosedEle.className.replaceAll(/\schosed/g, "");
+            chosedEle = e.target;
+            (_a2 = chosedEle.parentElement) == null ? void 0 : _a2.insertBefore(copyEle, chosedEle);
+            chosedEle.className += " chosed";
+            chosedIndex.value = curChosedIndex;
+            (_b = props.onTargetChanged) == null ? void 0 : _b.call(this, data, e, dragging2);
+          }
+        }
+        (_c = props.onDragover) == null ? void 0 : _c.call(this, data, e, dragging2);
+      },
+      onDrop(data, e, dragging2) {
+        var _a2;
+        e.stopPropagation();
+        let targetIndex = data.chosedIndex.value == 0 || data.chosedIndex.value == 1 ? data.chosedIndex.value : data.chosedIndex.value - 1;
+        changeIndex(data.items, data.index, targetIndex);
+        emit("update:modelValue", items);
+        (_a2 = props.onDrop) == null ? void 0 : _a2.call(this, data, e, dragging2);
+      },
+      onDragenter: props.onDragover,
+      onDragleave: props.onDragleave
+    };
+    function changeIndex(arr, from, to) {
+      if (from > to) {
+        const item = arr[from];
+        arr.splice(from, 1);
+        arr.splice(to, 0, item);
+      } else if (from < to) {
+        arr.splice(to, 0, arr[from]);
+        arr.splice(from, 1);
+      }
+    }
+    return (_ctx, _cache) => {
+      const _component_DraggableList = resolveComponent("DraggableList", true);
+      const _directive_draggable = resolveDirective("draggable");
+      const _directive_dragtraget = resolveDirective("dragtraget");
+      return withDirectives((openBlock(), createElementBlock("div", _hoisted_1$3, [
+        (openBlock(true), createElementBlock(Fragment, null, renderList(unref(items), (item, index2) => {
+          return withDirectives((openBlock(), createElementBlock("div", {
+            class: "item",
+            key: item._key
+          }, [
+            createTextVNode(toDisplayString(item.value) + " ", 1),
+            item.children ? (openBlock(), createBlock(_component_DraggableList, {
+              key: 0,
+              modelValue: item.children,
+              "onUpdate:modelValue": ($event) => item.children = $event
+            }, null, 8, ["modelValue", "onUpdate:modelValue"])) : createCommentVNode("", true)
+          ], 512)), [
+            [_directive_draggable, getOptions(item, index2)]
+          ]);
+        }), 128))
+      ], 512)), [
+        [_directive_dragtraget, targetOptions]
+      ]);
+    };
+  }
+});
+var DraggableList = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-fafecaba"]]);
+var index$5 = {
+  install(app) {
+    app.component("DraggableList", DraggableList);
+  }
+};
+var RollText_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _hoisted_1$2 = {
   key: 0,
   class: "text"
 };
 const _hoisted_2$2 = ["innerHTML"];
 const _hoisted_3$1 = ["innerHTML"];
-const __default__$4 = defineComponent({
+const __default__$4 = defineComponent$1({
   name: "rollText"
 });
 function setup$4(__props) {
@@ -137,9 +340,9 @@ function setup$4(__props) {
   const text = shallowRef(null);
   const view = shallowRef(null);
   if (props.asyncData !== null) {
-    watch(() => props.asyncData, () => nextTick(setAnime));
+    watch(() => props.asyncData, () => nextTick$1(setAnime));
   } else {
-    nextTick(setAnime);
+    nextTick$1(setAnime);
   }
   function setAnime() {
     if (!text.value)
@@ -223,7 +426,7 @@ function setup$4(__props) {
     ], 4);
   };
 }
-const _sfc_main$4 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues({}, __default__$4), {
+const _sfc_main$4 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$4), {
   props: {
     type: { default: 1 },
     duration: { default: 8 },
@@ -239,7 +442,7 @@ var index$4 = {
   }
 };
 var SliderBox_vue_vue_type_style_index_0_scoped_true_lang = "";
-const __default__$3 = defineComponent({
+const __default__$3 = defineComponent$1({
   name: "sliderBox"
 });
 function setup$3(__props) {
@@ -266,7 +469,7 @@ function setup$3(__props) {
     ], 6);
   };
 }
-const _sfc_main$3 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues({}, __default__$3), {
+const _sfc_main$3 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$3), {
   props: {
     duration: { default: 0.5 },
     direction: { default: "bottom" }
@@ -290,7 +493,7 @@ const _hoisted_3 = ["onClick"];
 const _hoisted_4 = { class: "jumpTo" };
 const _hoisted_5 = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createElementVNode("span", null, "\u8DF3\u8F6C\u5230\u7B2C", -1));
 const _hoisted_6 = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createElementVNode("span", null, "\u9875", -1));
-const __default__$2 = defineComponent({
+const __default__$2 = defineComponent$1({
   name: "splitPage"
 });
 function setup$2(__props, { emit }) {
@@ -419,7 +622,7 @@ function setup$2(__props, { emit }) {
     ])) : createCommentVNode("", true);
   };
 }
-const _sfc_main$2 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues({}, __default__$2), {
+const _sfc_main$2 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$2), {
   props: {
     modelValue: null,
     limit: { default: 7 },
@@ -441,7 +644,7 @@ const _hoisted_1 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createElem
 const _hoisted_2 = [
   _hoisted_1
 ];
-const __default__$1 = defineComponent({
+const __default__$1 = defineComponent$1({
   name: "switchButton"
 });
 function setup$1(__props, { emit }) {
@@ -471,7 +674,7 @@ function setup$1(__props, { emit }) {
     ], 2);
   };
 }
-const _sfc_main$1 = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues({}, __default__$1), {
+const _sfc_main$1 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$1), {
   props: {
     modelValue: { type: Boolean }
   },
@@ -487,13 +690,14 @@ var index$1 = {
 var components = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
+  DraggableList: index$5,
   RollText: index$4,
   SliderBox: index$3,
   SplitPage: index$2,
   SwitchButton: index$1
 });
 var Message_vue_vue_type_style_index_0_scoped_true_lang = "";
-const __default__ = defineComponent({
+const __default__ = defineComponent$1({
   name: "message"
 });
 function setup(__props) {
@@ -542,7 +746,7 @@ function setup(__props) {
     }, 8, ["onBeforeLeave"]);
   };
 }
-const _sfc_main = /* @__PURE__ */ defineComponent$1(__spreadProps(__spreadValues({}, __default__), {
+const _sfc_main = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__), {
   props: {
     text: null,
     type: null,
@@ -1565,4 +1769,4 @@ var index = {
     }
   }
 };
-export { AsyncConstructor, LocalFiles, LocalStorage, Message, Random, index$4 as RollText, SDDate, SDIDB, SDMath, index$3 as SliderBox, index$2 as SplitPage, index$1 as SwitchButton, vFill as VFill, vHidden as VHidden, Validator, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, removeItem, throttle, userBrowers };
+export { AsyncConstructor, index$5 as DraggableList, LocalFiles, LocalStorage, Message, Random, index$4 as RollText, SDDate, SDIDB, SDMath, index$3 as SliderBox, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, removeItem, throttle, userBrowers };

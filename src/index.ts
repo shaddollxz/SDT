@@ -14,8 +14,12 @@ export default {
 };
 
 // 按需导出全局组件或指令
-export { RollText, SliderBox, SplitPage, SwitchButton } from "./components";
-export { VFill, VHidden } from "./directives";
+export { DraggableList, RollText, SliderBox, SplitPage, SwitchButton } from "./components";
+export { VFill, VHidden, VDrag } from "./directives";
+
+// 导出组件或指令的类型
+export type { DraggableListProps } from "./components";
+export type { VDragType } from "./directives";
 
 // 导出需要函数渲染的组件
 export { default as Message } from "./components/Message";

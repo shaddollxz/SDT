@@ -3,8 +3,10 @@ declare const _default: {
     install(app: App): void;
 };
 export default _default;
-export { RollText, SliderBox, SplitPage, SwitchButton } from "./components";
-export { VFill, VHidden } from "./directives";
+export { DraggableList, RollText, SliderBox, SplitPage, SwitchButton } from "./components";
+export { VFill, VHidden, VDrag } from "./directives";
+export type { DraggableListProps } from "./components";
+export type { VDragType } from "./directives";
 export { default as Message } from "./components/Message";
 export { default as AsyncConstructor } from "./methods/AsyncConstructor";
 export { default as debounce } from "./methods/debounce";
