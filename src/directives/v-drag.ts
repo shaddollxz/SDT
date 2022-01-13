@@ -18,14 +18,21 @@ interface ImgSetting {
     x?: number;
     y?: number;
 }
-export type DraggableOptions = {
+export interface DraggableOptions<T = any> {
     draggable?: boolean;
-    data?: any;
-    onDragstart?: (e: DragEvent) => void;
-    onDrag?: (e: DragEvent) => void;
-    onDragend?: (e: DragEvent) => void;
+    data?: T;
+    onDragstart?: (this: HTMLElement, e: DragEvent) => void;
+    onDrag?: (this: HTMLElement, e: DragEvent) => void;
+    onDragend?: (this: HTMLElement, e: DragEvent) => void;
     img?: () => ImgSetting;
-} & ThisType<HTMLElement>;
+}
+export interface TargetOptions<T = any> {
+    style?: DataTransfer["dropEffect"];
+    onDrop?: (this: HTMLElement, data: T, e: DragEvent, dragging: Element) => void;
+    onDragenter?: (this: HTMLElement, data: T, e: DragEvent, dragging: Element) => void;
+    onDragover?: (this: HTMLElement, data: T, e: DragEvent, dragging: Element) => void;
+    onDragleave?: (this: HTMLElement, data: T, e: DragEvent, dragging: Element) => void;
+}
 
 const map = new WeakMap();
 let dragging: Element | null; // 被拖放元素 e.relatedTarget不准确 要手动记录
@@ -77,14 +84,6 @@ function draggableUpdated(el: HTMLElement, options: DirectiveBinding<DraggableOp
     el.draggable = options.value.draggable ?? true;
     map.set(el, options.value.data);
 }
-
-export type TargetOptions<T = any> = {
-    style?: DataTransfer["dropEffect"];
-    onDrop?: (data: T, e: DragEvent, dragging: Element) => void;
-    onDragenter?: (data: T, e: DragEvent, dragging: Element) => void;
-    onDragover?: (data: T, e: DragEvent, dragging: Element) => void;
-    onDragleave?: (data: T, e: DragEvent, dragging: Element) => void;
-} & ThisType<HTMLElement>;
 
 function targetMounted(el: HTMLElement, options: DirectiveBinding<TargetOptions>) {
     let data: any;

@@ -58,16 +58,20 @@ interface FindOptions<KeyPath, IndexNames> {
     index: KeyPath | IndexNames;
     count?: number;
 }
-interface UpdateOptions {
-    $set?: object;
+interface UpdateOptions<T extends string> {
+    $set?: {
+        [K in T]?: any;
+    } & {
+        [key in string]: any;
+    };
     $inc?: {
-        [key in string]: number;
+        [K in T]: number;
     };
     $push?: {
-        [key in string]: object | object[];
+        [K in T]: any | any[];
     };
     $pull?: {
-        [key in string]: object | object[];
+        [K in T]: any | any[];
     };
 }
 /** 数据库表 通过调用SDIDB的defineTable返回函数获得 */
@@ -94,12 +98,12 @@ declare class IDBTable<KeyPath extends string, KeyNames extends string, IndexNam
      * @param update 修改的数据 和mongoose的使用一样
      * @param key 如果该表没有主键，会有一个自增长的key，把这个key放入，否则数据会被新增而不是更新
      */
-    update(query: Record<KeyNames, any>, update: UpdateOptions, key?: IDBValidKey): Promise<any>;
+    update(query: Record<KeyNames, any>, update: UpdateOptions<KeyNames>, key?: IDBValidKey): Promise<any>;
     /**
      * 通过主键或索引查找并修改
      */
-    updateByKeypath(query: string, update: UpdateOptions): Promise<TableRow<KeyPath, KeyNames>>;
-    updateByKeypath(query: FindOptions<KeyPath, IndexNames>, update: UpdateOptions): Promise<TableRow<KeyPath, KeyNames>>;
+    updateByKeypath(query: string, update: UpdateOptions<KeyNames>): Promise<TableRow<KeyPath, KeyNames>>;
+    updateByKeypath(query: FindOptions<KeyPath, IndexNames>, update: UpdateOptions<KeyNames>): Promise<TableRow<KeyPath, KeyNames>>;
     /**
      * 通过主键或索引对应的数据
      * 如果通过主键查找，不需要放入keyPath

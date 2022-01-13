@@ -224,17 +224,17 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent({
   emits: ["update:modelValue"],
   setup(__props, { emit }) {
     const props = __props;
-    let items = reactive(props.modelValue.map((item, index2) => {
+    let list = reactive(props.modelValue.map((item, index2) => {
       var _a2;
       return __spreadProps(__spreadValues({}, item), {
-        _key: (_a2 = item._key) != null ? _a2 : `${index2}`
+        _key: (_a2 = item._key) != null ? _a2 : `${Date.now()}${index2}`
       });
     }));
     let chosedEle, chosedIndex = { value: 0 }, copyEle;
     function getOptions(item, index2) {
       return {
         draggable: item.draggable,
-        data: { index: index2, item, items, chosedIndex },
+        data: { index: index2, item, list, chosedIndex },
         onDragstart(e) {
           var _a2;
           e.stopPropagation();
@@ -275,8 +275,8 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent({
         var _a2;
         e.stopPropagation();
         let targetIndex = data.chosedIndex.value == 0 || data.chosedIndex.value == 1 ? data.chosedIndex.value : data.chosedIndex.value - 1;
-        changeIndex(data.items, data.index, targetIndex);
-        emit("update:modelValue", items);
+        changeIndex(data.list, data.index, targetIndex);
+        emit("update:modelValue", list);
         (_a2 = props.onDrop) == null ? void 0 : _a2.call(this, data, e, dragging2);
       },
       onDragenter: props.onDragover,
@@ -297,7 +297,7 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent({
       const _directive_draggable = resolveDirective("draggable");
       const _directive_dragtraget = resolveDirective("dragtraget");
       return withDirectives((openBlock(), createElementBlock("div", _hoisted_1$3, [
-        (openBlock(true), createElementBlock(Fragment, null, renderList(unref(items), (item, index2) => {
+        (openBlock(true), createElementBlock(Fragment, null, renderList(unref(list), (item, index2) => {
           return withDirectives((openBlock(), createElementBlock("div", {
             class: "item",
             key: item._key
@@ -318,7 +318,7 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var DraggableList = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-fafecaba"]]);
+var DraggableList = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-4a1ea3fa"]]);
 var index$5 = {
   install(app) {
     app.component("DraggableList", DraggableList);
@@ -801,6 +801,12 @@ class AsyncConstructor {
     this.then = init.then.bind(init);
   }
 }
+function capitalize(str) {
+  return str[0].toUpperCase() + str.slice(1);
+}
+function unCapitalize(str) {
+  return str[0].toLowerCase() + str.slice(1);
+}
 function debounce(callback, delay = 300, style = true) {
   let timeoutId = void 0;
   if (style) {
@@ -992,8 +998,8 @@ class LocalFiles extends AsyncConstructor {
     this.text = ["txt", "md", "json", "js", "css", "less", "sass", "ts", "xml", "html"];
     this.dataurl = ["jpg", "png", "jpge", "gif", "mp4", "mp3", "flac"];
   }
-  get file() {
-    return this._files.length == 1 ? this._files[0] : this._files;
+  get files() {
+    return this._files;
   }
   get name() {
     if (this._files.length == 1) {
@@ -1769,4 +1775,4 @@ var index = {
     }
   }
 };
-export { AsyncConstructor, index$5 as DraggableList, LocalFiles, LocalStorage, Message, Random, index$4 as RollText, SDDate, SDIDB, SDMath, index$3 as SliderBox, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, removeItem, throttle, userBrowers };
+export { AsyncConstructor, index$5 as DraggableList, LocalFiles, LocalStorage, Message, Random, index$4 as RollText, SDDate, SDIDB, SDMath, index$3 as SliderBox, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, removeItem, throttle, unCapitalize, userBrowers };

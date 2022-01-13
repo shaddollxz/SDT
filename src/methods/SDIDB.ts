@@ -197,11 +197,11 @@ interface FindOptions<KeyPath, IndexNames> {
     index: KeyPath | IndexNames;
     count?: number;
 }
-interface UpdateOptions {
-    $set?: object;
-    $inc?: { [key in string]: number };
-    $push?: { [key in string]: object | object[] };
-    $pull?: { [key in string]: object | object[] };
+interface UpdateOptions<T extends string> {
+    $set?: { [K in T]?: any } & { [key in string]: any };
+    $inc?: { [K in T]: number };
+    $push?: { [K in T]: any | any[] };
+    $pull?: { [K in T]: any | any[] };
 }
 
 /** 数据库表 通过调用SDIDB的defineTable返回函数获得 */
@@ -240,11 +240,11 @@ class IDBTable<KeyPath extends string, KeyNames extends string, IndexNames exten
      * @param update 修改的数据 和mongoose的使用一样
      * @param key 如果该表没有主键，会有一个自增长的key，把这个key放入，否则数据会被新增而不是更新
      */
-    async update(query: Record<KeyNames, any>, update: UpdateOptions, key?: IDBValidKey) {
+    async update(query: Record<KeyNames, any>, update: UpdateOptions<KeyNames>, key?: IDBValidKey) {
         let value = (await this.find(query))[0];
 
         for (const item in update) {
-            changeProperties(value, update[item], item as keyof UpdateOptions);
+            changeProperties(value, update[item], item as keyof UpdateOptions<KeyNames>);
         }
 
         let IDBrequest = this.store.put(value, key);
@@ -254,17 +254,20 @@ class IDBTable<KeyPath extends string, KeyNames extends string, IndexNames exten
     /**
      * 通过主键或索引查找并修改
      */
-    async updateByKeypath(query: string, update: UpdateOptions): Promise<TableRow<KeyPath, KeyNames>>;
+    async updateByKeypath(
+        query: string,
+        update: UpdateOptions<KeyNames>
+    ): Promise<TableRow<KeyPath, KeyNames>>;
     async updateByKeypath(
         query: FindOptions<KeyPath, IndexNames>,
-        update: UpdateOptions
+        update: UpdateOptions<KeyNames>
     ): Promise<TableRow<KeyPath, KeyNames>>;
-    async updateByKeypath(query: FindOptions<KeyPath, IndexNames> | string, update: UpdateOptions) {
+    async updateByKeypath(query: FindOptions<KeyPath, IndexNames> | string, update: UpdateOptions<KeyNames>) {
         // @ts-ignore
         let value = (await this.findByKeypath(query))[0];
 
         for (const item in update) {
-            changeProperties(value, update[item], item as keyof UpdateOptions);
+            changeProperties(value, update[item], item as keyof UpdateOptions<KeyNames>);
         }
 
         let IDBrequest = this.store.put(value);
@@ -407,7 +410,7 @@ async function CURDHandler(this: IDBTable<any, any, any>, IDBRequest: IDBRequest
     });
 }
 
-function changeProperties(changed: object, changedTo: object, methods: keyof UpdateOptions): void {
+function changeProperties(changed: object, changedTo: object, methods: keyof UpdateOptions<any>): void {
     switch (methods) {
         case "$set":
             for (const key in changedTo) {

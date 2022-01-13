@@ -19,7 +19,7 @@ const _localStorage = Symbol("_localStorage");
  * 支持直接放入读取对象元素 支持定义有时间限制的localStorage
  * 该类为单例模式
  */
-export default class LocalStorage {
+export default class LocalStorage<T extends Record<string, any> = any> {
     private [_localStorage]!: Storage;
     constructor() {
         if (cache) return cache;
@@ -31,25 +31,25 @@ export default class LocalStorage {
         this[_localStorage].clear();
     }
 
-    removeItem(key: string) {
+    removeItem(key: StringKeys<T>) {
         this[_localStorage].removeItem(key);
     }
 
-    setItem(key: string, value: unknown) {
+    setItem<K extends StringKeys<T>>(key: K, value: T[K]) {
         if (isBaseType(value)) {
             this[_localStorage].setItem(key, value as string);
         } else {
             this[_localStorage].setItem(key, JSON.stringify(value));
         }
     }
-    setLimitItem(key: string, value: unknown, limit: number, precision: Precision) {
+    setLimitItem<K extends StringKeys<T>>(key: K, value: T[K], limit: number, precision: Precision) {
         this[_localStorage].setItem(
             key,
             JSON.stringify([value, { __LIMIT__: new SDDate().add(limit, precision).getTime() }] as LimitItem)
         );
     }
 
-    getItem(key: string) {
+    getItem<K extends StringKeys<T>>(key: K): T[K] | null {
         let item = JSON.parse(this[_localStorage].getItem(key)!);
 
         if (!isLimitItem(item)) return item;

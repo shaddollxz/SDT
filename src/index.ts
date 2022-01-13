@@ -26,6 +26,7 @@ export { default as Message } from "./components/Message";
 
 // 导出方法
 export { default as AsyncConstructor } from "./methods/AsyncConstructor";
+export { capitalize, unCapitalize } from "./methods/capitalize";
 export { default as debounce } from "./methods/debounce";
 export { default as deepClone } from "./methods/deepClone";
 export { default as deleteEmpty } from "./methods/deleteEmpty";

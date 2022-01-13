@@ -2,7 +2,7 @@
     <div class="draggableList" v-dragtraget="targetOptions">
         <div
             class="item"
-            v-for="(item, index) of items"
+            v-for="(item, index) of list"
             :key="item._key"
             v-draggable="getOptions(item, index)"
         >
@@ -41,18 +41,18 @@ type Emits = {
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-type TransferData = {
-    items: Props["modelValue"] & { _key: string }[];
-    item: TransferData["items"][number];
+interface TransferData {
+    list: Props["modelValue"] & { readonly _key: string }[];
+    item: TransferData["list"][number];
     index: number;
     chosedIndex: { value: number };
-};
+}
 
-let items = reactive<Props["modelValue"]>(
+let list = reactive<Props["modelValue"]>(
     props.modelValue.map((item, index) => {
         return {
             ...item,
-            _key: item._key ?? `${index}`,
+            _key: item._key ?? `${Date.now()}${index}`,
         };
     })
 );
@@ -63,7 +63,7 @@ let chosedEle: HTMLElement, // 拖放时鼠标指着的元素
 function getOptions(item: Props["modelValue"][number], index: number): VDragType.DraggableOptions {
     return {
         draggable: item.draggable,
-        data: { index, item, items, chosedIndex }, // 因为会出现嵌套多层且事件阻止冒泡的情况，全局变量也需要传值给drop事件
+        data: { index, item, list, chosedIndex }, // 因为会出现嵌套多层且事件阻止冒泡的情况，全局变量也需要传值给drop事件
         onDragstart(e) {
             e.stopPropagation();
             chosedEle = this;
@@ -109,8 +109,8 @@ const targetOptions: VDragType.TargetOptions<TransferData> = {
             data.chosedIndex.value == 0 || data.chosedIndex.value == 1
                 ? data.chosedIndex.value
                 : data.chosedIndex.value - 1; // 因为前面插入了预览元素，这里index应该修改
-        changeIndex(data.items, data.index, targetIndex);
-        emit("update:modelValue", items);
+        changeIndex(data.list, data.index, targetIndex);
+        emit("update:modelValue", list);
         props.onDrop?.call(this, data, e, dragging);
     },
 

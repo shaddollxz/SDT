@@ -8,18 +8,18 @@ interface ImgSetting {
     x?: number;
     y?: number;
 }
-export declare type DraggableOptions = {
+export interface DraggableOptions<T = any> {
     draggable?: boolean;
-    data?: any;
-    onDragstart?: (e: DragEvent) => void;
-    onDrag?: (e: DragEvent) => void;
-    onDragend?: (e: DragEvent) => void;
+    data?: T;
+    onDragstart?: (this: HTMLElement, e: DragEvent) => void;
+    onDrag?: (this: HTMLElement, e: DragEvent) => void;
+    onDragend?: (this: HTMLElement, e: DragEvent) => void;
     img?: () => ImgSetting;
-} & ThisType<HTMLElement>;
-export declare type TargetOptions<T = any> = {
+}
+export interface TargetOptions<T = any> {
     style?: DataTransfer["dropEffect"];
-    onDrop?: (data: T, e: DragEvent, dragging: Element) => void;
-    onDragenter?: (data: T, e: DragEvent, dragging: Element) => void;
-    onDragover?: (data: T, e: DragEvent, dragging: Element) => void;
-    onDragleave?: (data: T, e: DragEvent, dragging: Element) => void;
-} & ThisType<HTMLElement>;
+    onDrop?: (this: HTMLElement, data: T, e: DragEvent, dragging: Element) => void;
+    onDragenter?: (this: HTMLElement, data: T, e: DragEvent, dragging: Element) => void;
+    onDragover?: (this: HTMLElement, data: T, e: DragEvent, dragging: Element) => void;
+    onDragleave?: (this: HTMLElement, data: T, e: DragEvent, dragging: Element) => void;
+}

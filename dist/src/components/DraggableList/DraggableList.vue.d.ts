@@ -17,16 +17,16 @@ export interface Props {
     onDrop?: VDragType.TargetOptions<TransferData>["onDrop"];
     onTargetChanged?: VDragType.TargetOptions<TransferData>["onDragover"];
 }
-declare type TransferData = {
-    items: Props["modelValue"] & {
-        _key: string;
+interface TransferData {
+    list: Props["modelValue"] & {
+        readonly _key: string;
     }[];
-    item: TransferData["items"][number];
+    item: TransferData["list"][number];
     index: number;
     chosedIndex: {
         value: number;
     };
-};
+}
 declare const _sfc_main: import("vue").DefineComponent<{
     modelValue: {
         type: ArrayConstructor;
@@ -91,7 +91,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
         onTargetChanged?: VDragType.TargetOptions<TransferData>["onDragover"];
     };
     emit: (e: "update:modelValue", v: Props["modelValue"]) => void;
-    items: {
+    list: {
         [x: string]: any;
         value: string;
         _key?: string | undefined;
@@ -105,7 +105,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     };
     copyEle: HTMLElement;
     getOptions: (item: Props["modelValue"][number], index: number) => VDragType.DraggableOptions;
-    targetOptions: VDragType.TargetOptions<TransferData>;
+    targetOptions: import("../../directives/v-drag").TargetOptions<TransferData>;
     changeIndex: (arr: any[], from: number, to: number) => void;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, "update:modelValue"[], "update:modelValue", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
     modelValue?: unknown;

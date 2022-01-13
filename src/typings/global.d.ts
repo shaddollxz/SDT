@@ -27,3 +27,12 @@ declare type Values<T> = T extends { [K in keyof T]: infer U } ? U : never;
  * 将元组转为联合类型
  */
 declare type TupleToUnion<T> = T extends Array<infer U> ? U : never;
+
+/**
+ * 获取对象的字符串类型键
+ */
+declare type StringKeys<T extends object> = T extends { [K in infer R]: any }
+    ? R extends string
+        ? R
+        : never
+    : never;

@@ -24,7 +24,7 @@ export default class LocalFiles extends AsyncConstructor {
     text: string[];
     dataurl: string[];
     constructor({ count, type, maxSize }?: ConstructorOptions);
-    get file(): File | File[];
+    get files(): File[];
     get name(): string | string[];
     get size(): number | number[];
     /**

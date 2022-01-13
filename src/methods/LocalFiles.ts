@@ -65,8 +65,8 @@ export default class LocalFiles extends AsyncConstructor {
         this.dataurl = ["jpg", "png", "jpge", "gif", "mp4", "mp3", "flac"];
     }
 
-    get file() {
-        return this._files.length == 1 ? this._files[0] : this._files;
+    get files() {
+        return this._files;
     }
 
     get name() {
