@@ -483,7 +483,7 @@ var index$3 = {
   }
 };
 var SplitPage_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _withScopeId$1 = (n) => (pushScopeId("data-v-33cb74c1"), n = n(), popScopeId(), n);
+const _withScopeId$1 = (n) => (pushScopeId("data-v-84978720"), n = n(), popScopeId(), n);
 const _hoisted_1$1 = {
   key: 0,
   class: "splitPage"
@@ -632,7 +632,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
   emits: ["update:modelValue", "onPageChange", "getNewData"],
   setup: setup$2
 }));
-var SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-33cb74c1"]]);
+var SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-84978720"]]);
 var index$2 = {
   install(app) {
     app.component("SplitPage", SplitPage);
@@ -955,6 +955,34 @@ function isSame(F, S, deep = false) {
     }
   }
   return true;
+}
+function iterable(obj, sortFunc) {
+  if (obj[Symbol.iterator])
+    return;
+  Object.defineProperty(obj, Symbol.iterator, {
+    value: function() {
+      const keys = sortFunc ? Object.keys(this).sort(sortFunc) : Object.keys(this);
+      let count = 0;
+      return {
+        next: () => {
+          if (count < keys.length) {
+            return { done: false, value: this[keys[count]] };
+          } else {
+            return { done: true, value: void 0 };
+          }
+        },
+        return() {
+          return { done: true, value: void 0 };
+        },
+        throw() {
+          throw { done: true, value: void 0 };
+        }
+      };
+    }.bind(obj),
+    writable: false,
+    enumerable: false,
+    configurable: false
+  });
 }
 class LocalFiles extends AsyncConstructor {
   constructor({ count = 1, type = [], maxSize = Number.MAX_VALUE } = {}) {
@@ -1775,4 +1803,4 @@ var index = {
     }
   }
 };
-export { AsyncConstructor, index$5 as DraggableList, LocalFiles, LocalStorage, Message, Random, index$4 as RollText, SDDate, SDIDB, SDMath, index$3 as SliderBox, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, removeItem, throttle, unCapitalize, userBrowers };
+export { AsyncConstructor, index$5 as DraggableList, LocalFiles, LocalStorage, Message, Random, index$4 as RollText, SDDate, SDIDB, SDMath, index$3 as SliderBox, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, iterable, removeItem, throttle, unCapitalize, userBrowers };

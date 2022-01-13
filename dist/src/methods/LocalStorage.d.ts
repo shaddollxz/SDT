@@ -1,4 +1,5 @@
 import type { Precision } from "./SDDate";
+import type { StringKeys } from "../utils/typings";
 declare const _localStorage: unique symbol;
 /**
  * localStorage的封装

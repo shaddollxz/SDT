@@ -1,14 +1,9 @@
 import AsyncConstructor from "./AsyncConstructor";
 import isSame from "./isSame";
 import removeItem from "./removeItem";
+import type { StringKeys } from "../utils/typings";
 
 let __DB__: Record<string, IDBDatabase> = {}; //? 数据库，增删改查都在它身上进行
-
-type StringKeys<T extends object> = T extends { [K in infer R]: any }
-    ? R extends string
-        ? R
-        : never
-    : never;
 
 type OpenDBMap = "create" | "remove";
 

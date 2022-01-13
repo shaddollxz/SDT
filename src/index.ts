@@ -34,6 +34,7 @@ export { default as haveEmpth } from "./methods/haveEmpty";
 export { default as isEmpty } from "./methods/isEmpty";
 export { default as isMobile } from "./methods/isMobile";
 export { default as isSame } from "./methods/isSame";
+export { default as iterable } from "./methods/iterable";
 export { default as LocalFiles } from "./methods/LocalFiles";
 export { default as LocalStorage } from "./methods/LocalStorage";
 export { default as Random } from "./methods/Random";
@@ -44,3 +45,5 @@ export { default as SDMath } from "./methods/SDMath";
 export { default as throttle } from "./methods/throttle";
 export { default as userBrowers } from "./methods/userBrowers";
 export { default as Validator } from "./methods/Validator";
+
+export * from "./utils/typings";

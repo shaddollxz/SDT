@@ -1,5 +1,6 @@
 import SDDate from "./SDDate";
 import type { Precision } from "./SDDate";
+import type { StringKeys } from "../utils/typings";
 import { isBaseType, isObject } from "../utils/typeCheck";
 
 type LimitItem = [any, { __LIMIT__: number }];

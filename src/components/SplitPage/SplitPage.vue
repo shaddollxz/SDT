@@ -53,6 +53,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from "@vue/runtime-core";
+import type { NumberString } from "../../utils/typings";
 export default defineComponent({
     name: "splitPage",
 });
@@ -89,7 +90,9 @@ class BtnList {
         this._curr = 1;
         this.maxArr = Array.from({ length: this.max }).map((item, index) => index + 1);
         if (this.max > limitLen) {
-            this.showArr = (this.maxArr as typeof this.showArr).slice(0, this.limit - 2).concat("...", this.max);
+            this.showArr = (this.maxArr as typeof this.showArr)
+                .slice(0, this.limit - 2)
+                .concat("...", this.max);
         } else {
             this.showArr = this.maxArr;
         }
@@ -98,7 +101,9 @@ class BtnList {
         if (this.max <= this.limit) return;
 
         if (this._curr < this.limitHalf) {
-            this.showArr = (this.maxArr as typeof this.showArr).slice(0, this.limit - 2).concat("...", this.max);
+            this.showArr = (this.maxArr as typeof this.showArr)
+                .slice(0, this.limit - 2)
+                .concat("...", this.max);
         } else if (this._curr < this.max - this.limitHalf + 1) {
             this.showArr = [1, "..."]
                 .concat(

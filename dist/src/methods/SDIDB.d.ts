@@ -1,7 +1,5 @@
 import AsyncConstructor from "./AsyncConstructor";
-declare type StringKeys<T extends object> = T extends {
-    [K in infer R]: any;
-} ? R extends string ? R : never : never;
+import type { StringKeys } from "../utils/typings";
 declare type Index<KeyNames extends string> = Record<string, {
     path?: KeyNames | KeyNames[];
     unique?: boolean;
