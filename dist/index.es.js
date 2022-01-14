@@ -1421,59 +1421,6 @@ var Type;
   Type2[Type2["undefind"] = 5] = "undefind";
   Type2[Type2["regexp"] = 6] = "regexp";
 })(Type || (Type = {}));
-function isCacheItem(data) {
-  if (Array.isArray(data) && typeof data[1].__TYPT__ == "number") {
-    return true;
-  } else {
-    return false;
-  }
-}
-function pack(data) {
-  switch (typeof data) {
-    case "string":
-      return [data, { __TYPE__: 0 }];
-    case "number":
-    case "boolean":
-      return [data, { __TYPE__: 1 }];
-    case "object":
-      if (isNull(data)) {
-        return ["null", { __TYPE__: 4 }];
-      } else if (isRegExp(data)) {
-        const { source, flags } = data;
-        return [{ source, flags }, { __TYPE__: 6 }];
-      } else {
-        return [data, { __TYPE__: 3 }];
-      }
-    case "undefined":
-      return ["void 0", { __TYPE__: 5 }];
-    case "bigint":
-      return [data, { __TYPE__: 2 }];
-  }
-  throw "\u8BE5\u7C7B\u578B\u4E0D\u80FD\u88AB\u5B58\u50A8";
-}
-function unpack(data) {
-  const flag = data[1].__TYPE__;
-  switch (flag) {
-    case 0:
-      return data[0] + "";
-    case 1:
-      return data[0];
-    case 3:
-      return data[0];
-    case 4:
-      return null;
-    case 5:
-      return void 0;
-    case 2:
-      return BigInt(data[0]);
-    case 6:
-      return new RegExp(data[0].source, data[0].flages);
-  }
-}
-function setLimit(data, limit, precision) {
-  data[1].__LIMIT__ = new SDDate().add(limit, precision).getTime();
-  return data;
-}
 let cache = null;
 const _localStorage = Symbol("_localStorage");
 class LocalStorage {
@@ -1535,6 +1482,60 @@ class LocalStorage {
   }
 }
 _a = _localStorage;
+function isCacheItem(data) {
+  var _a2;
+  if (Array.isArray(data) && typeof ((_a2 = data == null ? void 0 : data[0]) == null ? void 0 : _a2.__TYPE__) == "number") {
+    return true;
+  } else {
+    return false;
+  }
+}
+function pack(data) {
+  switch (typeof data) {
+    case "string":
+      return [data, { __TYPE__: 0 }];
+    case "number":
+    case "boolean":
+      return [data, { __TYPE__: 1 }];
+    case "object":
+      if (isNull(data)) {
+        return ["null", { __TYPE__: 4 }];
+      } else if (isRegExp(data)) {
+        const { source, flags } = data;
+        return [{ source, flags }, { __TYPE__: 6 }];
+      } else {
+        return [data, { __TYPE__: 3 }];
+      }
+    case "undefined":
+      return ["void 0", { __TYPE__: 5 }];
+    case "bigint":
+      return [data, { __TYPE__: 2 }];
+  }
+  throw "\u8BE5\u7C7B\u578B\u4E0D\u80FD\u88AB\u5B58\u50A8";
+}
+function unpack(data) {
+  const flag = data[1].__TYPE__;
+  switch (flag) {
+    case 0:
+      return data[0] + "";
+    case 1:
+      return data[0];
+    case 3:
+      return data[0];
+    case 4:
+      return null;
+    case 5:
+      return void 0;
+    case 2:
+      return BigInt(data[0]);
+    case 6:
+      return new RegExp(data[0].source, data[0].flags);
+  }
+}
+function setLimit(data, limit, precision) {
+  data[1].__LIMIT__ = new SDDate().add(limit, precision).getTime();
+  return data;
+}
 const charMap = {
   char: [33, 126],
   lower: [97, 122],
