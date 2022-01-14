@@ -2,13 +2,15 @@
     <transition name="message" @before-leave="onClose" @after-leave="$emit('destroy')">
         <div class="message" v-show="isShow" :class="type" :style="style">
             <div :class="['text', align]">{{ text }}</div>
-            <div @click="isShow = !isShow" :class="isCanClose || !(duration > 0) ? 'canClose' : 'cantClose'">✖</div>
+            <div @click="isShow = !isShow" :class="isCanClose || !(duration > 0) ? 'canClose' : 'cantClose'">
+                ✖
+            </div>
         </div>
     </transition>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "@vue/runtime-core";
+import { defineComponent, onMounted, ref } from "vue";
 import type { StyleValue } from "vue";
 export default defineComponent({
     name: "message",

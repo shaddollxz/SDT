@@ -1,4 +1,3 @@
-import type { App, DirectiveBinding } from "vue";
 import { nextTick } from "vue";
 
 export default {

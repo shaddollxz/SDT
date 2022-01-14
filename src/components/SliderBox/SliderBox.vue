@@ -1,11 +1,16 @@
 <template>
-    <div class="sliderBox" :class="animeClass" :style="{ animationDuration: $props.duration + 's' }" ref="observer">
+    <div
+        class="sliderBox"
+        :class="animeClass"
+        :style="{ animationDuration: $props.duration + 's' }"
+        ref="observer"
+    >
         <slot></slot>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, shallowRef, ref, onMounted } from "@vue/runtime-core";
+import { defineComponent, shallowRef, ref, onMounted } from "vue";
 export default defineComponent({
     name: "sliderBox",
 });

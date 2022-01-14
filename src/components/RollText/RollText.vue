@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, shallowRef, ref, nextTick, watch } from "@vue/runtime-core";
+import { defineComponent, shallowRef, ref, nextTick, watch } from "vue";
 export default defineComponent({
     name: "rollText",
 });

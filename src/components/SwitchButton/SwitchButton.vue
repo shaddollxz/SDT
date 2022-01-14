@@ -1,19 +1,25 @@
 <template>
     <div class="switchButton" :class="{ open: modelValue }">
-        <div :class="{ chosed: !modelValue, notChosed: modelValue }">
+        <div
+            :class="{ chosed: !modelValue, notChosed: modelValue }"
+            @click="emit('update:modelValue', false), emit('onStatuChange', false)"
+        >
             <slot name="left"></slot>
         </div>
         <div class="center" @click="statuChange">
             <div></div>
         </div>
-        <div :class="{ chosed: modelValue, notChosed: !modelValue }">
+        <div
+            :class="{ chosed: modelValue, notChosed: !modelValue }"
+            @click="emit('update:modelValue', true), emit('onStatuChange', true)"
+        >
             <slot name="right"></slot>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+import { defineComponent } from "vue";
 export default defineComponent({
     name: "switchButton",
 });

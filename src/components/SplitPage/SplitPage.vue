@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "@vue/runtime-core";
+import { defineComponent, ref, watch } from "vue";
 import type { NumberString } from "../../utils/typings";
 export default defineComponent({
     name: "splitPage",

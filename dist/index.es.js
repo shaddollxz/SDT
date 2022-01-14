@@ -42,8 +42,7 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 var _a;
-import { nextTick, defineComponent, resolveComponent, resolveDirective, withDirectives, openBlock, createElementBlock, Fragment, renderList, unref, createTextVNode, toDisplayString, createBlock, createCommentVNode, isRef, normalizeStyle, createElementVNode, normalizeClass, renderSlot, withKeys, vModelText, pushScopeId, popScopeId, useCssVars, Transition, withCtx, vShow, createVNode, render } from "vue";
-import { reactive, defineComponent as defineComponent$1, ref, shallowRef, watch, nextTick as nextTick$1, onMounted } from "@vue/runtime-core";
+import { nextTick, defineComponent, reactive, resolveComponent, resolveDirective, withDirectives, openBlock, createElementBlock, Fragment, renderList, unref, createTextVNode, toDisplayString, createBlock, createCommentVNode, ref, shallowRef, watch, isRef, normalizeStyle, createElementVNode, normalizeClass, renderSlot, onMounted, onUnmounted, pushScopeId, popScopeId, withKeys, vModelText, useCssVars, Transition, withCtx, vShow, createVNode, render } from "vue";
 var vFill = {
   install(app) {
     app.directive("fill", {
@@ -208,8 +207,8 @@ var _export_sfc = (sfc, props) => {
   }
   return sfc;
 };
-const _hoisted_1$3 = { class: "draggableList" };
-const _sfc_main$5 = /* @__PURE__ */ defineComponent({
+const _hoisted_1$4 = { class: "draggableList" };
+const _sfc_main$6 = /* @__PURE__ */ defineComponent({
   props: {
     modelValue: null,
     onDragstart: null,
@@ -296,7 +295,7 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent({
       const _component_DraggableList = resolveComponent("DraggableList", true);
       const _directive_draggable = resolveDirective("draggable");
       const _directive_dragtraget = resolveDirective("dragtraget");
-      return withDirectives((openBlock(), createElementBlock("div", _hoisted_1$3, [
+      return withDirectives((openBlock(), createElementBlock("div", _hoisted_1$4, [
         (openBlock(true), createElementBlock(Fragment, null, renderList(unref(list), (item, index2) => {
           return withDirectives((openBlock(), createElementBlock("div", {
             class: "item",
@@ -318,31 +317,31 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var DraggableList = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-4a1ea3fa"]]);
-var index$5 = {
+var DraggableList = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-e4c9e48c"]]);
+var index$6 = {
   install(app) {
     app.component("DraggableList", DraggableList);
   }
 };
 var RollText_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _hoisted_1$2 = {
+const _hoisted_1$3 = {
   key: 0,
   class: "text"
 };
-const _hoisted_2$2 = ["innerHTML"];
+const _hoisted_2$3 = ["innerHTML"];
 const _hoisted_3$1 = ["innerHTML"];
-const __default__$4 = defineComponent$1({
+const __default__$5 = defineComponent({
   name: "rollText"
 });
-function setup$4(__props) {
+function setup$5(__props) {
   const props = __props;
   let state = ref("");
   const text = shallowRef(null);
   const view = shallowRef(null);
   if (props.asyncData !== null) {
-    watch(() => props.asyncData, () => nextTick$1(setAnime));
+    watch(() => props.asyncData, () => nextTick(setAnime));
   } else {
-    nextTick$1(setAnime);
+    nextTick(setAnime);
   }
   function setAnime() {
     if (!text.value)
@@ -404,7 +403,7 @@ function setup$4(__props) {
           }, [
             renderSlot(_ctx.$slots, "default", {}, void 0, true)
           ], 512),
-          _ctx.$props.type == 1 ? (openBlock(), createElementBlock("div", _hoisted_1$2, [
+          _ctx.$props.type == 1 ? (openBlock(), createElementBlock("div", _hoisted_1$3, [
             renderSlot(_ctx.$slots, "default", {}, void 0, true)
           ])) : createCommentVNode("", true)
         ], 64)) : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
@@ -415,7 +414,7 @@ function setup$4(__props) {
               isRef(text) && (text.value = _value);
             },
             innerHTML: _ctx.$props.asyncData
-          }, null, 8, _hoisted_2$2),
+          }, null, 8, _hoisted_2$3),
           _ctx.$props.type == 1 ? (openBlock(), createElementBlock("div", {
             key: 0,
             class: "text",
@@ -426,26 +425,26 @@ function setup$4(__props) {
     ], 4);
   };
 }
-const _sfc_main$4 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$4), {
+const _sfc_main$5 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$5), {
   props: {
     type: { default: 1 },
     duration: { default: 8 },
     asyncData: { default: () => null },
     align: { default: "left" }
   },
-  setup: setup$4
+  setup: setup$5
 }));
-var RollText = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-455910ec"]]);
-var index$4 = {
+var RollText = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-1022b723"]]);
+var index$5 = {
   install(app) {
     app.component("RollText", RollText);
   }
 };
 var SliderBox_vue_vue_type_style_index_0_scoped_true_lang = "";
-const __default__$3 = defineComponent$1({
+const __default__$4 = defineComponent({
   name: "sliderBox"
 });
-function setup$3(__props) {
+function setup$4(__props) {
   const props = __props;
   const observer = shallowRef(null);
   const animeClass = ref("");
@@ -469,21 +468,198 @@ function setup$3(__props) {
     ], 6);
   };
 }
-const _sfc_main$3 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$3), {
+const _sfc_main$4 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$4), {
   props: {
     duration: { default: 0.5 },
     direction: { default: "bottom" }
   },
-  setup: setup$3
+  setup: setup$4
 }));
-var SliderBox = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-6cf5a071"]]);
-var index$3 = {
+var SliderBox = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-1301c2c7"]]);
+var index$4 = {
   install(app) {
     app.component("SliderBox", SliderBox);
   }
 };
+function mathBase(methods) {
+  const method = Math[methods];
+  return function(number, precision = 0) {
+    if (precision) {
+      number = number + "e" + precision;
+      return +(method(+number) + "e" + -precision);
+    } else {
+      return method(+number);
+    }
+  };
+}
+const _mathMethods = {
+  ADD: {
+    getPoint: (point1, point2) => [point1 > point2 ? point1 : point2, point1 > point2 ? point1 : point2],
+    method: (num1, num2) => num1 + num2
+  },
+  SUB: {
+    getPoint: (point1, point2) => [point1 > point2 ? point1 : point2, point1 > point2 ? point1 : point2],
+    method: (num1, num2) => num1 - num2
+  },
+  MUL: {
+    getPoint: (point1, point2) => [point1 > point2 ? point1 : point2, point1 + point2],
+    method: (num1, num2) => num1 * num2
+  },
+  DIV: {
+    getPoint: (point1, point2) => [point1 > point2 ? point1 : point2, 0],
+    method: (num1, num2) => num1 / num2
+  }
+};
+function operateBase(type) {
+  const methods = _mathMethods[type];
+  return (num1, num2) => {
+    const str1 = "" + num1;
+    const str2 = "" + num2;
+    let num1_point = str1.lastIndexOf(".");
+    let num2_point = str2.lastIndexOf(".");
+    if (~num1_point && ~num2_point) {
+      num1_point = str1.length - 1 - num1_point;
+      num2_point = str2.length - 1 - num2_point;
+      const [point, finallyPiont] = methods.getPoint(num1_point, num2_point);
+      const add1 = +(num1 + "e" + point);
+      const add2 = +(num2 + "e" + point);
+      return +(methods.method(add1, add2) + "e" + -finallyPiont);
+    } else {
+      return methods.method(num1, num2);
+    }
+  };
+}
+class SDMath {
+}
+__publicField(SDMath, "round", mathBase("round"));
+__publicField(SDMath, "ceil", mathBase("ceil"));
+__publicField(SDMath, "floor", mathBase("floor"));
+__publicField(SDMath, "add", operateBase("ADD"));
+__publicField(SDMath, "sub", operateBase("SUB"));
+__publicField(SDMath, "mul", operateBase("MUL"));
+__publicField(SDMath, "div", operateBase("DIV"));
+class SliderHelper {
+  constructor(sliderWidth, leftest) {
+    __publicField(this, "beforemovePosition");
+    this.sliderWidth = sliderWidth;
+    this.leftest = leftest;
+  }
+  get rightest() {
+    return this.sliderWidth + this.leftest;
+  }
+  movePosition(sliderWidth, leftest, beforemovePosition) {
+    this.sliderWidth = sliderWidth;
+    this.leftest = leftest;
+    this.beforemovePosition = beforemovePosition;
+  }
+  btnPosition(mousePoint) {
+    if (mousePoint < this.leftest) {
+      return 0;
+    } else if (mousePoint > this.rightest) {
+      return 100;
+    } else {
+      return SDMath.round((mousePoint - this.leftest) / this.sliderWidth * 100, 2);
+    }
+  }
+  reset() {
+    return this.beforemovePosition;
+  }
+}
+var Slider_vue_vue_type_style_index_0_scoped_true_lang = "";
+const _withScopeId$2 = (n) => (pushScopeId("data-v-221487b5"), n = n(), popScopeId(), n);
+const _hoisted_1$2 = /* @__PURE__ */ _withScopeId$2(() => /* @__PURE__ */ createElementVNode("div", { class: "btn" }, null, -1));
+const _hoisted_2$2 = [
+  _hoisted_1$2
+];
+const __default__$3 = defineComponent({
+  name: "slider"
+});
+function setup$3(__props, { emit }) {
+  const props = __props;
+  const slider = shallowRef(null);
+  let position = ref(props.modelValue != void 0 ? props.modelValue : 100);
+  let isCanMove = false;
+  let sliderHelper;
+  if (typeof props.modelValue == "number") {
+    watch(() => props.modelValue, () => {
+      if (!isCanMove) {
+        position.value = props.modelValue;
+      }
+    });
+  }
+  function getSliderDetail() {
+    const { x, width } = slider.value.getBoundingClientRect();
+    return { x, width };
+  }
+  function mouseDownHandler(e) {
+    isCanMove = true;
+    const sliderDetail = getSliderDetail();
+    sliderHelper.movePosition(sliderDetail.width, sliderDetail.x, position.value);
+    if (e.target.className !== "btn") {
+      position.value = sliderHelper.btnPosition(e.clientX);
+    }
+    emit("onDragStart", position.value);
+  }
+  function mouseUpHandler(e) {
+    if (isCanMove) {
+      isCanMove = false;
+      const nowPosition = sliderHelper.btnPosition(e.clientX);
+      if (nowPosition == 0 || nowPosition == 100 || e.target.className == "btn") {
+        position.value = nowPosition;
+        emit("update:modelValue", position.value);
+        emit("onDrop", position.value);
+      } else {
+        position.value = sliderHelper.reset();
+      }
+    }
+  }
+  function mouseMoveHandler(e) {
+    if (isCanMove) {
+      position.value = sliderHelper.btnPosition(e.clientX);
+      emit("onDragging", position.value);
+    }
+  }
+  onMounted(() => {
+    const sliderDetail = getSliderDetail();
+    sliderHelper = new SliderHelper(sliderDetail.width, sliderDetail.x);
+    document.addEventListener("mousemove", mouseMoveHandler);
+    document.addEventListener("mouseup", mouseUpHandler);
+  });
+  onUnmounted(() => {
+    document.removeEventListener("mousemove", mouseMoveHandler);
+    document.removeEventListener("mouseup", mouseUpHandler);
+  });
+  return (_ctx, _cache) => {
+    return openBlock(), createElementBlock("div", {
+      class: "slider",
+      ref: (_value, _refs) => {
+        _refs["slider"] = _value;
+        isRef(slider) && (slider.value = _value);
+      },
+      onMousedown: mouseDownHandler
+    }, [
+      createElementVNode("div", {
+        class: "passed",
+        style: normalizeStyle({ width: unref(position) + "%" })
+      }, _hoisted_2$2, 4)
+    ], 544);
+  };
+}
+const _sfc_main$3 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$3), {
+  props: {
+    modelValue: null
+  },
+  emits: ["update:modelValue", "onDragStart", "onDragging", "onDrop"],
+  setup: setup$3
+}));
+var Slider = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-221487b5"]]);
+var index$3 = {
+  install(app) {
+    app.component("Slider", Slider);
+  }
+};
 var SplitPage_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _withScopeId$1 = (n) => (pushScopeId("data-v-84978720"), n = n(), popScopeId(), n);
+const _withScopeId$1 = (n) => (pushScopeId("data-v-f7c8524e"), n = n(), popScopeId(), n);
 const _hoisted_1$1 = {
   key: 0,
   class: "splitPage"
@@ -493,7 +669,7 @@ const _hoisted_3 = ["onClick"];
 const _hoisted_4 = { class: "jumpTo" };
 const _hoisted_5 = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createElementVNode("span", null, "\u8DF3\u8F6C\u5230\u7B2C", -1));
 const _hoisted_6 = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createElementVNode("span", null, "\u9875", -1));
-const __default__$2 = defineComponent$1({
+const __default__$2 = defineComponent({
   name: "splitPage"
 });
 function setup$2(__props, { emit }) {
@@ -632,19 +808,19 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
   emits: ["update:modelValue", "onPageChange", "getNewData"],
   setup: setup$2
 }));
-var SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-84978720"]]);
+var SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-f7c8524e"]]);
 var index$2 = {
   install(app) {
     app.component("SplitPage", SplitPage);
   }
 };
 var SwitchButton_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _withScopeId = (n) => (pushScopeId("data-v-6d476758"), n = n(), popScopeId(), n);
+const _withScopeId = (n) => (pushScopeId("data-v-7c81c295"), n = n(), popScopeId(), n);
 const _hoisted_1 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createElementVNode("div", null, null, -1));
 const _hoisted_2 = [
   _hoisted_1
 ];
-const __default__$1 = defineComponent$1({
+const __default__$1 = defineComponent({
   name: "switchButton"
 });
 function setup$1(__props, { emit }) {
@@ -658,7 +834,8 @@ function setup$1(__props, { emit }) {
       class: normalizeClass(["switchButton", { open: __props.modelValue }])
     }, [
       createElementVNode("div", {
-        class: normalizeClass({ chosed: !__props.modelValue, notChosed: __props.modelValue })
+        class: normalizeClass({ chosed: !__props.modelValue, notChosed: __props.modelValue }),
+        onClick: _cache[0] || (_cache[0] = ($event) => (emit("update:modelValue", false), emit("onStatuChange", false)))
       }, [
         renderSlot(_ctx.$slots, "left", {}, void 0, true)
       ], 2),
@@ -667,7 +844,8 @@ function setup$1(__props, { emit }) {
         onClick: statuChange
       }, _hoisted_2),
       createElementVNode("div", {
-        class: normalizeClass({ chosed: __props.modelValue, notChosed: !__props.modelValue })
+        class: normalizeClass({ chosed: __props.modelValue, notChosed: !__props.modelValue }),
+        onClick: _cache[1] || (_cache[1] = ($event) => (emit("update:modelValue", true), emit("onStatuChange", true)))
       }, [
         renderSlot(_ctx.$slots, "right", {}, void 0, true)
       ], 2)
@@ -681,7 +859,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
   emits: ["update:modelValue", "onStatuChange"],
   setup: setup$1
 }));
-var SwitchButton = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-6d476758"]]);
+var SwitchButton = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-7c81c295"]]);
 var index$1 = {
   install(app) {
     app.component("SwitchButton", SwitchButton);
@@ -690,20 +868,21 @@ var index$1 = {
 var components = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  DraggableList: index$5,
-  RollText: index$4,
-  SliderBox: index$3,
+  DraggableList: index$6,
+  RollText: index$5,
+  SliderBox: index$4,
+  Slider: index$3,
   SplitPage: index$2,
   SwitchButton: index$1
 });
 var Message_vue_vue_type_style_index_0_scoped_true_lang = "";
-const __default__ = defineComponent$1({
+const __default__ = defineComponent({
   name: "message"
 });
 function setup(__props) {
   const props = __props;
   useCssVars((_ctx) => ({
-    "0e8ec0fe": direction.value
+    "cbe1ddd0": direction.value
   }));
   const isShow = ref(true);
   onMounted(() => {
@@ -737,7 +916,7 @@ function setup(__props) {
           createElementVNode("div", {
             onClick: _cache[0] || (_cache[0] = ($event) => isShow.value = !isShow.value),
             class: normalizeClass(__props.isCanClose || !(__props.duration > 0) ? "canClose" : "cantClose")
-          }, "\u2716", 2)
+          }, " \u2716 ", 2)
         ], 6), [
           [vShow, isShow.value]
         ])
@@ -759,7 +938,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({
   },
   setup
 }));
-var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-1881f2fe"]]);
+var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-497733d0"]]);
 let messageBox = null;
 function renderMessage(options) {
   if (!messageBox) {
@@ -831,7 +1010,6 @@ function debounce(callback, delay = 300, style = true) {
 }
 const isSymbol = (arg) => typeof arg == "symbol";
 const isNull = (arg) => arg === null;
-const isBaseType = (arg) => typeof arg !== "object";
 const isObject = (arg) => typeof arg == "object" && !Array.isArray(arg) && typeof arg !== "function" && arg !== null && !(arg instanceof RegExp);
 const isRegExp = (arg) => arg instanceof RegExp;
 function deepClone(o, cache2 = new WeakMap()) {
@@ -1233,12 +1411,68 @@ function transformTimeNumber(timeNumber, precision = "mm", formatStr = "/mm/:/ss
 const transformChinese = ["\u5929", "\u4E00", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u4E03", "\u516B", "\u4E5D", "\u5341", "\u5341\u4E00", "\u5341\u4E8C"];
 const transformEnglish_Week = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 const transformEnglish_Month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-function isLimitItem(arg) {
-  if (Array.isArray(arg) && isObject(arg[1]) && "__LIMIT__" in arg[1]) {
+var Type;
+(function(Type2) {
+  Type2[Type2["string"] = 0] = "string";
+  Type2[Type2["numberAndBoolen"] = 1] = "numberAndBoolen";
+  Type2[Type2["bigint"] = 2] = "bigint";
+  Type2[Type2["object"] = 3] = "object";
+  Type2[Type2["null"] = 4] = "null";
+  Type2[Type2["undefind"] = 5] = "undefind";
+  Type2[Type2["regexp"] = 6] = "regexp";
+})(Type || (Type = {}));
+function isCacheItem(data) {
+  if (Array.isArray(data) && typeof data[1].__TYPT__ == "number") {
     return true;
   } else {
     return false;
   }
+}
+function pack(data) {
+  switch (typeof data) {
+    case "string":
+      return [data, { __TYPE__: 0 }];
+    case "number":
+    case "boolean":
+      return [data, { __TYPE__: 1 }];
+    case "object":
+      if (isNull(data)) {
+        return ["null", { __TYPE__: 4 }];
+      } else if (isRegExp(data)) {
+        const { source, flags } = data;
+        return [{ source, flags }, { __TYPE__: 6 }];
+      } else {
+        return [data, { __TYPE__: 3 }];
+      }
+    case "undefined":
+      return ["void 0", { __TYPE__: 5 }];
+    case "bigint":
+      return [data, { __TYPE__: 2 }];
+  }
+  throw "\u8BE5\u7C7B\u578B\u4E0D\u80FD\u88AB\u5B58\u50A8";
+}
+function unpack(data) {
+  const flag = data[1].__TYPE__;
+  switch (flag) {
+    case 0:
+      return data[0] + "";
+    case 1:
+      return data[0];
+    case 3:
+      return data[0];
+    case 4:
+      return null;
+    case 5:
+      return void 0;
+    case 2:
+      return BigInt(data[0]);
+    case 6:
+      return new RegExp(data[0].source, data[0].flages);
+  }
+}
+function setLimit(data, limit, precision) {
+  data[1].__LIMIT__ = new SDDate().add(limit, precision).getTime();
+  return data;
 }
 let cache = null;
 const _localStorage = Symbol("_localStorage");
@@ -1257,24 +1491,43 @@ class LocalStorage {
     this[_localStorage].removeItem(key);
   }
   setItem(key, value) {
-    if (isBaseType(value)) {
-      this[_localStorage].setItem(key, value);
-    } else {
-      this[_localStorage].setItem(key, JSON.stringify(value));
-    }
+    this[_localStorage].setItem(key, JSON.stringify(pack(value)));
   }
   setLimitItem(key, value, limit, precision) {
-    this[_localStorage].setItem(key, JSON.stringify([value, { __LIMIT__: new SDDate().add(limit, precision).getTime() }]));
+    this[_localStorage].setItem(key, JSON.stringify(setLimit(pack(value), limit, precision)));
+  }
+  readCache(key) {
+    try {
+      return JSON.parse(this[_localStorage].getItem(key));
+    } catch (e) {
+      return this[_localStorage].getItem(key);
+    }
   }
   getItem(key) {
-    let item = JSON.parse(this[_localStorage].getItem(key));
-    if (!isLimitItem(item))
-      return item;
-    if (item[1].__LIMIT__ < Date.now()) {
-      this.removeItem(key);
-      return null;
+    let data = this.readCache(key);
+    if (isCacheItem(data)) {
+      if (data[1].__LIMIT__ && data[1].__LIMIT__ < Date.now()) {
+        this.removeItem(key);
+        return null;
+      } else {
+        return unpack(data);
+      }
     } else {
-      return item[0];
+      return data;
+    }
+  }
+  refresh(key, limit, precision) {
+    let data = this.readCache(key);
+    if (isCacheItem(data)) {
+      data[1].__LIMIT__ = new SDDate().add(limit, precision).getTime();
+      return unpack(data);
+    } else {
+      if (data == null) {
+        return null;
+      } else {
+        this.setLimitItem(key, data, limit, precision);
+        return data;
+      }
     }
   }
   get keys() {
@@ -1282,63 +1535,6 @@ class LocalStorage {
   }
 }
 _a = _localStorage;
-function mathBase(methods) {
-  const method = Math[methods];
-  return function(number, precision = 0) {
-    if (precision) {
-      number = number + "e" + precision;
-      return +(method(+number) + "e" + -precision);
-    } else {
-      return method(+number);
-    }
-  };
-}
-const _mathMethods = {
-  ADD: {
-    getPoint: (point1, point2) => [point1 > point2 ? point1 : point2, point1 > point2 ? point1 : point2],
-    method: (num1, num2) => num1 + num2
-  },
-  SUB: {
-    getPoint: (point1, point2) => [point1 > point2 ? point1 : point2, point1 > point2 ? point1 : point2],
-    method: (num1, num2) => num1 - num2
-  },
-  MUL: {
-    getPoint: (point1, point2) => [point1 > point2 ? point1 : point2, point1 + point2],
-    method: (num1, num2) => num1 * num2
-  },
-  DIV: {
-    getPoint: (point1, point2) => [point1 > point2 ? point1 : point2, 0],
-    method: (num1, num2) => num1 / num2
-  }
-};
-function operateBase(type) {
-  const methods = _mathMethods[type];
-  return (num1, num2) => {
-    const str1 = "" + num1;
-    const str2 = "" + num2;
-    let num1_point = str1.lastIndexOf(".");
-    let num2_point = str2.lastIndexOf(".");
-    if (~num1_point && ~num2_point) {
-      num1_point = str1.length - 1 - num1_point;
-      num2_point = str2.length - 1 - num2_point;
-      const [point, finallyPiont] = methods.getPoint(num1_point, num2_point);
-      const add1 = +(num1 + "e" + point);
-      const add2 = +(num2 + "e" + point);
-      return +(methods.method(add1, add2) + "e" + -finallyPiont);
-    } else {
-      return methods.method(num1, num2);
-    }
-  };
-}
-class SDMath {
-}
-__publicField(SDMath, "round", mathBase("round"));
-__publicField(SDMath, "ceil", mathBase("ceil"));
-__publicField(SDMath, "floor", mathBase("floor"));
-__publicField(SDMath, "add", operateBase("ADD"));
-__publicField(SDMath, "sub", operateBase("SUB"));
-__publicField(SDMath, "mul", operateBase("MUL"));
-__publicField(SDMath, "div", operateBase("DIV"));
 const charMap = {
   char: [33, 126],
   lower: [97, 122],
@@ -1803,4 +1999,4 @@ var index = {
     }
   }
 };
-export { AsyncConstructor, index$5 as DraggableList, LocalFiles, LocalStorage, Message, Random, index$4 as RollText, SDDate, SDIDB, SDMath, index$3 as SliderBox, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, iterable, removeItem, throttle, unCapitalize, userBrowers };
+export { AsyncConstructor, index$6 as DraggableList, LocalFiles, LocalStorage, Message, Random, index$5 as RollText, SDDate, SDIDB, SDMath, index$4 as SliderBox, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, iterable, removeItem, throttle, unCapitalize, userBrowers };
