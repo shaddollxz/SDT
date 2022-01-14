@@ -1484,7 +1484,7 @@ class LocalStorage {
 _a = _localStorage;
 function isCacheItem(data) {
   var _a2;
-  if (Array.isArray(data) && typeof ((_a2 = data == null ? void 0 : data[0]) == null ? void 0 : _a2.__TYPE__) == "number") {
+  if (Array.isArray(data) && typeof ((_a2 = data == null ? void 0 : data[1]) == null ? void 0 : _a2.__TYPE__) == "number") {
     return true;
   } else {
     return false;

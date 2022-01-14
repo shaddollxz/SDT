@@ -93,7 +93,7 @@ export default class LocalStorage<T extends Record<string, any> = any> {
 }
 
 function isCacheItem(data: unknown): data is CacheItem {
-    if (Array.isArray(data) && typeof data?.[0]?.__TYPE__ == "number") {
+    if (Array.isArray(data) && typeof data?.[1]?.__TYPE__ == "number") {
         return true;
     } else {
         return false;
