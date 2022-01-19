@@ -22,10 +22,10 @@ export default defineComponent({
 </script>
 <script setup lang="ts">
 interface Props {
-    type: 1 | 2;
-    duration: number;
-    asyncData: string | null;
-    align: "left" | "right" | "top" | "bottom";
+    type?: 1 | 2;
+    duration?: number;
+    asyncData?: string | null;
+    align?: "left" | "right" | "top" | "bottom";
 }
 const props = withDefaults(defineProps<Props>(), {
     type: 1,

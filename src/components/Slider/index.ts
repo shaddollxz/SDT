@@ -1,3 +1,4 @@
+import type { App } from "vue";
 import Slider from "./Slider.vue";
 
 export default {

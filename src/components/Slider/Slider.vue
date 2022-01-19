@@ -8,6 +8,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted, watch, ref, shallowRef } from "vue";
+import type { Ref } from "vue";
 export default defineComponent({
     name: "slider",
 });

@@ -434,7 +434,7 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
   },
   setup: setup$5
 }));
-var RollText = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-1022b723"]]);
+var RollText = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-3c6a1ce5"]]);
 var index$5 = {
   install(app) {
     app.component("RollText", RollText);
@@ -475,7 +475,7 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
   },
   setup: setup$4
 }));
-var SliderBox = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-1301c2c7"]]);
+var SliderBox = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-4a0e7cda"]]);
 var index$4 = {
   install(app) {
     app.component("SliderBox", SliderBox);
@@ -566,7 +566,7 @@ class SliderHelper {
   }
 }
 var Slider_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _withScopeId$2 = (n) => (pushScopeId("data-v-221487b5"), n = n(), popScopeId(), n);
+const _withScopeId$2 = (n) => (pushScopeId("data-v-33f70ec2"), n = n(), popScopeId(), n);
 const _hoisted_1$2 = /* @__PURE__ */ _withScopeId$2(() => /* @__PURE__ */ createElementVNode("div", { class: "btn" }, null, -1));
 const _hoisted_2$2 = [
   _hoisted_1$2
@@ -652,14 +652,70 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
   emits: ["update:modelValue", "onDragStart", "onDragging", "onDrop"],
   setup: setup$3
 }));
-var Slider = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-221487b5"]]);
+var Slider = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-33f70ec2"]]);
 var index$3 = {
   install(app) {
     app.component("Slider", Slider);
   }
 };
+class BtnList {
+  constructor(maxLen, limitLen) {
+    __publicField(this, "max");
+    __publicField(this, "limit");
+    __publicField(this, "limitHalf");
+    __publicField(this, "_curr");
+    __publicField(this, "maxArr");
+    __publicField(this, "showArr");
+    this.max = +maxLen;
+    this.limit = +limitLen;
+    this.limitHalf = this.limit % 2 ? ~~(this.limit / 2) + 1 : this.limit / 2;
+    this._curr = 1;
+    this.maxArr = Array.from({ length: this.max }).map((item, index2) => index2 + 1);
+    if (this.max > limitLen) {
+      this.showArr = this.maxArr.slice(0, this.limit - 2).concat("...", this.max);
+    } else {
+      this.showArr = this.maxArr;
+    }
+  }
+  refreshList() {
+    if (this.max <= this.limit)
+      return;
+    if (this._curr < this.limitHalf) {
+      this.showArr = this.maxArr.slice(0, this.limit - 2).concat("...", this.max);
+    } else if (this._curr < this.max - this.limitHalf + 1) {
+      this.showArr = [1, "..."].concat(this.maxArr.slice(this._curr - (this.limitHalf - 2), this._curr - (this.limitHalf - 2) + this.limit - 4)).concat("...", this.max);
+    } else {
+      this.showArr = [1, "..."].concat(this.maxArr.slice(this.maxArr.length - this.limit + 2));
+    }
+  }
+  get curr() {
+    return this._curr;
+  }
+  set curr(value) {
+    if (value == this._curr)
+      return;
+    if (value > this.max) {
+      this._curr = this.max;
+    } else if (value < 1) {
+      this._curr = 1;
+    } else {
+      this._curr = value;
+    }
+    this.refreshList();
+  }
+  next() {
+    if (this.curr < this.max) {
+      this.curr++;
+    }
+  }
+  prev() {
+    if (this.curr > 1) {
+      this.curr--;
+    }
+  }
+}
 var SplitPage_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _withScopeId$1 = (n) => (pushScopeId("data-v-f7c8524e"), n = n(), popScopeId(), n);
+const _withScopeId$1 = (n) => (pushScopeId("data-v-7cc36cc4"), n = n(), popScopeId(), n);
 const _hoisted_1$1 = {
   key: 0,
   class: "splitPage"
@@ -674,62 +730,6 @@ const __default__$2 = defineComponent({
 });
 function setup$2(__props, { emit }) {
   const props = __props;
-  class BtnList {
-    constructor(maxLen, limitLen) {
-      __publicField(this, "max");
-      __publicField(this, "limit");
-      __publicField(this, "limitHalf");
-      __publicField(this, "_curr");
-      __publicField(this, "maxArr");
-      __publicField(this, "showArr");
-      this.max = +maxLen;
-      this.limit = +limitLen;
-      this.limitHalf = this.limit % 2 ? ~~(this.limit / 2) + 1 : this.limit / 2;
-      this._curr = 1;
-      this.maxArr = Array.from({ length: this.max }).map((item, index2) => index2 + 1);
-      if (this.max > limitLen) {
-        this.showArr = this.maxArr.slice(0, this.limit - 2).concat("...", this.max);
-      } else {
-        this.showArr = this.maxArr;
-      }
-    }
-    refreshList() {
-      if (this.max <= this.limit)
-        return;
-      if (this._curr < this.limitHalf) {
-        this.showArr = this.maxArr.slice(0, this.limit - 2).concat("...", this.max);
-      } else if (this._curr < this.max - this.limitHalf + 1) {
-        this.showArr = [1, "..."].concat(this.maxArr.slice(this._curr - (this.limitHalf - 2), this._curr - (this.limitHalf - 2) + this.limit - 4)).concat("...", this.max);
-      } else {
-        this.showArr = [1, "..."].concat(this.maxArr.slice(this.maxArr.length - this.limit + 2));
-      }
-    }
-    get curr() {
-      return this._curr;
-    }
-    set curr(value) {
-      if (value == this._curr)
-        return;
-      if (value > this.max) {
-        this._curr = this.max;
-      } else if (value < 1) {
-        this._curr = 1;
-      } else {
-        this._curr = value;
-      }
-      this.refreshList();
-    }
-    next() {
-      if (this.curr < this.max) {
-        this.curr++;
-      }
-    }
-    prev() {
-      if (this.curr > 1) {
-        this.curr--;
-      }
-    }
-  }
   const pageCache = Object.create(null);
   const btns = ref(new BtnList(props.totalPage, props.limit));
   btns.value.curr = props.currentPage ? +props.currentPage : 1;
@@ -808,7 +808,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
   emits: ["update:modelValue", "onPageChange", "getNewData"],
   setup: setup$2
 }));
-var SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-f7c8524e"]]);
+var SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-7cc36cc4"]]);
 var index$2 = {
   install(app) {
     app.component("SplitPage", SplitPage);

@@ -1,3 +1,5 @@
+import type { App, DirectiveBinding } from "vue";
+
 export default {
     install(app: App) {
         app.directive("hidden", {

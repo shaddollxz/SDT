@@ -17,8 +17,8 @@ export default defineComponent({
 </script>
 <script setup lang="ts">
 interface Props {
-    duration: number;
-    direction: "top" | "bottom" | "left" | "right";
+    duration?: number;
+    direction?: "top" | "bottom" | "left" | "right";
 }
 const props = withDefaults(defineProps<Props>(), {
     duration: 0.5,

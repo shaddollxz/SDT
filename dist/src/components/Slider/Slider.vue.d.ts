@@ -1,4 +1,5 @@
 import SliderHelper from "./SliderHelper";
+import type { Ref } from "vue";
 declare const _sfc_main: import("vue").DefineComponent<{
     modelValue: {
         type: NumberConstructor;
@@ -14,8 +15,8 @@ declare const _sfc_main: import("vue").DefineComponent<{
         (name: "onDragging", percent: number): void;
         (name: "onDrop", percent: number): void;
     };
-    slider: import("vue").Ref<HTMLDivElement | null>;
-    position: import("vue").Ref<number>;
+    slider: Ref<HTMLDivElement | null>;
+    position: Ref<number>;
     isCanMove: boolean;
     sliderHelper: SliderHelper;
     getSliderDetail: () => {

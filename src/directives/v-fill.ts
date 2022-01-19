@@ -1,3 +1,5 @@
+import type { App, DirectiveBinding } from "vue";
+
 export default {
     //* 因为margin不能被js拿到，所以子元素不要设置左右margin
     install(app: App) {
