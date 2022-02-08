@@ -1,7 +1,8 @@
 {
     "name": "sdt3",
-    "version": "2.0.20",
+    "version": "2.0.21",
     "description": "工具和组件库",
+    "type": "module",
     "main": "./dist/index.es.js",
     "types": "./dist/index.d.ts",
     "style": "./dist/style.css",

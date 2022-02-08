@@ -434,7 +434,7 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
   },
   setup: setup$5
 }));
-var RollText = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-3c6a1ce5"]]);
+var RollText = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-f8f51be2"]]);
 var index$5 = {
   install(app) {
     app.component("RollText", RollText);
