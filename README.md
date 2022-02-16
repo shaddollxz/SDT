@@ -12,7 +12,7 @@ vue 组件：
 
 ```javascript
 import SDT from "sdt3";
-import "sdt3/dist/style.css";
+import "sdt3/style";
 app.use(SDT);
 ```
 
@@ -20,7 +20,7 @@ app.use(SDT);
 
 ```javascript
 import { RollText } from "sdt3";
-import "sdt3/dist/style.css";
+import "sdt3/style";
 app.use(RollText);
 ```
 
@@ -29,7 +29,7 @@ app.use(RollText);
 直接指定需要的函数或对象引入
 
 ```javascript
-import { LimitArray } from "sdt3";
+import { SDIDB } from "sdt3";
 ```
 
 # 组件
