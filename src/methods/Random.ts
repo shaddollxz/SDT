@@ -18,6 +18,9 @@ const charMap: CharMap = {
  * 通过静态方法返回一个指定范围的随机数
  */
 export default class Random {
+    /**
+     * 从指定范围的数字中返回一个数字
+     */
     static number(range: [min: number, max: number], precision = 0) {
         const [min, max] = range;
         let random = Math.random() * (max - min + 1) + min;
@@ -25,6 +28,16 @@ export default class Random {
         return random;
     }
 
+    /**
+     * 从数组中随机获得一项
+     */
+    static array<T>(arr: T[], start: number = 0, end: number = arr.length - 1): T {
+        return arr[Random.number([start, end])];
+    }
+
+    /**
+     * 从字符串中获取指定数量的随机字并组成字符串
+     */
     static pick(range: string, len: number = 1): string {
         const arr = [];
         for (let i = 0; i < len; i++) {
@@ -37,6 +50,9 @@ export default class Random {
         return Math.random() > 0.5;
     }
 
+    /**
+     * 获取随机字母或数字
+     */
     static stringAndNumber(len: number = 1) {
         return Math.random()
             .toString(36)

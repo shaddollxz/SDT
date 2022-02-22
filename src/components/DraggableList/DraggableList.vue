@@ -16,7 +16,7 @@
 import { reactive } from "vue";
 import type { VDragType } from "../../directives";
 
-export interface Props {
+interface Props {
     modelValue: {
         value: string;
         _key?: string;
@@ -35,9 +35,9 @@ export interface Props {
     onDrop?: VDragType.TargetOptions<TransferData>["onDrop"];
     onTargetChanged?: VDragType.TargetOptions<TransferData>["onDragover"];
 }
-type Emits = {
+interface Emits {
     (e: "update:modelValue", v: Props["modelValue"]): void;
-};
+}
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 

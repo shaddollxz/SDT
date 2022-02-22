@@ -6,4 +6,3 @@ export default {
         app.component("DraggableList", DraggableList);
     },
 };
-export type { Props as DraggableListProps } from "./DraggableList.vue";

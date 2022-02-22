@@ -317,7 +317,7 @@ const _sfc_main$6 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var DraggableList = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-e4c9e48c"]]);
+var DraggableList = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-ee92b992"]]);
 var index$6 = {
   install(app) {
     app.component("DraggableList", DraggableList);
@@ -1549,6 +1549,9 @@ class Random {
     let random = Math.random() * (max - min + 1) + min;
     random = SDMath.floor(random, precision);
     return random;
+  }
+  static array(arr, start = 0, end = arr.length - 1) {
+    return arr[Random.number([start, end])];
   }
   static pick(range, len = 1) {
     const arr = [];

@@ -1,5 +1,5 @@
 import type { VDragType } from "../../directives";
-export interface Props {
+interface Props {
     modelValue: {
         value: string;
         _key?: string;

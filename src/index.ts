@@ -18,7 +18,6 @@ export { DraggableList, RollText, SliderBox, SplitPage, SwitchButton } from "./c
 export { VFill, VHidden, VDrag } from "./directives";
 
 // 导出组件或指令的类型
-export type { DraggableListProps } from "./components";
 export type { VDragType } from "./directives";
 
 // 导出需要函数渲染的组件
