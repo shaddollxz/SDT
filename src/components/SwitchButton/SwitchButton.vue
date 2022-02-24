@@ -41,7 +41,7 @@ function statuChange() {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .switchButton {
     --height: 2rem;
     --width: 5rem;

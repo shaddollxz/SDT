@@ -130,7 +130,7 @@ function changeIndex(arr: any[], from: number, to: number) {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .draggableList {
     .item {
         transition: opacity 0.5s linear;

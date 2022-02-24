@@ -1,8 +1,8 @@
 <template>
     <div
-        class="sliderBox"
+        class="lazyLoadBox"
         :class="animeClass"
-        :style="{ animationDuration: $props.duration + 's' }"
+        :style="{ animationDuration: duration + 's' }"
         ref="observer"
     >
         <slot></slot>
@@ -12,35 +12,46 @@
 <script lang="ts">
 import { defineComponent, shallowRef, ref, onMounted } from "vue";
 export default defineComponent({
-    name: "sliderBox",
+    name: "lazyLoadBox",
 });
 </script>
 <script setup lang="ts">
 interface Props {
     duration?: number;
     direction?: "top" | "bottom" | "left" | "right";
+    isReHidden?: boolean;
+}
+interface Emits {
+    (n: "onShow"): void;
 }
 const props = withDefaults(defineProps<Props>(), {
     duration: 0.5,
     direction: "bottom",
+    isReHidden: false,
 });
+const emit = defineEmits<Emits>();
 
 const observer = shallowRef<HTMLElement | null>(null);
 const animeClass = ref("");
 
 let io = new IntersectionObserver(([e]) => {
     if (e.isIntersecting) {
-        //todo 设置动画
+        // 出现在屏幕上
+        emit("onShow");
         animeClass.value = `${props.direction}`;
-        //todo 取消监听
-        io.unobserve(e.target);
+        // 如果设置会重新隐藏将不会解除监听
+        if (!props.isReHidden) {
+            io.unobserve(e.target);
+        }
+    } else {
+        animeClass.value = "";
     }
 });
 onMounted(() => io.observe(observer.value!));
 </script>
 
-<style lang="less" scoped>
-.sliderBox {
+<style lang="scss" scoped>
+.lazyLoadBox {
     opacity: 0;
 }
 .top {

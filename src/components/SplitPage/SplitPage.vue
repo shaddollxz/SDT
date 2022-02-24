@@ -83,7 +83,7 @@ btns.value.curr = props.currentPage ? +props.currentPage : 1;
 pageCache[btns.value.curr] = props.modelValue;
 //todo 是异步数据或者总页数改变时重新计算页面显示
 watch(
-    () => props.totalPage, //? totalPage可能是异步得到的，只在父组件获得了数据后才会执行一次
+    () => props.totalPage, // totalPage可能是异步得到的，只在父组件获得了数据后才会执行一次
     () => {
         btns.value = new BtnList(props.totalPage, props.limit);
         btns.value.curr = props.currentPage ? +props.currentPage : 1;
@@ -113,7 +113,7 @@ watch(
 );
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .splitPage {
     display: flex;
     flex-direction: column;

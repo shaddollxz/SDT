@@ -317,7 +317,7 @@ const _sfc_main$6 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-var DraggableList = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-ee92b992"]]);
+var DraggableList = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-6fc194ce"]]);
 var index$6 = {
   install(app) {
     app.component("DraggableList", DraggableList);
@@ -434,31 +434,36 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
   },
   setup: setup$5
 }));
-var RollText = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-f8f51be2"]]);
+var RollText = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-35aa41a6"]]);
 var index$5 = {
   install(app) {
     app.component("RollText", RollText);
   }
 };
-var SliderBox_vue_vue_type_style_index_0_scoped_true_lang = "";
+var LazyLoadBox_vue_vue_type_style_index_0_scoped_true_lang = "";
 const __default__$4 = defineComponent({
-  name: "sliderBox"
+  name: "lazyLoadBox"
 });
-function setup$4(__props) {
+function setup$4(__props, { emit }) {
   const props = __props;
   const observer = shallowRef(null);
   const animeClass = ref("");
   let io = new IntersectionObserver(([e]) => {
     if (e.isIntersecting) {
+      emit("onShow");
       animeClass.value = `${props.direction}`;
-      io.unobserve(e.target);
+      if (!props.isReHidden) {
+        io.unobserve(e.target);
+      }
+    } else {
+      animeClass.value = "";
     }
   });
   onMounted(() => io.observe(observer.value));
   return (_ctx, _cache) => {
     return openBlock(), createElementBlock("div", {
-      class: normalizeClass(["sliderBox", animeClass.value]),
-      style: normalizeStyle({ animationDuration: _ctx.$props.duration + "s" }),
+      class: normalizeClass(["lazyLoadBox", animeClass.value]),
+      style: normalizeStyle({ animationDuration: __props.duration + "s" }),
       ref: (_value, _refs) => {
         _refs["observer"] = _value;
         isRef(observer) && (observer.value = _value);
@@ -471,14 +476,16 @@ function setup$4(__props) {
 const _sfc_main$4 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$4), {
   props: {
     duration: { default: 0.5 },
-    direction: { default: "bottom" }
+    direction: { default: "bottom" },
+    isReHidden: { type: Boolean, default: false }
   },
+  emits: ["onShow"],
   setup: setup$4
 }));
-var SliderBox = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-4a0e7cda"]]);
+var LazyLoadBox = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-4b78e094"]]);
 var index$4 = {
   install(app) {
-    app.component("SliderBox", SliderBox);
+    app.component("LazyLoadBox", LazyLoadBox);
   }
 };
 function mathBase(methods) {
@@ -715,7 +722,7 @@ class BtnList {
   }
 }
 var SplitPage_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _withScopeId$1 = (n) => (pushScopeId("data-v-7cc36cc4"), n = n(), popScopeId(), n);
+const _withScopeId$1 = (n) => (pushScopeId("data-v-2c885610"), n = n(), popScopeId(), n);
 const _hoisted_1$1 = {
   key: 0,
   class: "splitPage"
@@ -808,14 +815,14 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
   emits: ["update:modelValue", "onPageChange", "getNewData"],
   setup: setup$2
 }));
-var SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-7cc36cc4"]]);
+var SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-2c885610"]]);
 var index$2 = {
   install(app) {
     app.component("SplitPage", SplitPage);
   }
 };
 var SwitchButton_vue_vue_type_style_index_0_scoped_true_lang = "";
-const _withScopeId = (n) => (pushScopeId("data-v-7c81c295"), n = n(), popScopeId(), n);
+const _withScopeId = (n) => (pushScopeId("data-v-cad2ce44"), n = n(), popScopeId(), n);
 const _hoisted_1 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createElementVNode("div", null, null, -1));
 const _hoisted_2 = [
   _hoisted_1
@@ -859,7 +866,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
   emits: ["update:modelValue", "onStatuChange"],
   setup: setup$1
 }));
-var SwitchButton = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-7c81c295"]]);
+var SwitchButton = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-cad2ce44"]]);
 var index$1 = {
   install(app) {
     app.component("SwitchButton", SwitchButton);
@@ -870,7 +877,7 @@ var components = /* @__PURE__ */ Object.freeze({
   [Symbol.toStringTag]: "Module",
   DraggableList: index$6,
   RollText: index$5,
-  SliderBox: index$4,
+  LazyLoadBox: index$4,
   Slider: index$3,
   SplitPage: index$2,
   SwitchButton: index$1
@@ -882,7 +889,7 @@ const __default__ = defineComponent({
 function setup(__props) {
   const props = __props;
   useCssVars((_ctx) => ({
-    "cbe1ddd0": direction.value
+    "037a2b23": direction.value
   }));
   const isShow = ref(true);
   onMounted(() => {
@@ -938,7 +945,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({
   },
   setup
 }));
-var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-497733d0"]]);
+var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-c565143e"]]);
 let messageBox = null;
 function renderMessage(options) {
   if (!messageBox) {
@@ -2003,4 +2010,4 @@ var index = {
     }
   }
 };
-export { AsyncConstructor, index$6 as DraggableList, LocalFiles, LocalStorage, Message, Random, index$5 as RollText, SDDate, SDIDB, SDMath, index$4 as SliderBox, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, iterable, removeItem, throttle, unCapitalize, userBrowers };
+export { AsyncConstructor, index$6 as DraggableList, index$4 as LazyLoadBox, LocalFiles, LocalStorage, Message, Random, index$5 as RollText, SDDate, SDIDB, SDMath, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, iterable, removeItem, throttle, unCapitalize, userBrowers };

@@ -53,7 +53,7 @@ const directionMap: Direction = {
 const direction = ref(directionMap[props.leaveTo]);
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .message {
     position: relative;
     display: flex;

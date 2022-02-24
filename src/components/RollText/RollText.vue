@@ -92,7 +92,7 @@ function backAnime() {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .rollText {
     position: relative;
     overflow: hidden;
