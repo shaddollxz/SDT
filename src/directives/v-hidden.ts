@@ -4,7 +4,7 @@ export default {
     install(app: App) {
         app.directive("hidden", {
             mounted,
-            beforeUpdate,
+            updated,
         });
     },
 };
@@ -12,6 +12,6 @@ export default {
 function mounted(el: HTMLElement, boolen: DirectiveBinding<boolean>) {
     el.style.visibility = boolen.value ? "" : "hidden";
 }
-function beforeUpdate(el: HTMLElement, boolen: DirectiveBinding<boolean>) {
+function updated(el: HTMLElement, boolen: DirectiveBinding<boolean>) {
     el.style.visibility = boolen.value ? "" : "hidden";
 }

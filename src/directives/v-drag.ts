@@ -7,7 +7,7 @@ export default {
             mounted: draggableMounted,
             updated: draggableUpdated,
         });
-        app.directive("dragtraget", {
+        app.directive("dragtarget", {
             mounted: targetMounted,
         });
     },

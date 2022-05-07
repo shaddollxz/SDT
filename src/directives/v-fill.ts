@@ -5,7 +5,7 @@ export default {
     install(app: App) {
         app.directive("fill", {
             mounted,
-            beforeUpdate,
+            updated,
         });
     },
 };
@@ -34,7 +34,7 @@ function mounted(el: HTMLElement) {
     updateChild(el, cacheData);
 }
 
-function beforeUpdate(el: HTMLElement) {
+function updated(el: HTMLElement) {
     let cacheData = cache.get(el)!;
     //todo 如果是异步数据 数据更新时 先检测是否有子元素宽
     if (!cacheData.childWidth && el.firstElementChild) {
