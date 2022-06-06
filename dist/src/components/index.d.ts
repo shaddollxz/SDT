@@ -1,4 +1,3 @@
-export { default as DraggableList } from "./DraggableList";
 export { default as RollText } from "./RollText";
 export { default as LazyLoadBox } from "./LazyLoadBox";
 export { default as Slider } from "./Slider";

@@ -3,7 +3,6 @@ import "vue";
 
 declare module "vue" {
     export interface GlobalComponents {
-        DraggableList: typeof import("sdt3/src/components/DraggableList/DraggableList.vue").default;
         RollText: typeof import("sdt3/src/components/RollText/RollText.vue").default;
         LazyLoadBox: typeof import("sdt3/src/components/LazyLoadBox/LazyLoadBox.vue").default;
         Slider: typeof import("sdt3/src/components/Slider/Slider.vue").default;

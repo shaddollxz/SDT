@@ -42,12 +42,12 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 var _a;
-import { nextTick, defineComponent, reactive, resolveComponent, resolveDirective, withDirectives, openBlock, createElementBlock, Fragment, renderList, unref, createTextVNode, toDisplayString, createBlock, createCommentVNode, ref, shallowRef, watch, isRef, normalizeStyle, createElementVNode, normalizeClass, renderSlot, onMounted, onUnmounted, pushScopeId, popScopeId, withKeys, vModelText, useCssVars, Transition, withCtx, vShow, createVNode, render } from "vue";
+import { nextTick, defineComponent, ref, shallowRef, watch, openBlock, createElementBlock, isRef, normalizeStyle, createElementVNode, normalizeClass, unref, Fragment, renderSlot, createCommentVNode, onMounted, onUnmounted, pushScopeId, popScopeId, renderList, toDisplayString, withDirectives, withKeys, vModelText, useCssVars, createBlock, Transition, withCtx, vShow, createVNode, render } from "vue";
 var vFill = {
   install(app) {
     app.directive("fill", {
       mounted: mounted$1,
-      beforeUpdate: beforeUpdate$1
+      updated: updated$1
     });
   }
 };
@@ -68,7 +68,7 @@ function mounted$1(el) {
   }
   updateChild(el, cacheData);
 }
-function beforeUpdate$1(el) {
+function updated$1(el) {
   let cacheData = cache$1.get(el);
   if (!cacheData.childWidth && el.firstElementChild) {
     cacheData.childWidth = el.firstElementChild.offsetWidth;
@@ -97,14 +97,14 @@ var vHidden = {
   install(app) {
     app.directive("hidden", {
       mounted,
-      beforeUpdate
+      updated
     });
   }
 };
 function mounted(el, boolen) {
   el.style.visibility = boolen.value ? "" : "hidden";
 }
-function beforeUpdate(el, boolen) {
+function updated(el, boolen) {
   el.style.visibility = boolen.value ? "" : "hidden";
 }
 var vDrag = {
@@ -113,7 +113,7 @@ var vDrag = {
       mounted: draggableMounted,
       updated: draggableUpdated
     });
-    app.directive("dragtraget", {
+    app.directive("dragtarget", {
       mounted: targetMounted
     });
   }
@@ -200,130 +200,13 @@ var directives = /* @__PURE__ */ Object.freeze({
   VDrag: vDrag
 });
 var colors = "";
-var DraggableList_vue_vue_type_style_index_0_scoped_true_lang = "";
+var RollText_vue_vue_type_style_index_0_scoped_true_lang = "";
 var _export_sfc = (sfc, props) => {
   for (const [key, val] of props) {
     sfc[key] = val;
   }
   return sfc;
 };
-const _hoisted_1$4 = { class: "draggableList" };
-const _sfc_main$6 = /* @__PURE__ */ defineComponent({
-  props: {
-    modelValue: null,
-    onDragstart: null,
-    onDragend: null,
-    onDrag: null,
-    onDragover: null,
-    onDragleave: null,
-    onDragenter: null,
-    onDrop: null,
-    onTargetChanged: null
-  },
-  emits: ["update:modelValue"],
-  setup(__props, { emit }) {
-    const props = __props;
-    let list = reactive(props.modelValue.map((item, index2) => {
-      var _a2;
-      return __spreadProps(__spreadValues({}, item), {
-        _key: (_a2 = item._key) != null ? _a2 : `${Date.now()}${index2}`
-      });
-    }));
-    let chosedEle, chosedIndex = { value: 0 }, copyEle;
-    function getOptions(item, index2) {
-      return {
-        draggable: item.draggable,
-        data: { index: index2, item, list, chosedIndex },
-        onDragstart(e) {
-          var _a2;
-          e.stopPropagation();
-          chosedEle = this;
-          copyEle = this.cloneNode(true);
-          copyEle.className = this.className += " dragging";
-          (_a2 = props.onDragstart) == null ? void 0 : _a2.call(this, e);
-        },
-        onDragend(e) {
-          var _a2, _b;
-          e.stopPropagation();
-          this.className = "item";
-          chosedEle.className = "item";
-          (_a2 = this.parentElement) == null ? void 0 : _a2.removeChild(copyEle);
-          (_b = props.onDragend) == null ? void 0 : _b.call(this, e);
-        },
-        onDrag: props.onDrag,
-        img: item.img
-      };
-    }
-    const targetOptions = {
-      onDragover(data, e, dragging2) {
-        var _a2, _b, _c;
-        if (chosedEle && chosedEle !== e.target && e.target !== copyEle) {
-          const curChosedIndex = Array.from(dragging2.parentElement.children).indexOf(e.target);
-          if (~curChosedIndex) {
-            chosedEle.className = chosedEle.className.replaceAll(/\schosed/g, "");
-            chosedEle = e.target;
-            (_a2 = chosedEle.parentElement) == null ? void 0 : _a2.insertBefore(copyEle, chosedEle);
-            chosedEle.className += " chosed";
-            chosedIndex.value = curChosedIndex;
-            (_b = props.onTargetChanged) == null ? void 0 : _b.call(this, data, e, dragging2);
-          }
-        }
-        (_c = props.onDragover) == null ? void 0 : _c.call(this, data, e, dragging2);
-      },
-      onDrop(data, e, dragging2) {
-        var _a2;
-        e.stopPropagation();
-        let targetIndex = data.chosedIndex.value == 0 || data.chosedIndex.value == 1 ? data.chosedIndex.value : data.chosedIndex.value - 1;
-        changeIndex(data.list, data.index, targetIndex);
-        emit("update:modelValue", list);
-        (_a2 = props.onDrop) == null ? void 0 : _a2.call(this, data, e, dragging2);
-      },
-      onDragenter: props.onDragover,
-      onDragleave: props.onDragleave
-    };
-    function changeIndex(arr, from, to) {
-      if (from > to) {
-        const item = arr[from];
-        arr.splice(from, 1);
-        arr.splice(to, 0, item);
-      } else if (from < to) {
-        arr.splice(to, 0, arr[from]);
-        arr.splice(from, 1);
-      }
-    }
-    return (_ctx, _cache) => {
-      const _component_DraggableList = resolveComponent("DraggableList", true);
-      const _directive_draggable = resolveDirective("draggable");
-      const _directive_dragtraget = resolveDirective("dragtraget");
-      return withDirectives((openBlock(), createElementBlock("div", _hoisted_1$4, [
-        (openBlock(true), createElementBlock(Fragment, null, renderList(unref(list), (item, index2) => {
-          return withDirectives((openBlock(), createElementBlock("div", {
-            class: "item",
-            key: item._key
-          }, [
-            createTextVNode(toDisplayString(item.value) + " ", 1),
-            item.children ? (openBlock(), createBlock(_component_DraggableList, {
-              key: 0,
-              modelValue: item.children,
-              "onUpdate:modelValue": ($event) => item.children = $event
-            }, null, 8, ["modelValue", "onUpdate:modelValue"])) : createCommentVNode("", true)
-          ], 512)), [
-            [_directive_draggable, getOptions(item, index2)]
-          ]);
-        }), 128))
-      ], 512)), [
-        [_directive_dragtraget, targetOptions]
-      ]);
-    };
-  }
-});
-var DraggableList = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-6fc194ce"]]);
-var index$6 = {
-  install(app) {
-    app.component("DraggableList", DraggableList);
-  }
-};
-var RollText_vue_vue_type_style_index_0_scoped_true_lang = "";
 const _hoisted_1$3 = {
   key: 0,
   class: "text"
@@ -875,7 +758,6 @@ var index$1 = {
 var components = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  DraggableList: index$6,
   RollText: index$5,
   LazyLoadBox: index$4,
   Slider: index$3,
@@ -2010,4 +1892,4 @@ var index = {
     }
   }
 };
-export { AsyncConstructor, index$6 as DraggableList, index$4 as LazyLoadBox, LocalFiles, LocalStorage, Message, Random, index$5 as RollText, SDDate, SDIDB, SDMath, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, iterable, removeItem, throttle, unCapitalize, userBrowers };
+export { AsyncConstructor, index$4 as LazyLoadBox, LocalFiles, LocalStorage, Message, Random, index$5 as RollText, SDDate, SDIDB, SDMath, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, iterable, removeItem, throttle, unCapitalize, userBrowers };

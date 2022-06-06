@@ -3,7 +3,7 @@ declare const _default: {
     install(app: App): void;
 };
 export default _default;
-export { DraggableList, RollText, LazyLoadBox, SplitPage, SwitchButton } from "./components";
+export { RollText, LazyLoadBox, SplitPage, SwitchButton } from "./components";
 export { VFill, VHidden, VDrag } from "./directives";
 export type { VDragType } from "./directives";
 export { default as Message } from "./components/Message";

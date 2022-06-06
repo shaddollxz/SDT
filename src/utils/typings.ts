@@ -11,11 +11,8 @@ export type NumberString = `${number}`;
 /**
  * 比较两个类型是否相同，返回true false
  */
-export type Equal<T, U> = (<R>(arg: R extends T ? 1 : 2) => void) extends <R>(
-    arg: R extends U ? 1 : 2
-) => void
-    ? true
-    : false;
+// prettier-ignore
+export type Equal<T, U> = (<R>(arg: R extends T ? 1 : 2) => void) extends (<RR>(arg: RR extends U ? 1 : 2) => void) ? true : false;
 
 /**
  * if 推荐配合Equal使用
