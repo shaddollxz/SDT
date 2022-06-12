@@ -2,6 +2,7 @@ import type { App } from "vue";
 
 import * as directives from "./directives";
 import * as components from "./components";
+// import "./globalComponents";
 
 // 默认导出全局的组件和指令
 const plugins = { ...directives, ...components };

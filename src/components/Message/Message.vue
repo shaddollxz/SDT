@@ -1,12 +1,12 @@
 <template>
-    <transition name="message" @before-leave="onClose" @after-leave="$emit('destroy')">
+    <Transition name="message" @before-leave="onClose" @after-leave="$emit('destroy')">
         <div class="message" v-show="isShow" :class="type" :style="style">
             <div :class="['text', align]">{{ text }}</div>
             <div @click="isShow = !isShow" :class="isCanClose || !(duration > 0) ? 'canClose' : 'cantClose'">
                 ✖
             </div>
         </div>
-    </transition>
+    </Transition>
 </template>
 
 <script lang="ts">
@@ -17,7 +17,7 @@ export default defineComponent({
 });
 </script>
 <script setup lang="ts">
-export interface Props {
+interface Props {
     text: string;
     type: "default" | "success" | "error";
     duration: number; // 显示的事件 如果为零会无视isCanClose显示删除按钮
@@ -55,14 +55,13 @@ const direction = ref(directionMap[props.leaveTo]);
 
 <style lang="scss" scoped>
 .message {
-    position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     width: 33%;
     height: max-content;
     box-sizing: border-box;
     padding: 1rem 1.8rem;
+    margin: auto;
     margin-bottom: 0.6rem;
     border-radius: 0.4rem;
     &.default {

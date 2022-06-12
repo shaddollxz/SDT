@@ -160,8 +160,6 @@ watch(
         input {
             margin: 0 0.5rem;
             max-width: 2rem;
-            color: var(--color-text-default);
-            background-color: var(--color-bg-bland);
             border: 1.5px solid var(--color-border);
             border-radius: 0.5rem;
             &:focus-visible {

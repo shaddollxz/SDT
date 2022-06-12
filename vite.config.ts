@@ -1,16 +1,27 @@
 import { defineConfig } from "vite";
 import type { PluginOption } from "vite";
 import path from "path";
+import fs from "fs-extra";
 import vue from "@vitejs/plugin-vue";
 import dts from "vite-plugin-dts";
 
+const outDir = path.join(__dirname, "/dist");
+
 const plugins: (PluginOption | PluginOption[])[] = [vue()];
-plugins.push(dts());
+plugins.push(
+    dts({
+        async afterBuild() {
+            const indexDir = path.resolve(outDir, "./index.d.ts");
+            const dts = await fs.readFile(indexDir, "utf-8");
+            await fs.writeFile(indexDir, dts + 'import "./globalComponents";\r');
+        },
+    })
+);
 
 // https://vitejs.dev/config/
 export default defineConfig({
     build: {
-        outDir: path.join(__dirname, "/dist"),
+        outDir,
         target: "es2015", // 这里是库模式 发布到npm用es2015 否则webpack无法使用
 
         lib: {

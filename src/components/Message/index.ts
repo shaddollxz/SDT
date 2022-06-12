@@ -1,7 +1,17 @@
 import { createVNode, render } from "vue";
-import type { VNodeProps } from "vue";
+import type { VNodeProps, StyleValue } from "vue";
 import messageComp from "./Message.vue";
-import type { Props } from "./Message.vue";
+
+interface Props {
+    text: string;
+    type: "default" | "success" | "error";
+    duration: number; // 显示的事件 如果为零会无视isCanClose显示删除按钮
+    isCanClose: boolean; // 是否显示删除按钮
+    align: "left" | "right" | "center";
+    style?: StyleValue;
+    leaveTo: "top" | "left" | "bottom" | "right";
+    onClose?: (el: Element) => void;
+}
 
 type MessageProps = Partial<Props>;
 
@@ -10,7 +20,7 @@ let messageBox: HTMLDivElement | null = null;
 function renderMessage(options: MessageProps) {
     if (!messageBox) {
         messageBox = document.createElement("div");
-        messageBox.style.cssText = `position:fixed;top:8%;display:flex;flex-direction:column;align-items:center;z-index:999;width:100%;height:0;`;
+        messageBox.style.cssText = `position:fixed;top:8%;display:flex;flex-direction:column;z-index:999;width:100%;height:0;`;
         document.body.appendChild(messageBox);
     }
 

@@ -30,7 +30,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     type: 1,
     duration: 8,
-    // @ts-ignore 不知道为啥要报错 总之就忽略了
     asyncData: () => null,
     align: "left",
 });

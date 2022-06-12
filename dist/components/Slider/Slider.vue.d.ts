@@ -1,11 +1,6 @@
 import SliderHelper from "./SliderHelper";
 import type { Ref } from "vue";
-declare const _sfc_main: import("vue").DefineComponent<{
-    modelValue: {
-        type: NumberConstructor;
-        required: false;
-    };
-}, {
+declare const _sfc_main: import("vue").DefineComponent<{}, {
     props: {
         modelValue?: number | undefined;
     };
@@ -26,11 +21,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     mouseDownHandler: (e: MouseEvent) => void;
     mouseUpHandler: (e: MouseEvent) => void;
     mouseMoveHandler: (e: MouseEvent) => void;
-}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("update:modelValue" | "onDragStart" | "onDragging" | "onDrop")[], "update:modelValue" | "onDragStart" | "onDragging" | "onDrop", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<{
-    modelValue?: unknown;
-} & {} & {
-    modelValue?: number | undefined;
-}> & {
+}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, ("update:modelValue" | "onDragStart" | "onDragging" | "onDrop")[], "update:modelValue" | "onDragStart" | "onDragging" | "onDrop", import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{}>> & {
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
     onOnDragStart?: ((...args: any[]) => any) | undefined;
     onOnDragging?: ((...args: any[]) => any) | undefined;
