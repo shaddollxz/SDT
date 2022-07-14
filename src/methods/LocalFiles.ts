@@ -9,8 +9,10 @@ type ReadType = "readAsArrayBuffer" | "readAsDataURL" | "readAsText";
 interface ReadOptions {
     readAs?: ReadType;
     order?: number;
+    chunkSize?: number;
 }
-type ReadResult = string | string[] | ArrayBuffer | ArrayBuffer[] | (string | ArrayBuffer | null)[] | null;
+type ReadOneFileResult = string | ArrayBuffer | ArrayBuffer[] | null;
+type ReadResult = ReadOneFileResult[];
 
 /**
  * 异步实例化时跳出文件选择框 并根据read方法读取选择的文件
@@ -22,7 +24,7 @@ type ReadResult = string | string[] | ArrayBuffer | ArrayBuffer[] | (string | Ar
  * let result = files.read()
  */
 export default class LocalFiles extends AsyncConstructor {
-    private _files!: File[];
+    declare files: File[];
     text: string[];
     dataurl: string[];
     constructor({ count = 1, type = [], maxSize = Number.MAX_VALUE }: ConstructorOptions = {}) {
@@ -37,14 +39,14 @@ export default class LocalFiles extends AsyncConstructor {
             input.click();
             document.body.removeChild(input);
 
-            this._files = await new Promise((resolve, reject) => {
+            this.files = await new Promise((resolve, reject) => {
                 input.addEventListener("change", function read(e) {
                     let target = e.target as HTMLInputElement;
                     if (count == 1 || target.files!.length == 1) {
                         if (target.files![0].size < limitSize) {
                             resolve([target.files![0]]);
                         } else {
-                            resolve([]);
+                            reject("选择的文件超出允许大小");
                         }
                     } else {
                         let counter = 0;
@@ -55,7 +57,11 @@ export default class LocalFiles extends AsyncConstructor {
                                 result.push(item);
                             }
                         });
-                        resolve(result);
+                        if (result.length == 0) {
+                            reject("选择的文件全部超出允许大小");
+                        } else {
+                            resolve(result);
+                        }
                     }
                     this.removeEventListener("change", read);
                 });
@@ -65,71 +71,47 @@ export default class LocalFiles extends AsyncConstructor {
         this.dataurl = ["jpg", "png", "jpge", "gif", "mp4", "mp3", "flac"];
     }
 
-    get files() {
-        return this._files;
-    }
-
+    /** 选取的文件名，如果有多个是数组，如果只有一个为字符串 */
     get name() {
-        if (this._files.length == 1) {
-            return this._files[0].name;
+        if (this.files.length == 1) {
+            return this.files[0].name;
         } else {
-            return this._files.map((item) => item.name);
+            return this.files.map((item) => item.name);
         }
     }
 
+    /** 选取的文件大小，如果有多个是数组，如果只有一个为字符串 */
     get size() {
-        if (this._files.length == 1) {
-            return this._files[0].size;
+        if (this.files.length == 1) {
+            return this.files[0].size;
         } else {
-            return this._files.map((item) => item.size);
+            return this.files.map((item) => item.size);
         }
     }
 
     /**
      * 不传入参数会读取所有文件并返回文件内容的数组
      * 方法会自己推断部分文件的读取返回类型 也能通过options自己设置返回类型
+     * 如果文件大于该值 会切片读取 以ArrayBuffer数组的形式存储 默认没有设置
      * @param options 设置读取文件的方式和读取第几个文件
      */
-    async read(options: ReadOptions = {}): Promise<ReadResult> {
-        if (this._files.length == 0) throw "文件超过设置大小";
-        const { readAs = undefined, order = 0 } = options;
-        const reader = new FileReader();
+    async read(options: ReadOptions = {}): Promise<ReadResult | ReadOneFileResult> {
+        if (this.files.length == 0) throw "文件超过设置大小";
+        const { readAs = undefined, order = 0, chunkSize = Infinity } = options;
+
         // 传入多个文件时默认读全部文件
-        if (this._files.length > 1 && !order) {
+        if (this.files.length > 1 && !order) {
             const result: ReadResult = [];
-            for (const file of this._files) {
-                if (readAs) {
-                    reader[readAs](file);
-                } else {
-                    reader[this.readType(file)](file);
-                }
-                const content = await new Promise((resolve, reject) => {
-                    reader.onerror = () => {
-                        reject("读取文件失败");
-                    };
-                    reader.onload = (e) => {
-                        resolve(e.target!.result);
-                    };
-                });
+            for (const file of this.files) {
+                const content = await this.readFile(file, readAs ?? this.readType(file), chunkSize);
                 // @ts-ignore
                 result.push(content);
             }
             return result;
         } else {
             // 只有一个文件或指定了读取文件位置时读取一个文件
-            if (readAs) {
-                reader[readAs](this._files[order]);
-            } else {
-                reader[this.readType(this._files[order])](this._files[order]);
-            }
-            return new Promise((resolve, reject) => {
-                reader.onerror = () => {
-                    reject("读取文件失败");
-                };
-                reader.onload = (e) => {
-                    resolve(e.target!.result);
-                };
-            });
+            const file = this.files[order];
+            return await this.readFile(file, readAs ?? this.readType(file), chunkSize);
         }
     }
 
@@ -138,7 +120,7 @@ export default class LocalFiles extends AsyncConstructor {
         const regexp = /(?<=\.)\w+$/;
         const fileType = file.name.match(regexp)![0];
         if (fileType == null) {
-            throw "无法获取文件后缀";
+            return "readAsText";
         }
         if (this.text.includes(fileType)) {
             return "readAsText";
@@ -146,6 +128,38 @@ export default class LocalFiles extends AsyncConstructor {
             return "readAsDataURL";
         } else {
             return "readAsArrayBuffer";
+        }
+    }
+
+    async readFile(file: Blob, readAs: ReadType, chunkSize: number): Promise<ReadOneFileResult> {
+        const reader = new FileReader();
+        if (file.size <= chunkSize) {
+            reader[readAs](file);
+            return new Promise((resolve, reject) => {
+                reader.onerror = () => {
+                    reject("读取文件失败");
+                };
+                reader.onload = (e) => {
+                    resolve(e.target!.result);
+                };
+            });
+        } else {
+            const chunkCount = Math.ceil(file.size / chunkSize);
+            const chunks: ArrayBuffer[] = [];
+
+            for (let i = 0; i < chunkCount; i++) {
+                const start = i * chunkSize,
+                    end = start + chunkSize >= file.size ? file.size : start + chunkSize;
+                chunks.push(
+                    (await this.readFile(
+                        file.slice(start, end),
+                        "readAsArrayBuffer",
+                        chunkSize
+                    )) as ArrayBuffer
+                );
+            }
+
+            return chunks;
         }
     }
 }

@@ -1,4 +1,4 @@
-import isEmpty from "./isEmpty";
+import { isEmpty } from "./checkEmpty";
 
 let instancePoor: Validator[] | null = null; // 因为可能用不上对象池，所以初始化为null 当需要放入实例时再初始化为数组
 

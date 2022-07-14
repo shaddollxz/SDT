@@ -1,4 +1,4 @@
-import deleteEmpty from "./deleteEmpty";
+import { deleteEmpty } from "./checkEmpty";
 
 const browerList = ["edge", "opera", "chrome", "safari", "firefox"] as const;
 

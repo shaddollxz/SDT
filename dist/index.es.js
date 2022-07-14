@@ -885,6 +885,8 @@ const isNull = (arg) => arg === null;
 const isObject = (arg) => typeof arg == "object" && !Array.isArray(arg) && typeof arg !== "function" && arg !== null && !(arg instanceof RegExp);
 const isRegExp = (arg) => arg instanceof RegExp;
 function deepClone(o, cache2 = /* @__PURE__ */ new WeakMap()) {
+  if (window.structuredClone)
+    return window.structuredClone(o);
   if (isRegExp(o) || isNull(o))
     throw "\u4F20\u5165\u7C7B\u578B\u9519\u8BEF";
   let result = Array.isArray(o) ? [] : /* @__PURE__ */ Object.create(null);
@@ -905,6 +907,8 @@ function deepClone(o, cache2 = /* @__PURE__ */ new WeakMap()) {
 }
 function isEmpty(value, isCheckZero = false) {
   if (typeof value !== "object" || value == null) {
+    if (value === "")
+      return true;
     return value == 0 ? isCheckZero ? true : false : !value;
   }
   if (Array.isArray(value)) {
@@ -929,6 +933,23 @@ function isEmpty(value, isCheckZero = false) {
       }
       return true;
     }
+  }
+}
+function havaEmpty(value, isCheckZero = false) {
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      if (isEmpty(item, isCheckZero)) {
+        return true;
+      }
+    }
+    return false;
+  } else {
+    for (const key in value) {
+      if (isEmpty(value[key], isCheckZero)) {
+        return true;
+      }
+    }
+    return false;
   }
 }
 function deleteEmpty(value, isCheckZero = false) {
@@ -956,23 +977,6 @@ function deleteEmpty(value, isCheckZero = false) {
       }
     }
     return result;
-  }
-}
-function havaEmpty(value, isCheckZero = false) {
-  if (Array.isArray(value)) {
-    for (const item of value) {
-      if (isEmpty(item, isCheckZero)) {
-        return true;
-      }
-    }
-    return false;
-  } else {
-    for (const key in value) {
-      if (isEmpty(value[key], isCheckZero)) {
-        return true;
-      }
-    }
-    return false;
   }
 }
 var isMobile = /Mobile/i.test(navigator.userAgent);
@@ -1046,14 +1050,14 @@ class LocalFiles extends AsyncConstructor {
       document.body.appendChild(input);
       input.click();
       document.body.removeChild(input);
-      this._files = yield new Promise((resolve, reject) => {
+      this.files = yield new Promise((resolve, reject) => {
         input.addEventListener("change", function read(e) {
           let target = e.target;
           if (count == 1 || target.files.length == 1) {
             if (target.files[0].size < limitSize) {
               resolve([target.files[0]]);
             } else {
-              resolve([]);
+              reject("\u9009\u62E9\u7684\u6587\u4EF6\u8D85\u51FA\u5141\u8BB8\u5927\u5C0F");
             }
           } else {
             let counter = 0;
@@ -1064,74 +1068,50 @@ class LocalFiles extends AsyncConstructor {
                 result.push(item);
               }
             });
-            resolve(result);
+            if (result.length == 0) {
+              reject("\u9009\u62E9\u7684\u6587\u4EF6\u5168\u90E8\u8D85\u51FA\u5141\u8BB8\u5927\u5C0F");
+            } else {
+              resolve(result);
+            }
           }
           this.removeEventListener("change", read);
         });
       });
     }));
-    __publicField(this, "_files");
     __publicField(this, "text");
     __publicField(this, "dataurl");
     this.text = ["txt", "md", "json", "js", "css", "less", "sass", "ts", "xml", "html"];
     this.dataurl = ["jpg", "png", "jpge", "gif", "mp4", "mp3", "flac"];
   }
-  get files() {
-    return this._files;
-  }
   get name() {
-    if (this._files.length == 1) {
-      return this._files[0].name;
+    if (this.files.length == 1) {
+      return this.files[0].name;
     } else {
-      return this._files.map((item) => item.name);
+      return this.files.map((item) => item.name);
     }
   }
   get size() {
-    if (this._files.length == 1) {
-      return this._files[0].size;
+    if (this.files.length == 1) {
+      return this.files[0].size;
     } else {
-      return this._files.map((item) => item.size);
+      return this.files.map((item) => item.size);
     }
   }
   read() {
     return __async(this, arguments, function* (options = {}) {
-      if (this._files.length == 0)
+      if (this.files.length == 0)
         throw "\u6587\u4EF6\u8D85\u8FC7\u8BBE\u7F6E\u5927\u5C0F";
-      const { readAs = void 0, order = 0 } = options;
-      const reader = new FileReader();
-      if (this._files.length > 1 && !order) {
+      const { readAs = void 0, order = 0, chunkSize = Infinity } = options;
+      if (this.files.length > 1 && !order) {
         const result = [];
-        for (const file of this._files) {
-          if (readAs) {
-            reader[readAs](file);
-          } else {
-            reader[this.readType(file)](file);
-          }
-          const content = yield new Promise((resolve, reject) => {
-            reader.onerror = () => {
-              reject("\u8BFB\u53D6\u6587\u4EF6\u5931\u8D25");
-            };
-            reader.onload = (e) => {
-              resolve(e.target.result);
-            };
-          });
+        for (const file of this.files) {
+          const content = yield this.readFile(file, readAs != null ? readAs : this.readType(file), chunkSize);
           result.push(content);
         }
         return result;
       } else {
-        if (readAs) {
-          reader[readAs](this._files[order]);
-        } else {
-          reader[this.readType(this._files[order])](this._files[order]);
-        }
-        return new Promise((resolve, reject) => {
-          reader.onerror = () => {
-            reject("\u8BFB\u53D6\u6587\u4EF6\u5931\u8D25");
-          };
-          reader.onload = (e) => {
-            resolve(e.target.result);
-          };
-        });
+        const file = this.files[order];
+        return yield this.readFile(file, readAs != null ? readAs : this.readType(file), chunkSize);
       }
     });
   }
@@ -1139,7 +1119,7 @@ class LocalFiles extends AsyncConstructor {
     const regexp = new RegExp("(?<=\\.)\\w+$");
     const fileType = file.name.match(regexp)[0];
     if (fileType == null) {
-      throw "\u65E0\u6CD5\u83B7\u53D6\u6587\u4EF6\u540E\u7F00";
+      return "readAsText";
     }
     if (this.text.includes(fileType)) {
       return "readAsText";
@@ -1148,6 +1128,30 @@ class LocalFiles extends AsyncConstructor {
     } else {
       return "readAsArrayBuffer";
     }
+  }
+  readFile(file, readAs, chunkSize) {
+    return __async(this, null, function* () {
+      const reader = new FileReader();
+      if (file.size <= chunkSize) {
+        reader[readAs](file);
+        return new Promise((resolve, reject) => {
+          reader.onerror = () => {
+            reject("\u8BFB\u53D6\u6587\u4EF6\u5931\u8D25");
+          };
+          reader.onload = (e) => {
+            resolve(e.target.result);
+          };
+        });
+      } else {
+        const chunkCount = Math.ceil(file.size / chunkSize);
+        const chunks = [];
+        for (let i = 0; i < chunkCount; i++) {
+          const start = i * chunkSize, end = start + chunkSize >= file.size ? file.size : start + chunkSize;
+          chunks.push(yield this.readFile(file.slice(start, end), "readAsArrayBuffer", chunkSize));
+        }
+        return chunks;
+      }
+    });
   }
 }
 const _SDDate = class extends Date {
@@ -1865,4 +1869,4 @@ var index = {
     }
   }
 };
-export { AsyncConstructor, index$4 as LazyLoadBox, LocalFiles, LocalStorage, Message, Random, index$5 as RollText, SDDate, SDIDB, SDMath, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty as haveEmpth, isEmpty, isMobile, isSame, iterable, removeItem, throttle, unCapitalize, userBrowers };
+export { AsyncConstructor, index$4 as LazyLoadBox, LocalFiles, LocalStorage, Message, Random, index$5 as RollText, SDDate, SDIDB, SDMath, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty, isEmpty, isMobile, isSame, iterable, removeItem, throttle, unCapitalize, userBrowers };

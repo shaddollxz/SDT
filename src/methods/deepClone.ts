@@ -5,7 +5,9 @@ import { isRegExp, isNull, isObject } from "../utils/typeCheck";
  * @returns 新的对象
  */
 export default function deepClone(o: object, cache = new WeakMap()) {
+    if (window.structuredClone) return window.structuredClone(o);
     if (isRegExp(o) || isNull(o)) throw "传入类型错误";
+
     let result: Array<any> | object = Array.isArray(o) ? [] : Object.create(null);
 
     if (cache.get(o)) {

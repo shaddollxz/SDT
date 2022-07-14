@@ -1,3 +1,4 @@
+export type { EitherOr } from "./EitherOr";
 /**
  * 基础类型
  */
