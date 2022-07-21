@@ -1,14 +1,15 @@
 import AsyncConstructor from "./AsyncConstructor";
+import type { EitherOr } from "../utils/EitherOr";
 interface ConstructorOptions {
     count?: number;
     type?: string[];
     maxSize?: number;
 }
-declare type ReadType = "readAsArrayBuffer" | "readAsDataURL" | "readAsText";
-interface ReadOptions {
+declare type ReadType = "readAsArrayBuffer" | "readAsDataURL" | "readAsText" | "readAsBinaryString";
+declare type ReadOptions = EitherOr<{
     readAs?: ReadType;
     chunkSize?: number;
-}
+}, "readAs", "chunkSize">;
 declare type ReadOneFileResult = string | ArrayBuffer | ArrayBuffer[] | null;
 declare type ReadResult = ReadOneFileResult[];
 /**
@@ -38,6 +39,6 @@ export default class LocalFiles extends AsyncConstructor {
     read(order?: number, options?: ReadOptions): Promise<ReadOneFileResult>;
     /** 获取文件后缀名 根据后缀决定读取方法 */
     protected readType(file: File): ReadType;
-    readFile(file: Blob, readAs: ReadType, chunkSize: number): Promise<ReadOneFileResult>;
+    readFile(file: Blob, readAs: ReadType, chunkSize?: number): Promise<ReadOneFileResult>;
 }
 export {};

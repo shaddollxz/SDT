@@ -1,15 +1,20 @@
 import AsyncConstructor from "./AsyncConstructor";
+import type { EitherOr } from "../utils/EitherOr";
 
 interface ConstructorOptions {
     count?: number;
     type?: string[];
     maxSize?: number;
 }
-type ReadType = "readAsArrayBuffer" | "readAsDataURL" | "readAsText";
-interface ReadOptions {
-    readAs?: ReadType;
-    chunkSize?: number;
-}
+type ReadType = "readAsArrayBuffer" | "readAsDataURL" | "readAsText" | "readAsBinaryString";
+type ReadOptions = EitherOr<
+    {
+        readAs?: ReadType;
+        chunkSize?: number;
+    },
+    "readAs",
+    "chunkSize"
+>;
 type ReadOneFileResult = string | ArrayBuffer | ArrayBuffer[] | null;
 type ReadResult = ReadOneFileResult[];
 
@@ -88,7 +93,7 @@ export default class LocalFiles extends AsyncConstructor {
     async read(): Promise<ReadResult>;
     async read(order?: number, options?: ReadOptions): Promise<ReadOneFileResult>;
     // prettier-ignore
-    async read(order?: number, { chunkSize = Infinity, readAs }: ReadOptions = {}): Promise<ReadResult | ReadOneFileResult> {
+    async read(order?: number, { chunkSize , readAs }: ReadOptions = {}): Promise<ReadResult | ReadOneFileResult> {
         // 默认读全部文件
         if (order === undefined) {
             const result: ReadResult = [];
@@ -120,9 +125,9 @@ export default class LocalFiles extends AsyncConstructor {
         }
     }
 
-    async readFile(file: Blob, readAs: ReadType, chunkSize: number): Promise<ReadOneFileResult> {
+    async readFile(file: Blob, readAs: ReadType, chunkSize?: number): Promise<ReadOneFileResult> {
         const reader = new FileReader();
-        if (file.size <= chunkSize) {
+        if (chunkSize === undefined || file.size <= chunkSize) {
             reader[readAs](file);
             return new Promise((resolve, reject) => {
                 reader.onerror = () => {
@@ -152,6 +157,3 @@ export default class LocalFiles extends AsyncConstructor {
         }
     }
 }
-
-let files = new LocalFiles();
-files.read();

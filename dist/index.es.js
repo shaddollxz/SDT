@@ -1090,7 +1090,7 @@ class LocalFiles extends AsyncConstructor {
     return this.files.map((item) => item.size);
   }
   read(_0) {
-    return __async(this, arguments, function* (order, { chunkSize = Infinity, readAs } = {}) {
+    return __async(this, arguments, function* (order, { chunkSize, readAs } = {}) {
       if (order === void 0) {
         const result = [];
         for (const file of this.files) {
@@ -1121,7 +1121,7 @@ class LocalFiles extends AsyncConstructor {
   readFile(file, readAs, chunkSize) {
     return __async(this, null, function* () {
       const reader = new FileReader();
-      if (file.size <= chunkSize) {
+      if (chunkSize === void 0 || file.size <= chunkSize) {
         reader[readAs](file);
         return new Promise((resolve, reject) => {
           reader.onerror = () => {
@@ -1143,8 +1143,6 @@ class LocalFiles extends AsyncConstructor {
     });
   }
 }
-let files = new LocalFiles();
-files.read();
 const _SDDate = class extends Date {
   constructor(args) {
     args ? super(args) : super();
