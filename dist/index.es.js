@@ -1083,26 +1083,15 @@ class LocalFiles extends AsyncConstructor {
     this.text = ["txt", "md", "json", "js", "css", "less", "sass", "ts", "xml", "html"];
     this.dataurl = ["jpg", "png", "jpge", "gif", "mp4", "mp3", "flac"];
   }
-  get name() {
-    if (this.files.length == 1) {
-      return this.files[0].name;
-    } else {
-      return this.files.map((item) => item.name);
-    }
+  get names() {
+    return this.files.map((item) => item.name);
   }
-  get size() {
-    if (this.files.length == 1) {
-      return this.files[0].size;
-    } else {
-      return this.files.map((item) => item.size);
-    }
+  get sizes() {
+    return this.files.map((item) => item.size);
   }
-  read() {
-    return __async(this, arguments, function* (options = {}) {
-      if (this.files.length == 0)
-        throw "\u6587\u4EF6\u8D85\u8FC7\u8BBE\u7F6E\u5927\u5C0F";
-      const { readAs = void 0, order = 0, chunkSize = Infinity } = options;
-      if (this.files.length > 1 && !order) {
+  read(_0) {
+    return __async(this, arguments, function* (order, { chunkSize = Infinity, readAs } = {}) {
+      if (order === void 0) {
         const result = [];
         for (const file of this.files) {
           const content = yield this.readFile(file, readAs != null ? readAs : this.readType(file), chunkSize);
@@ -1154,6 +1143,8 @@ class LocalFiles extends AsyncConstructor {
     });
   }
 }
+let files = new LocalFiles();
+files.read();
 const _SDDate = class extends Date {
   constructor(args) {
     args ? super(args) : super();
