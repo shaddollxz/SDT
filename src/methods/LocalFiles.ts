@@ -70,22 +70,24 @@ export default class LocalFiles {
             const _this = this;
             input.addEventListener("change", function read(e) {
                 let target = e.target as HTMLInputElement;
-
-                Array.prototype.forEach.call(target.files, (item) => {
-                    if (_this.files.length < _this.count) {
-                        if (_this.maxSize) {
-                            if (item.size <= _this.maxSize) {
-                                _this.files.push(item);
-                            }
-                        } else {
-                            _this.files.push(item);
-                        }
-                    }
-                });
+                target.files && _this.append(target.files);
                 resolve(_this.files);
-
                 this.removeEventListener("change", read);
             });
+        });
+    }
+
+    append(files: FileList | File[]) {
+        Array.prototype.forEach.call(files, (item) => {
+            if (this.files.length < this.count) {
+                if (this.maxSize) {
+                    if (item.size <= this.maxSize) {
+                        this.files.push(item);
+                    }
+                } else {
+                    this.files.push(item);
+                }
+            }
         });
     }
 
@@ -102,14 +104,14 @@ export default class LocalFiles {
         if (order === undefined) {
             const result: ReadResult = [];
             for (const file of this.files) {
-                const content = await this.readFile(file, readAs ?? this.readType(file), chunkSize);
+                const content = await LocalFiles.readFile(file, readAs ?? this.readType(file), chunkSize);
                 result.push(content);
             }
             return result;
         } else {
             // 指定了读取文件位置时读取一个文件
             const file = this.files[order];
-            return await this.readFile(file, readAs ?? this.readType(file), chunkSize);
+            return await LocalFiles.readFile(file, readAs ?? this.readType(file), chunkSize);
         }
     }
 
@@ -129,7 +131,8 @@ export default class LocalFiles {
         }
     }
 
-    async readFile(file: Blob, readAs: ReadType, chunkSize?: number): Promise<ReadOneFileResult> {
+    /** 读取文件 */
+    static async readFile(file: Blob, readAs: ReadType, chunkSize?: number): Promise<ReadOneFileResult> {
         const reader = new FileReader();
         if (chunkSize === undefined || file.size <= chunkSize) {
             reader[readAs](file);

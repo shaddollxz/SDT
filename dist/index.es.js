@@ -1074,21 +1074,24 @@ class LocalFiles {
         const _this = this;
         input.addEventListener("change", function read(e) {
           let target = e.target;
-          Array.prototype.forEach.call(target.files, (item) => {
-            if (_this.files.length < _this.count) {
-              if (_this.maxSize) {
-                if (item.size <= _this.maxSize) {
-                  _this.files.push(item);
-                }
-              } else {
-                _this.files.push(item);
-              }
-            }
-          });
+          target.files && _this.append(target.files);
           resolve(_this.files);
           this.removeEventListener("change", read);
         });
       });
+    });
+  }
+  append(files) {
+    Array.prototype.forEach.call(files, (item) => {
+      if (this.files.length < this.count) {
+        if (this.maxSize) {
+          if (item.size <= this.maxSize) {
+            this.files.push(item);
+          }
+        } else {
+          this.files.push(item);
+        }
+      }
     });
   }
   read(_0) {
@@ -1096,13 +1099,13 @@ class LocalFiles {
       if (order === void 0) {
         const result = [];
         for (const file of this.files) {
-          const content = yield this.readFile(file, readAs != null ? readAs : this.readType(file), chunkSize);
+          const content = yield LocalFiles.readFile(file, readAs != null ? readAs : this.readType(file), chunkSize);
           result.push(content);
         }
         return result;
       } else {
         const file = this.files[order];
-        return yield this.readFile(file, readAs != null ? readAs : this.readType(file), chunkSize);
+        return yield LocalFiles.readFile(file, readAs != null ? readAs : this.readType(file), chunkSize);
       }
     });
   }
@@ -1120,7 +1123,7 @@ class LocalFiles {
       return "readAsArrayBuffer";
     }
   }
-  readFile(file, readAs, chunkSize) {
+  static readFile(file, readAs, chunkSize) {
     return __async(this, null, function* () {
       const reader = new FileReader();
       if (chunkSize === void 0 || file.size <= chunkSize) {

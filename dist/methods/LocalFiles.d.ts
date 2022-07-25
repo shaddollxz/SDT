@@ -35,6 +35,7 @@ export default class LocalFiles {
     get sizes(): number[];
     /** 选取文件 */
     getFile(): Promise<File[] | undefined>;
+    append(files: FileList | File[]): void;
     /**
      * 不传入参数会读取所有文件并返回文件内容的数组
      * 方法会自己推断部分文件的读取返回类型 也能通过options自己设置返回类型
@@ -44,6 +45,7 @@ export default class LocalFiles {
     read(order?: number, options?: ReadOptions): Promise<ReadOneFileResult>;
     /** 获取文件后缀名 根据后缀决定读取方法 */
     protected readType(file: File): ReadType;
-    readFile(file: Blob, readAs: ReadType, chunkSize?: number): Promise<ReadOneFileResult>;
+    /** 读取文件 */
+    static readFile(file: Blob, readAs: ReadType, chunkSize?: number): Promise<ReadOneFileResult>;
 }
 export {};
