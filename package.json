@@ -1,6 +1,6 @@
 {
     "name": "sdt3",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "description": "工具和组件库",
     "type": "module",
     "main": "./dist/index.es.js",

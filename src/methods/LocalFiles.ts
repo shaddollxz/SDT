@@ -24,53 +24,21 @@ type ReadResult = ReadOneFileResult[];
  *
  * @async 该类支持异步实例化
  * @example
- * let files = await new LocalFiles()
+ * let files = new LocalFiles()
+ * await files.getFile()
  * let result = files.read()
  */
-export default class LocalFiles extends AsyncConstructor {
-    declare files: File[];
+export default class LocalFiles {
+    files: File[] = [];
     text: string[];
     dataurl: string[];
-    constructor({ count = 1, type = [], maxSize = Number.MAX_VALUE }: ConstructorOptions = {}) {
-        super(async () => {
-            const limitSize = maxSize ? maxSize * 1024 : maxSize;
-            const input = document.createElement("input");
-            input.type = "file";
-            input.style.display = "none";
-            input.multiple = count == 1 ? false : true;
-            input.accept = ",." + (type.join(",.") || "*"); // 设置文件接收类型
-            document.body.appendChild(input);
-            input.click();
-            document.body.removeChild(input);
-
-            this.files = await new Promise((resolve, reject) => {
-                input.addEventListener("change", function read(e) {
-                    let target = e.target as HTMLInputElement;
-                    if (count == 1 || target.files!.length == 1) {
-                        if (target.files![0].size < limitSize) {
-                            resolve([target.files![0]]);
-                        } else {
-                            reject("选择的文件超出允许大小");
-                        }
-                    } else {
-                        let counter = 0;
-                        const result: File[] = [];
-                        Array.prototype.forEach.call(target.files, (item) => {
-                            if (counter < count && item.size < limitSize) {
-                                counter++;
-                                result.push(item);
-                            }
-                        });
-                        if (result.length == 0) {
-                            reject("选择的文件全部超出允许大小");
-                        } else {
-                            resolve(result);
-                        }
-                    }
-                    this.removeEventListener("change", read);
-                });
-            });
-        });
+    count: number = 1;
+    type: string[] = [];
+    maxSize?: number; // 以kb为单位
+    constructor({ count, type, maxSize }: ConstructorOptions = {}) {
+        count && (this.count = count);
+        type && (this.type = type);
+        maxSize && (this.maxSize = maxSize * 1024);
         this.text = ["txt", "md", "json", "js", "css", "less", "sass", "ts", "xml", "html"];
         this.dataurl = ["jpg", "png", "jpge", "gif", "mp4", "mp3", "flac"];
     }
@@ -83,6 +51,42 @@ export default class LocalFiles extends AsyncConstructor {
     /** 选取的文件大小，如果有多个是数组，如果只有一个为字符串 */
     get sizes() {
         return this.files.map((item) => item.size);
+    }
+
+    /** 选取文件 */
+    async getFile() {
+        if (this.files.length >= this.count) return;
+
+        const input = document.createElement("input");
+        input.type = "file";
+        input.style.display = "none";
+        input.multiple = this.count == 1 ? false : true;
+        input.accept = ",." + (this.type.join(",.") || "*"); // 设置文件接收类型
+        document.body.appendChild(input);
+        input.click();
+        document.body.removeChild(input);
+
+        return await new Promise<File[]>((resolve, reject) => {
+            const _this = this;
+            input.addEventListener("change", function read(e) {
+                let target = e.target as HTMLInputElement;
+
+                Array.prototype.forEach.call(target.files, (item) => {
+                    if (_this.files.length < _this.count) {
+                        if (_this.maxSize) {
+                            if (item.size <= _this.maxSize) {
+                                _this.files.push(item);
+                            }
+                        } else {
+                            _this.files.push(item);
+                        }
+                    }
+                });
+                resolve(_this.files);
+
+                this.removeEventListener("change", read);
+            });
+        });
     }
 
     /**

@@ -1,4 +1,3 @@
-import AsyncConstructor from "./AsyncConstructor";
 import type { EitherOr } from "../utils/EitherOr";
 interface ConstructorOptions {
     count?: number;
@@ -18,18 +17,24 @@ declare type ReadResult = ReadOneFileResult[];
  *
  * @async 该类支持异步实例化
  * @example
- * let files = await new LocalFiles()
+ * let files = new LocalFiles()
+ * await files.getFile()
  * let result = files.read()
  */
-export default class LocalFiles extends AsyncConstructor {
+export default class LocalFiles {
     files: File[];
     text: string[];
     dataurl: string[];
+    count: number;
+    type: string[];
+    maxSize?: number;
     constructor({ count, type, maxSize }?: ConstructorOptions);
     /** 选取的文件名 */
     get names(): string[];
     /** 选取的文件大小，如果有多个是数组，如果只有一个为字符串 */
     get sizes(): number[];
+    /** 选取文件 */
+    getFile(): Promise<File[] | undefined>;
     /**
      * 不传入参数会读取所有文件并返回文件内容的数组
      * 方法会自己推断部分文件的读取返回类型 也能通过options自己设置返回类型

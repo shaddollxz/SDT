@@ -1038,48 +1038,17 @@ function iterable(obj, sortFunc) {
     configurable: false
   });
 }
-class LocalFiles extends AsyncConstructor {
-  constructor({ count = 1, type = [], maxSize = Number.MAX_VALUE } = {}) {
-    super(() => __async(this, null, function* () {
-      const limitSize = maxSize ? maxSize * 1024 : maxSize;
-      const input = document.createElement("input");
-      input.type = "file";
-      input.style.display = "none";
-      input.multiple = count == 1 ? false : true;
-      input.accept = ",." + (type.join(",.") || "*");
-      document.body.appendChild(input);
-      input.click();
-      document.body.removeChild(input);
-      this.files = yield new Promise((resolve, reject) => {
-        input.addEventListener("change", function read(e) {
-          let target = e.target;
-          if (count == 1 || target.files.length == 1) {
-            if (target.files[0].size < limitSize) {
-              resolve([target.files[0]]);
-            } else {
-              reject("\u9009\u62E9\u7684\u6587\u4EF6\u8D85\u51FA\u5141\u8BB8\u5927\u5C0F");
-            }
-          } else {
-            let counter = 0;
-            const result = [];
-            Array.prototype.forEach.call(target.files, (item) => {
-              if (counter < count && item.size < limitSize) {
-                counter++;
-                result.push(item);
-              }
-            });
-            if (result.length == 0) {
-              reject("\u9009\u62E9\u7684\u6587\u4EF6\u5168\u90E8\u8D85\u51FA\u5141\u8BB8\u5927\u5C0F");
-            } else {
-              resolve(result);
-            }
-          }
-          this.removeEventListener("change", read);
-        });
-      });
-    }));
+class LocalFiles {
+  constructor({ count, type, maxSize } = {}) {
+    __publicField(this, "files", []);
     __publicField(this, "text");
     __publicField(this, "dataurl");
+    __publicField(this, "count", 1);
+    __publicField(this, "type", []);
+    __publicField(this, "maxSize");
+    count && (this.count = count);
+    type && (this.type = type);
+    maxSize && (this.maxSize = maxSize * 1024);
     this.text = ["txt", "md", "json", "js", "css", "less", "sass", "ts", "xml", "html"];
     this.dataurl = ["jpg", "png", "jpge", "gif", "mp4", "mp3", "flac"];
   }
@@ -1088,6 +1057,39 @@ class LocalFiles extends AsyncConstructor {
   }
   get sizes() {
     return this.files.map((item) => item.size);
+  }
+  getFile() {
+    return __async(this, null, function* () {
+      if (this.files.length >= this.count)
+        return;
+      const input = document.createElement("input");
+      input.type = "file";
+      input.style.display = "none";
+      input.multiple = this.count == 1 ? false : true;
+      input.accept = ",." + (this.type.join(",.") || "*");
+      document.body.appendChild(input);
+      input.click();
+      document.body.removeChild(input);
+      return yield new Promise((resolve, reject) => {
+        const _this = this;
+        input.addEventListener("change", function read(e) {
+          let target = e.target;
+          Array.prototype.forEach.call(target.files, (item) => {
+            if (_this.files.length < _this.count) {
+              if (_this.maxSize) {
+                if (item.size <= _this.maxSize) {
+                  _this.files.push(item);
+                }
+              } else {
+                _this.files.push(item);
+              }
+            }
+          });
+          resolve(_this.files);
+          this.removeEventListener("change", read);
+        });
+      });
+    });
   }
   read(_0) {
     return __async(this, arguments, function* (order, { chunkSize, readAs } = {}) {
