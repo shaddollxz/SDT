@@ -68,9 +68,7 @@ export default class SDIDB extends AsyncConstructor {
         __DB__[dbname].close();
     }
 
-    /**
-     * 删除指定的表
-     */
+    /** 删除指定的表 */
     async removeTable(tableName: string) {
         // 如果有缓存 先把它关闭再重新升级建表
         if (this._tableList.includes(tableName)) {
@@ -233,7 +231,7 @@ class IDBTable<KeyPath extends string, IndexNames extends string, TableType exte
     async insert(value: TableType, key: IDBValidKey): Promise<boolean>;
     async insert(value: TableType, key?: IDBValidKey) {
         // 插入前查看主键是否有重复
-        if (this.keypath && (await this.findByKeypath(value[this.keypath])).length) {
+        if (this.keypath && !(await this.findByKeypath(value[this.keypath])).length) {
             return false;
         }
         await this.CURDHandler(this.store.add(value, key));
@@ -324,11 +322,11 @@ class IDBTable<KeyPath extends string, IndexNames extends string, TableType exte
             cursorFinder.onsuccess = (e) => {
                 const cursor: IDBCursorWithValue = (e.target as any).result;
                 if (cursor) {
-                    const value = cursor.value;
                     let isFind = true;
                     for (const key of keys) {
-                        if (!isSame(value[key], query[key])) {
+                        if (!isSame(cursor.value[key], query[key])) {
                             isFind = false;
+                            break;
                         }
                     }
                     if (isFind) result.push(cursor.value);

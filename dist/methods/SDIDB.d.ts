@@ -38,9 +38,7 @@ export default class SDIDB extends AsyncConstructor {
     open(dbname: string): Promise<this | undefined>;
     /** 关闭指定的数据库 */
     close(dbname: string): void;
-    /**
-     * 删除指定的表
-     */
+    /** 删除指定的表 */
     removeTable(tableName: string): Promise<void>;
     /** 创建一个新的表 该表只能通过一个自增的主键key查找数据 */
     defineTable(tableName: string): Promise<IDBTable<any, any, any>>;

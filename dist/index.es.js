@@ -1026,14 +1026,17 @@ function deleteEmpty(value, isCheckZero = false) {
 }
 var isMobile = /Mobile/i.test(navigator.userAgent);
 function isSame(F, S, deep = false) {
-  if (F === S)
-    return true;
-  if (Number.isNaN(F) && Number.isNaN(S))
-    return true;
-  if (isRegExp(F) && isRegExp(S)) {
-    if (!(F.source === S.source))
-      return false;
+  if (["number", "string", "bigint", "boolean", "undefined"].includes(typeof F)) {
+    if (Number.isNaN(F) && Number.isNaN(S))
+      return true;
+    return F === S;
   }
+  if (F === null && S === null)
+    return true;
+  if (isRegExp(F) && isRegExp(S))
+    return F.source === S.source && F.flags === S.flags;
+  if (typeof F === "function" && typeof S === "function")
+    return F.toString() === S.toString();
   let FF = F, SS = S;
   const Fkeys = deep ? Reflect.ownKeys(FF) : Object.keys(FF);
   const Skeys = deep ? Reflect.ownKeys(SS) : Object.keys(SS);
@@ -1042,9 +1045,8 @@ function isSame(F, S, deep = false) {
   for (const key of Fkeys) {
     if (!Skeys.includes(key))
       return false;
-    if (!isSame(FF[key], SS[key])) {
+    if (!isSame(FF[key], SS[key]))
       return false;
-    }
   }
   return true;
 }
@@ -1634,7 +1636,7 @@ class IDBTable {
   }
   insert(value, key) {
     return __async(this, null, function* () {
-      if (this.keypath && (yield this.findByKeypath(value[this.keypath])).length) {
+      if (this.keypath && !(yield this.findByKeypath(value[this.keypath])).length) {
         return false;
       }
       yield this.CURDHandler(this.store.add(value, key));
@@ -1713,11 +1715,11 @@ class IDBTable {
         cursorFinder.onsuccess = (e) => {
           const cursor = e.target.result;
           if (cursor) {
-            const value = cursor.value;
             let isFind = true;
             for (const key of keys) {
-              if (!isSame(value[key], query[key])) {
+              if (!isSame(cursor.value[key], query[key])) {
                 isFind = false;
+                break;
               }
             }
             if (isFind)
