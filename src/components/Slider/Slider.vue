@@ -1,7 +1,7 @@
 <template>
-    <div class="slider" ref="slider" @mousedown="mouseDownHandler">
+    <div class="slider" ref="slider" @mousedown="draggable ? mouseDownHandler : undefined">
         <div class="passed" :style="{ width: position + '%' }">
-            <div class="btn"></div>
+            <div class="btn" v-if="draggable"></div>
         </div>
     </div>
 </template>
@@ -18,6 +18,8 @@ import SliderHelper from "./SliderHelper";
 
 interface Props {
     modelValue?: number;
+    defaultValue?: number;
+    draggable?: boolean;
 }
 interface Emits {
     (name: "update:modelValue", n: number): void;
@@ -26,11 +28,13 @@ interface Emits {
     (name: "onDragging", percent: number): void;
     (name: "onDrop", percent: number): void;
 }
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), { draggable: false });
 const emit = defineEmits<Emits>();
 
 const slider: Ref<HTMLDivElement | null> = shallowRef(null);
-let position = ref(props.modelValue != undefined ? props.modelValue : 100); // 在内部单独维护位置 只在移动成功后修改父组件的值
+let position = ref(
+    typeof props.modelValue == "number" ? props.modelValue : props.defaultValue ? props.defaultValue : 100
+);
 let isCanMove = false;
 let sliderHelper: SliderHelper;
 
@@ -57,7 +61,7 @@ function mouseDownHandler(e: MouseEvent) {
     if ((e.target as HTMLDivElement).className !== "btn") {
         position.value = sliderHelper.btnPosition(e.clientX);
     }
-    emit("onDragStart", position.value);
+    emit("onDragStart", position.value / 100);
 }
 function mouseUpHandler(e: MouseEvent) {
     if (isCanMove) {
@@ -65,8 +69,8 @@ function mouseUpHandler(e: MouseEvent) {
         const nowPosition = sliderHelper.btnPosition(e.clientX);
         if (nowPosition == 0 || nowPosition == 100 || (e.target as HTMLDivElement).className == "btn") {
             position.value = nowPosition;
-            emit("update:modelValue", position.value);
-            emit("onDrop", position.value);
+            emit("update:modelValue", position.value / 100);
+            emit("onDrop", position.value / 100);
         } else {
             position.value = sliderHelper.reset();
         }
@@ -75,19 +79,23 @@ function mouseUpHandler(e: MouseEvent) {
 function mouseMoveHandler(e: MouseEvent) {
     if (isCanMove) {
         position.value = sliderHelper.btnPosition(e.clientX);
-        emit("onDragging", position.value);
+        emit("onDragging", position.value / 100);
     }
 }
 
 onMounted(() => {
     const sliderDetail = getSliderDetail();
     sliderHelper = new SliderHelper(sliderDetail.width, sliderDetail.x);
-    document.addEventListener("mousemove", mouseMoveHandler);
-    document.addEventListener("mouseup", mouseUpHandler);
+    if (props.draggable) {
+        document.addEventListener("mousemove", mouseMoveHandler);
+        document.addEventListener("mouseup", mouseUpHandler);
+    }
 });
 onUnmounted(() => {
-    document.removeEventListener("mousemove", mouseMoveHandler);
-    document.removeEventListener("mouseup", mouseUpHandler);
+    if (props.draggable) {
+        document.removeEventListener("mousemove", mouseMoveHandler);
+        document.removeEventListener("mouseup", mouseUpHandler);
+    }
 });
 </script>
 

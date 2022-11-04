@@ -53,7 +53,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, watch } from "vue";
-import type { NumberString } from "../../utils/typings";
+import type { NumberString } from "../../typings/utils";
 import { BtnList } from "./SplitPageHelper";
 export default defineComponent({
     name: "splitPage",

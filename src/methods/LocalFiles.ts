@@ -1,5 +1,5 @@
 import AsyncConstructor from "./AsyncConstructor";
-import type { EitherOr } from "../utils/EitherOr";
+import type { EitherOr } from "../typings/utils";
 
 interface ConstructorOptions {
     count?: number;

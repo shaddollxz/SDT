@@ -1,4 +1,4 @@
-import type { BaseType } from "./typings";
+import type { BaseType } from "../typings/utils";
 export declare const isNumber: (arg: unknown) => arg is number;
 export declare const isString: (arg: unknown) => arg is string;
 export declare const isBoolen: (arg: unknown) => arg is boolean;

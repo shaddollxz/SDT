@@ -4,7 +4,7 @@ import messageComp from "./Message.vue";
 
 interface Props {
     text: string;
-    type: "default" | "success" | "error";
+    type: "default" | "success" | "error" | "warning";
     duration: number; // 显示的事件 如果为零会无视isCanClose显示删除按钮
     isCanClose: boolean; // 是否显示删除按钮
     align: "left" | "right" | "center";
@@ -41,6 +41,7 @@ interface MessageFunc {
     (text: string, options?: Omit<MessageProps, "text">): void;
     success: (text: string, options?: Omit<MessageProps, "type" | "text">) => void;
     error: (text: string, options?: Omit<MessageProps, "type" | "text">) => void;
+    warning: (text: string, options?: Omit<MessageProps, "type" | "text">) => void;
 }
 
 const defaultProps: any = {
@@ -59,6 +60,9 @@ Message.success = (text, options) => {
 };
 Message.error = (text, options) => {
     renderMessage(Object.assign({}, defaultProps, options, { text, type: "error" }));
+};
+Message.warning = (text, options) => {
+    renderMessage(Object.assign({}, defaultProps, options, { text, type: "warning" }));
 };
 
 export default Message;

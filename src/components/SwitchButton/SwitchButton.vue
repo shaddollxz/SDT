@@ -50,11 +50,10 @@ function statuChange() {
         box-sizing: border-box;
         padding: 0 calc(var(--height) / 2) 0 0;
         border-radius: var(--height);
-        border: var(---color-border);
+        border: var(--color-text-default) solid 1px;
         margin: 0 0.5rem;
         width: var(--width);
         height: var(--height);
-        background-color: var(--color-bg-deep);
         cursor: pointer;
         > div {
             width: var(--height);
@@ -65,15 +64,15 @@ function statuChange() {
         }
     }
     .chosed {
-        color: var(--color-primary-bland);
+        color: var(--color-green-1);
     }
     .notChosed {
-        color: var(--color-error-bland);
+        color: var(--color-red-1);
     }
     // 选择右边时
     &.open {
         .center {
-            background-color: var(--color-primary-bland);
+            background-color: var(--color-green-1);
             > div {
                 transform: translateX(calc(var(--width) - 100%));
             }

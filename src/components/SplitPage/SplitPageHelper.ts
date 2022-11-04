@@ -1,4 +1,4 @@
-import type { NumberString } from "../../utils/typings";
+import type { NumberString } from "../../typings/utils";
 //#region 按钮的数据结构
 export class BtnList {
     max: number;
@@ -12,7 +12,7 @@ export class BtnList {
         this.limit = +limitLen;
         this.limitHalf = this.limit % 2 ? ~~(this.limit / 2) + 1 : this.limit / 2;
         this._curr = 1;
-        this.maxArr = Array.from({ length: this.max }).map((item, index) => index + 1);
+        this.maxArr = Array.from({ length: this.max }).map((_, index) => index + 1);
         if (this.max > limitLen) {
             this.showArr = (this.maxArr as typeof this.showArr)
                 .slice(0, this.limit - 2)

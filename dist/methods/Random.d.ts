@@ -12,6 +12,8 @@ export default class Random {
      * 从数组中随机获得一项
      */
     static array<T>(arr: T[], start?: number, end?: number): T;
+    /** 从数组中随机获取多个不重复项 */
+    static arrayMulti<T>(arr: T[], len: number): T[];
     /**
      * 从字符串中获取指定数量的随机字并组成字符串
      */

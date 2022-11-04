@@ -1,4 +1,4 @@
-import { isRegExp, isSymbol } from "../utils/typeCheck";
+import { isRegExp } from "../utils/typeCheck";
 
 /**
  * 判断两个值是否相等 (无法判断set,map是否相同)
@@ -10,13 +10,6 @@ import { isRegExp, isSymbol } from "../utils/typeCheck";
 export default function isSame(F: unknown, S: unknown, deep = false): boolean {
     if (F === S) return true;
     if (Number.isNaN(F) && Number.isNaN(S)) return true;
-    if (isSymbol(F) && isSymbol(S)) {
-        if (F.toString() === S.toString()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     //? 到这里就说明都是对象了
     if (isRegExp(F) && isRegExp(S)) {

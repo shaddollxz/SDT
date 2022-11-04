@@ -19,7 +19,7 @@ export default defineComponent({
 <script setup lang="ts">
 interface Props {
     text: string;
-    type: "default" | "success" | "error";
+    type: "default" | "success" | "error" | "warning";
     duration: number; // 显示的事件 如果为零会无视isCanClose显示删除按钮
     isCanClose: boolean; // 是否显示删除按钮
     align: "left" | "right" | "center";
@@ -69,12 +69,16 @@ const direction = ref(directionMap[props.leaveTo]);
         background-color: var(--color-text-default);
     }
     &.success {
-        color: var(--color-primary);
-        background-color: var(--color-primary-text);
+        color: var(--color-green);
+        background-color: var(--color-green-7);
     }
     &.error {
-        color: var(--color-error);
-        background-color: var(--color-error-text);
+        color: var(--color-red);
+        background-color: var(--color-red-7);
+    }
+    &.warning {
+        color: var(--color-orange);
+        background-color: var(--color-orange-7);
     }
     .text {
         margin-right: 1rem;

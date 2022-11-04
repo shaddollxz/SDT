@@ -1,4 +1,4 @@
-import type { EitherOr } from "../utils/EitherOr";
+import type { EitherOr } from "../typings/utils";
 interface ConstructorOptions {
     count?: number;
     type?: string[];

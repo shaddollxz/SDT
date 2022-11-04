@@ -42,7 +42,7 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 var _a;
-import { nextTick, defineComponent, ref, shallowRef, watch, openBlock, createElementBlock, normalizeStyle, createElementVNode, normalizeClass, unref, Fragment, renderSlot, createCommentVNode, onMounted, onUnmounted, pushScopeId, popScopeId, renderList, toDisplayString, withDirectives, isRef, withKeys, vModelText, useCssVars, createBlock, Transition, withCtx, vShow, createVNode, render } from "vue";
+import { nextTick, defineComponent, ref, shallowRef, watch, openBlock, createElementBlock, normalizeStyle, createElementVNode, normalizeClass, unref, Fragment, renderSlot, createCommentVNode, onMounted, onUnmounted, renderList, toDisplayString, withDirectives, isRef, withKeys, vModelText, pushScopeId, popScopeId, computed, useCssVars, createBlock, Transition, withCtx, vShow, createVNode, render } from "vue";
 var vFill = {
   install(app) {
     app.directive("fill", {
@@ -198,7 +198,7 @@ var directives = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProp
   VHidden: vHidden,
   VDrag: vDrag
 }, Symbol.toStringTag, { value: "Module" }));
-var colors = /* @__PURE__ */ (() => ":root{--color-text-theme: orange;--color-primary: #238636;--color-primary-bland: #2ea043;--color-primary-text: #bce1c3;--color-error: #f56c6c;--color-error-bland: #ff9191;--color-error-text: #ffdada;--color-text-default: #adbac7;--color-border: #444c56;--color-bg-deep: #1c2128;--color-bg-bland: #22272e}\n")();
+var colors = /* @__PURE__ */ (() => ":root{--color-text-theme: orange;--color-blue: #337ecc;--color-blue-1: #409eff;--color-blue-3: #79bbff;--color-blue-5: #a0cfff;--color-blue-7: #c6e2ff;--color-blue-8: #d9ecff;--color-blue-9: #ecf5ff;--color-green: #529b2e;--color-green-1: #67c23a;--color-green-3: #95d475;--color-green-5: #b3e19d;--color-green-7: #d1edc4;--color-green-8: #e1f3d8;--color-green-9: #f0f9eb;--color-orange: #b88230;--color-orange-1: #e6a23c;--color-orange-3: #eebe77;--color-orange-5: #f3d19e;--color-orange-7: #f8e3c5;--color-orange-8: #faecd8;--color-orange-9: #fdf6ec;--color-red: #c45656;--color-red-1: #f56c6c;--color-red-3: #f89898;--color-red-5: #fab6b6;--color-red-7: #fcd3d3;--color-red-8: #fde2e2;--color-red-9: #fef0f0;--color-text-default: #adbac7;--color-border: #444c56;--color-bg-deep: #1c2128;--color-bg-bland: #22272e}\n")();
 var RollText_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".rollText[data-v-3bb0bd0f]{position:relative;overflow:hidden;display:flex}.rollText .move[data-v-3bb0bd0f]{width:max-content;display:flex;align-items:center;position:relative}.rollText .move .text[data-v-3bb0bd0f]{width:max-content;white-space:nowrap}.rollText .notOverView[data-v-3bb0bd0f]{width:200%!important}.rollText .notOverView .text[data-v-3bb0bd0f]{width:50%!important}.rollText .overView[data-v-3bb0bd0f]{width:max-content!important}.rollText .overView .text[data-v-3bb0bd0f]{width:max-content!important;padding-right:5rem}.rollText .roll[data-v-3bb0bd0f]{transform:translateZ(0);animation:move-3bb0bd0f 5s linear infinite}@keyframes move-3bb0bd0f{0%{transform:translate(0)}to{transform:translate(-50%)}}\n")();
 var _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
@@ -211,12 +211,12 @@ const _hoisted_1$3 = {
   key: 0,
   class: "text"
 };
-const _hoisted_2$3 = ["innerHTML"];
+const _hoisted_2$2 = ["innerHTML"];
 const _hoisted_3$1 = ["innerHTML"];
 const __default__$5 = defineComponent({
   name: "rollText"
 });
-const _sfc_main$5 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$5), {
+const _sfc_main$6 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$5), {
   props: {
     type: { default: 1 },
     duration: { default: 8 },
@@ -298,7 +298,7 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
               ref_key: "text",
               ref: text,
               innerHTML: _ctx.$props.asyncData
-            }, null, 8, _hoisted_2$3),
+            }, null, 8, _hoisted_2$2),
             _ctx.$props.type == 1 ? (openBlock(), createElementBlock("div", {
               key: 0,
               class: "text",
@@ -310,8 +310,8 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
     };
   }
 }));
-var RollText = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-3bb0bd0f"]]);
-var index$5 = {
+var RollText = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["__scopeId", "data-v-3bb0bd0f"]]);
+var index$6 = {
   install(app) {
     app.component("RollText", RollText);
   }
@@ -320,7 +320,7 @@ var LazyLoadBox_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ ((
 const __default__$4 = defineComponent({
   name: "lazyLoadBox"
 });
-const _sfc_main$4 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$4), {
+const _sfc_main$5 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$4), {
   props: {
     duration: { default: 0.5 },
     direction: { default: "bottom" },
@@ -355,8 +355,8 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
     };
   }
 }));
-var LazyLoadBox = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-4b78e094"]]);
-var index$4 = {
+var LazyLoadBox = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["__scopeId", "data-v-4b78e094"]]);
+var index$5 = {
   install(app) {
     app.component("LazyLoadBox", LazyLoadBox);
   }
@@ -445,24 +445,25 @@ class SliderHelper {
     return this.beforemovePosition;
   }
 }
-var Slider_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".slider[data-v-33f70ec2]{--Height: .8rem;--DIA: 1.2rem;position:relative;height:var(--Height);margin:calc((var(--DIA) - var(--Height)) / 2) 0;border-radius:calc(var(--Height) / 1.5);background-color:var(--color-text-default)}.slider .passed[data-v-33f70ec2]{height:var(--Height);border-radius:calc(var(--Height) / 1.5);background-color:var(--color-text-theme)}.slider .passed .btn[data-v-33f70ec2]{float:right;width:var(--DIA);height:var(--DIA);background:var(--color-text-theme);box-sizing:border-box;margin:calc((var(--DIA) - var(--Height)) / -2) calc(var(--DIA) / -2) 0 0;border:calc(var(--DIA) - var(--Height)) solid var(--color-text-default);border-radius:50%;cursor:grab}\n")();
-const _withScopeId$2 = (n) => (pushScopeId("data-v-33f70ec2"), n = n(), popScopeId(), n);
-const _hoisted_1$2 = /* @__PURE__ */ _withScopeId$2(() => /* @__PURE__ */ createElementVNode("div", { class: "btn" }, null, -1));
-const _hoisted_2$2 = [
-  _hoisted_1$2
-];
+var Slider_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".slider[data-v-db62d256]{--Height: .8rem;--DIA: 1.2rem;position:relative;height:var(--Height);margin:calc((var(--DIA) - var(--Height)) / 2) 0;border-radius:calc(var(--Height) / 1.5);background-color:var(--color-text-default)}.slider .passed[data-v-db62d256]{height:var(--Height);border-radius:calc(var(--Height) / 1.5);background-color:var(--color-text-theme)}.slider .passed .btn[data-v-db62d256]{float:right;width:var(--DIA);height:var(--DIA);background:var(--color-text-theme);box-sizing:border-box;margin:calc((var(--DIA) - var(--Height)) / -2) calc(var(--DIA) / -2) 0 0;border:calc(var(--DIA) - var(--Height)) solid var(--color-text-default);border-radius:50%;cursor:grab}\n")();
+const _hoisted_1$2 = {
+  key: 0,
+  class: "btn"
+};
 const __default__$3 = defineComponent({
   name: "slider"
 });
-const _sfc_main$3 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$3), {
+const _sfc_main$4 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$3), {
   props: {
-    modelValue: null
+    modelValue: null,
+    defaultValue: null,
+    draggable: { type: Boolean, default: false }
   },
   emits: ["update:modelValue", "onDragStart", "onDragging", "onDrop"],
   setup(__props, { emit }) {
     const props = __props;
     const slider = shallowRef(null);
-    let position = ref(props.modelValue != void 0 ? props.modelValue : 100);
+    let position = ref(typeof props.modelValue == "number" ? props.modelValue : props.defaultValue ? props.defaultValue : 100);
     let isCanMove = false;
     let sliderHelper;
     if (typeof props.modelValue == "number") {
@@ -483,7 +484,7 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
       if (e.target.className !== "btn") {
         position.value = sliderHelper.btnPosition(e.clientX);
       }
-      emit("onDragStart", position.value);
+      emit("onDragStart", position.value / 100);
     }
     function mouseUpHandler(e) {
       if (isCanMove) {
@@ -491,8 +492,8 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
         const nowPosition = sliderHelper.btnPosition(e.clientX);
         if (nowPosition == 0 || nowPosition == 100 || e.target.className == "btn") {
           position.value = nowPosition;
-          emit("update:modelValue", position.value);
-          emit("onDrop", position.value);
+          emit("update:modelValue", position.value / 100);
+          emit("onDrop", position.value / 100);
         } else {
           position.value = sliderHelper.reset();
         }
@@ -501,36 +502,42 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
     function mouseMoveHandler(e) {
       if (isCanMove) {
         position.value = sliderHelper.btnPosition(e.clientX);
-        emit("onDragging", position.value);
+        emit("onDragging", position.value / 100);
       }
     }
     onMounted(() => {
       const sliderDetail = getSliderDetail();
       sliderHelper = new SliderHelper(sliderDetail.width, sliderDetail.x);
-      document.addEventListener("mousemove", mouseMoveHandler);
-      document.addEventListener("mouseup", mouseUpHandler);
+      if (props.draggable) {
+        document.addEventListener("mousemove", mouseMoveHandler);
+        document.addEventListener("mouseup", mouseUpHandler);
+      }
     });
     onUnmounted(() => {
-      document.removeEventListener("mousemove", mouseMoveHandler);
-      document.removeEventListener("mouseup", mouseUpHandler);
+      if (props.draggable) {
+        document.removeEventListener("mousemove", mouseMoveHandler);
+        document.removeEventListener("mouseup", mouseUpHandler);
+      }
     });
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("div", {
         class: "slider",
         ref_key: "slider",
         ref: slider,
-        onMousedown: mouseDownHandler
+        onMousedown: _cache[0] || (_cache[0] = ($event) => __props.draggable ? mouseDownHandler : void 0)
       }, [
         createElementVNode("div", {
           class: "passed",
           style: normalizeStyle({ width: unref(position) + "%" })
-        }, _hoisted_2$2, 4)
+        }, [
+          __props.draggable ? (openBlock(), createElementBlock("div", _hoisted_1$2)) : createCommentVNode("", true)
+        ], 4)
       ], 544);
     };
   }
 }));
-var Slider = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-33f70ec2"]]);
-var index$3 = {
+var Slider = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["__scopeId", "data-v-db62d256"]]);
+var index$4 = {
   install(app) {
     app.component("Slider", Slider);
   }
@@ -547,7 +554,7 @@ class BtnList {
     this.limit = +limitLen;
     this.limitHalf = this.limit % 2 ? ~~(this.limit / 2) + 1 : this.limit / 2;
     this._curr = 1;
-    this.maxArr = Array.from({ length: this.max }).map((item, index2) => index2 + 1);
+    this.maxArr = Array.from({ length: this.max }).map((_, index2) => index2 + 1);
     if (this.max > limitLen) {
       this.showArr = this.maxArr.slice(0, this.limit - 2).concat("...", this.max);
     } else {
@@ -591,8 +598,8 @@ class BtnList {
     }
   }
 }
-var SplitPage_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".splitPage[data-v-2026c63f]{display:flex;flex-direction:column;justify-content:space-between;align-items:center;user-select:none}.splitPage .buttons[data-v-2026c63f]{display:flex;justify-content:center;width:100%;margin-bottom:1rem}.splitPage .buttons .button[data-v-2026c63f]{display:flex;align-items:center;justify-content:center;width:3rem;height:3rem;box-sizing:border-box;padding:.3rem .6rem;border-radius:.3rem;border:1px solid var(--color-border);margin:0 .5rem;cursor:pointer}.splitPage .buttons .button[data-v-2026c63f]:hover,.splitPage .buttons .button.current[data-v-2026c63f]{color:var(--color-text-theme);border-color:var(--color-text-theme)}.splitPage .buttons .button.arrow[data-v-2026c63f]{font-weight:600}.splitPage .buttons .button.ellipsis[data-v-2026c63f]{border:none;pointer-events:none;cursor:default}.splitPage .jumpTo input[data-v-2026c63f]{margin:0 .5rem;max-width:2rem;border:1.5px solid var(--color-border);border-radius:.5rem}.splitPage .jumpTo input[data-v-2026c63f]:focus-visible{outline-style:none;border-color:var(--color-text-theme)!important}\n")();
-const _withScopeId$1 = (n) => (pushScopeId("data-v-2026c63f"), n = n(), popScopeId(), n);
+var SplitPage_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".splitPage[data-v-6d1129ff]{display:flex;flex-direction:column;justify-content:space-between;align-items:center;user-select:none}.splitPage .buttons[data-v-6d1129ff]{display:flex;justify-content:center;width:100%;margin-bottom:1rem}.splitPage .buttons .button[data-v-6d1129ff]{display:flex;align-items:center;justify-content:center;width:3rem;height:3rem;box-sizing:border-box;padding:.3rem .6rem;border-radius:.3rem;border:1px solid var(--color-border);margin:0 .5rem;cursor:pointer}.splitPage .buttons .button[data-v-6d1129ff]:hover,.splitPage .buttons .button.current[data-v-6d1129ff]{color:var(--color-text-theme);border-color:var(--color-text-theme)}.splitPage .buttons .button.arrow[data-v-6d1129ff]{font-weight:600}.splitPage .buttons .button.ellipsis[data-v-6d1129ff]{border:none;pointer-events:none;cursor:default}.splitPage .jumpTo input[data-v-6d1129ff]{margin:0 .5rem;max-width:2rem;border:1.5px solid var(--color-border);border-radius:.5rem}.splitPage .jumpTo input[data-v-6d1129ff]:focus-visible{outline-style:none;border-color:var(--color-text-theme)!important}\n")();
+const _withScopeId$1 = (n) => (pushScopeId("data-v-6d1129ff"), n = n(), popScopeId(), n);
 const _hoisted_1$1 = {
   key: 0,
   class: "splitPage"
@@ -605,7 +612,7 @@ const _hoisted_6 = /* @__PURE__ */ _withScopeId$1(() => /* @__PURE__ */ createEl
 const __default__$2 = defineComponent({
   name: "splitPage"
 });
-const _sfc_main$2 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$2), {
+const _sfc_main$3 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$2), {
   props: {
     modelValue: null,
     limit: { default: 7 },
@@ -684,14 +691,14 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
     };
   }
 }));
-var SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-2026c63f"]]);
-var index$2 = {
+var SplitPage = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-6d1129ff"]]);
+var index$3 = {
   install(app) {
     app.component("SplitPage", SplitPage);
   }
 };
-var SwitchButton_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".switchButton[data-v-cad2ce44]{--height: 2rem;--width: 5rem;display:flex}.switchButton .center[data-v-cad2ce44]{box-sizing:border-box;padding:0 calc(var(--height) / 2) 0 0;border-radius:var(--height);border:var(---color-border);margin:0 .5rem;width:var(--width);height:var(--height);background-color:var(--color-bg-deep);cursor:pointer}.switchButton .center>div[data-v-cad2ce44]{width:var(--height);height:var(--height);clip-path:circle(50%);background-color:var(--color-text-default);transition:all .3s}.switchButton .chosed[data-v-cad2ce44]{color:var(--color-primary-bland)}.switchButton .notChosed[data-v-cad2ce44]{color:var(--color-error-bland)}.switchButton.open .center[data-v-cad2ce44]{background-color:var(--color-primary-bland)}.switchButton.open .center>div[data-v-cad2ce44]{transform:translate(calc(var(--width) - 100%))}\n")();
-const _withScopeId = (n) => (pushScopeId("data-v-cad2ce44"), n = n(), popScopeId(), n);
+var SwitchButton_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".switchButton[data-v-048ab657]{--height: 2rem;--width: 5rem;display:flex}.switchButton .center[data-v-048ab657]{box-sizing:border-box;padding:0 calc(var(--height) / 2) 0 0;border-radius:var(--height);border:var(--color-text-default) solid 1px;margin:0 .5rem;width:var(--width);height:var(--height);cursor:pointer}.switchButton .center>div[data-v-048ab657]{width:var(--height);height:var(--height);clip-path:circle(50%);background-color:var(--color-text-default);transition:all .3s}.switchButton .chosed[data-v-048ab657]{color:var(--color-green-1)}.switchButton .notChosed[data-v-048ab657]{color:var(--color-red-1)}.switchButton.open .center[data-v-048ab657]{background-color:var(--color-green-1)}.switchButton.open .center>div[data-v-048ab657]{transform:translate(calc(var(--width) - 100%))}\n")();
+const _withScopeId = (n) => (pushScopeId("data-v-048ab657"), n = n(), popScopeId(), n);
 const _hoisted_1 = /* @__PURE__ */ _withScopeId(() => /* @__PURE__ */ createElementVNode("div", null, null, -1));
 const _hoisted_2 = [
   _hoisted_1
@@ -699,7 +706,7 @@ const _hoisted_2 = [
 const __default__$1 = defineComponent({
   name: "switchButton"
 });
-const _sfc_main$1 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$1), {
+const _sfc_main$2 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({}, __default__$1), {
   props: {
     modelValue: { type: Boolean }
   },
@@ -734,21 +741,57 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues
     };
   }
 }));
-var SwitchButton = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-cad2ce44"]]);
-var index$1 = {
+var SwitchButton = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-048ab657"]]);
+var index$2 = {
   install(app) {
     app.component("SwitchButton", SwitchButton);
   }
 };
+var CheckBox_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => '.checkBox[data-v-0102f506]{box-sizing:border-box;width:1rem;aspect-ratio:1/1;border:1px solid var(--color-border)}.checked[data-v-0102f506]{position:relative;background-color:var(--color-text-default)}.checked[data-v-0102f506]:after{content:"";position:absolute;width:50%;aspect-ratio:2/1;left:50%;top:45%;transform:translate(-50%,-50%) rotate(-45deg);border:1px solid var(--color-border);border-right:0;border-top:0}\n')();
+const _sfc_main$1 = /* @__PURE__ */ defineComponent({
+  __name: "CheckBox",
+  props: {
+    modelValue: { type: Boolean, default: void 0 },
+    checked: { type: Boolean, default: false }
+  },
+  emits: ["update:modelValue", "onCheck"],
+  setup(__props, { emit }) {
+    const props = __props;
+    const isCheck = ref(props.checked ? props.checked : false);
+    const state = computed(() => props.modelValue === void 0 ? isCheck.value : props.modelValue);
+    function setState() {
+      if (props.modelValue === void 0) {
+        isCheck.value = !isCheck.value;
+        emit("onCheck", isCheck.value);
+      } else {
+        emit("update:modelValue", !props.modelValue);
+        emit("onCheck", !props.modelValue);
+      }
+    }
+    return (_ctx, _cache) => {
+      return openBlock(), createElementBlock("div", {
+        class: normalizeClass(["checkBox", { checked: unref(state) }]),
+        onClick: setState
+      }, null, 2);
+    };
+  }
+});
+var CheckBox = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-0102f506"]]);
+var index$1 = {
+  install(app) {
+    app.component("CheckBox", CheckBox);
+  }
+};
 var components = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
-  RollText: index$5,
-  LazyLoadBox: index$4,
-  Slider: index$3,
-  SplitPage: index$2,
-  SwitchButton: index$1
+  RollText: index$6,
+  LazyLoadBox: index$5,
+  Slider: index$4,
+  SplitPage: index$3,
+  SwitchButton: index$2,
+  CheckBox: index$1
 }, Symbol.toStringTag, { value: "Module" }));
-var Message_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".message[data-v-15ad05a8]{display:flex;align-items:center;width:33%;height:max-content;box-sizing:border-box;padding:1rem 1.8rem;margin:auto;margin-bottom:.6rem;border-radius:.4rem}.message.default[data-v-15ad05a8]{color:var(--color-bg-bland);background-color:var(--color-text-default)}.message.success[data-v-15ad05a8]{color:var(--color-primary);background-color:var(--color-primary-text)}.message.error[data-v-15ad05a8]{color:var(--color-error);background-color:var(--color-error-text)}.message .text[data-v-15ad05a8]{margin-right:1rem;font-size:1rem;font-weight:600;flex:1}.message .text.center[data-v-15ad05a8]{text-align:center}.message .text.left[data-v-15ad05a8]{text-align:left}.message .canClose[data-v-15ad05a8]{cursor:pointer}.message .cantClose[data-v-15ad05a8]{display:none}.message-leave-active[data-v-15ad05a8]{transition:all .7s ease}.message-leave-to[data-v-15ad05a8]{opacity:0;transform:var(--8984f1b4)}\n")();
+var Message_vue_vue_type_style_index_0_scoped_true_lang = /* @__PURE__ */ (() => ".message[data-v-22fadf35]{display:flex;align-items:center;width:33%;height:max-content;box-sizing:border-box;padding:1rem 1.8rem;margin:auto;margin-bottom:.6rem;border-radius:.4rem}.message.default[data-v-22fadf35]{color:var(--color-bg-bland);background-color:var(--color-text-default)}.message.success[data-v-22fadf35]{color:var(--color-green);background-color:var(--color-green-7)}.message.error[data-v-22fadf35]{color:var(--color-red);background-color:var(--color-red-7)}.message.warning[data-v-22fadf35]{color:var(--color-orange);background-color:var(--color-orange-7)}.message .text[data-v-22fadf35]{margin-right:1rem;font-size:1rem;font-weight:600;flex:1}.message .text.center[data-v-22fadf35]{text-align:center}.message .text.left[data-v-22fadf35]{text-align:left}.message .canClose[data-v-22fadf35]{cursor:pointer}.message .cantClose[data-v-22fadf35]{display:none}.message-leave-active[data-v-22fadf35]{transition:all .7s ease}.message-leave-to[data-v-22fadf35]{opacity:0;transform:var(--5ee9ed6c)}\n")();
 const __default__ = defineComponent({
   name: "message"
 });
@@ -766,7 +809,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({
   setup(__props) {
     const props = __props;
     useCssVars((_ctx) => ({
-      "8984f1b4": direction.value
+      "5ee9ed6c": direction.value
     }));
     const isShow = ref(true);
     onMounted(() => {
@@ -810,7 +853,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent(__spreadProps(__spreadValues({
     };
   }
 }));
-var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-15ad05a8"]]);
+var messageComp = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-22fadf35"]]);
 let messageBox = null;
 function renderMessage(options) {
   if (!messageBox) {
@@ -839,6 +882,9 @@ Message.success = (text, options) => {
 };
 Message.error = (text, options) => {
   renderMessage(Object.assign({}, defaultProps, options, { text, type: "error" }));
+};
+Message.warning = (text, options) => {
+  renderMessage(Object.assign({}, defaultProps, options, { text, type: "warning" }));
 };
 class AsyncConstructor {
   constructor(asyncArrowFunction) {
@@ -880,7 +926,6 @@ function debounce(callback, delay = 300, style = true) {
     };
   }
 }
-const isSymbol = (arg) => typeof arg == "symbol";
 const isNull = (arg) => arg === null;
 const isObject = (arg) => typeof arg == "object" && !Array.isArray(arg) && typeof arg !== "function" && arg !== null && !(arg instanceof RegExp);
 const isRegExp = (arg) => arg instanceof RegExp;
@@ -985,13 +1030,6 @@ function isSame(F, S, deep = false) {
     return true;
   if (Number.isNaN(F) && Number.isNaN(S))
     return true;
-  if (isSymbol(F) && isSymbol(S)) {
-    if (F.toString() === S.toString()) {
-      return true;
-    } else {
-      return false;
-    }
-  }
   if (isRegExp(F) && isRegExp(S)) {
     if (!(F.source === S.source))
       return false;
@@ -1280,7 +1318,20 @@ function transformTimeNumber(timeNumber, precision = "mm", formatStr = "/mm/:/ss
 }
 const transformChinese = ["\u5929", "\u4E00", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u4E03", "\u516B", "\u4E5D", "\u5341", "\u5341\u4E00", "\u5341\u4E8C"];
 const transformEnglish_Week = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
-const transformEnglish_Month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+const transformEnglish_Month = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec"
+];
 let cache = null;
 const _localStorage = Symbol("_localStorage");
 class LocalStorage {
@@ -1407,11 +1458,18 @@ class Random {
   static number(range, precision = 0) {
     const [min, max] = range;
     let random = Math.random() * (max - min + 1) + min;
-    random = SDMath.floor(random, precision);
-    return random;
+    return SDMath.floor(random, precision);
   }
   static array(arr, start = 0, end = arr.length - 1) {
     return arr[Random.number([start, end])];
+  }
+  static arrayMulti(arr, len) {
+    const newArr = [...arr];
+    for (let i = newArr.length - 1; i > 0; i--) {
+      const random = this.number([0, i]);
+      [newArr[i], newArr[random]] = [newArr[random], newArr[i]];
+    }
+    return newArr.slice(0, len);
   }
   static pick(range, len = 1) {
     const arr = [];
@@ -1470,23 +1528,25 @@ let __DB__ = {};
 class SDIDB extends AsyncConstructor {
   constructor(name) {
     super(() => __async(this, null, function* () {
-      yield this.openDB();
-    }));
-    __publicField(this, "_version");
-    __publicField(this, "_tableList");
-    this.name = name;
-  }
-  openDB(_0, _1) {
-    return __async(this, arguments, function* (type, tableName, settings = {}) {
-      let DBRequest = type && this._version ? window.indexedDB.open(this.name, ++this._version) : window.indexedDB.open(this.name);
-      DBRequest.onerror = () => {
-        throw "\u6570\u636E\u5E93\u6253\u5F00\u5931\u8D25";
-      };
-      if (type && tableName) {
-        yield onupgradeneeded.call(this, DBRequest, type, tableName, settings);
+      if (name) {
+        this.name = name;
+        yield this.openDB();
       }
-      yield onsuccess.call(this, DBRequest);
+    }));
+  }
+  open(dbname) {
+    return __async(this, null, function* () {
+      if (this.name != dbname) {
+        this.name = dbname;
+        yield this.openDB();
+        return this;
+      } else {
+        console.error("\u6570\u636E\u5E93" + dbname + "\u5DF2\u6253\u5F00");
+      }
     });
+  }
+  close(dbname) {
+    __DB__[dbname].close();
   }
   removeTable(tableName) {
     return __async(this, null, function* () {
@@ -1495,12 +1555,12 @@ class SDIDB extends AsyncConstructor {
       }
     });
   }
-  defineTable(_0, _1) {
-    return __async(this, arguments, function* (tableName, _keys, indexs = {}) {
+  defineTable(tableName, settings) {
+    return __async(this, null, function* () {
       if (!this._tableList.includes(tableName)) {
-        yield this.openDB("create", tableName, indexs);
+        yield this.openDB("create", tableName, settings);
       }
-      return () => new IDBTable(this.name, tableName, indexs);
+      return new IDBTable(this.name, tableName, settings);
     });
   }
   static deleteDB(dbname) {
@@ -1512,45 +1572,57 @@ class SDIDB extends AsyncConstructor {
   get tables() {
     return this._tableList;
   }
-}
-function onupgradeneeded(DBRequest, type, tableName, settings) {
-  return __async(this, null, function* () {
-    return new Promise((resolve, reject) => {
-      DBRequest.onupgradeneeded = (e) => {
-        var _a2, _b, _c;
-        const DB = e.target.result;
-        if (type == "create") {
-          const store = DB.createObjectStore(tableName, settings.keypath ? { keyPath: settings.keypath } : { autoIncrement: true });
-          if (settings.index) {
-            const indexNames = Object.keys(settings.index);
-            for (const name of indexNames) {
-              store.createIndex(name, (_a2 = settings.index[name].path) != null ? _a2 : name, {
-                unique: (_b = settings.index[name].unique) != null ? _b : false,
-                multiEntry: ((_c = settings.index[name].multiEntry) != null ? _c : Array.isArray(settings.index[name].path)) ? false : true
-              });
+  openDB(_0, _1) {
+    return __async(this, arguments, function* (type, tableName, settings = {}) {
+      let DBRequest = type && this._version ? window.indexedDB.open(this.name, ++this._version) : window.indexedDB.open(this.name);
+      DBRequest.onerror = () => {
+        throw "\u6570\u636E\u5E93\u6253\u5F00\u5931\u8D25";
+      };
+      if (type && tableName) {
+        yield this.onupgradeneeded(DBRequest, type, tableName, settings);
+      }
+      yield this.onsuccess(DBRequest);
+    });
+  }
+  onupgradeneeded(DBRequest, type, tableName, settings) {
+    return __async(this, null, function* () {
+      return new Promise((resolve, reject) => {
+        DBRequest.onupgradeneeded = (e) => {
+          var _a2, _b, _c;
+          const DB = e.target.result;
+          if (type == "create") {
+            const store = DB.createObjectStore(tableName, settings.keypath ? { keyPath: settings.keypath } : { autoIncrement: true });
+            if (settings.index) {
+              const indexNames = Object.keys(settings.index);
+              for (const name of indexNames) {
+                store.createIndex(name, (_a2 = settings.index[name].path) != null ? _a2 : name, {
+                  unique: (_b = settings.index[name].unique) != null ? _b : false,
+                  multiEntry: ((_c = settings.index[name].multiEntry) != null ? _c : Array.isArray(settings.index[name].path)) ? false : true
+                });
+              }
             }
+          } else if (type == "remove") {
+            DB.deleteObjectStore(tableName);
           }
-        } else if (type == "remove") {
-          DB.deleteObjectStore(tableName);
-        }
-        resolve(true);
-      };
+          resolve(true);
+        };
+      });
     });
-  });
-}
-function onsuccess(DBRequest) {
-  return __async(this, null, function* () {
-    return new Promise((resolve, reject) => {
-      DBRequest.onsuccess = (e) => {
-        const DB = e.target.result;
-        DB.onversionchange = () => DB.close();
-        __DB__[this.name] = DB;
-        this._version = DB.version;
-        this._tableList = Array.from(DB.objectStoreNames);
-        resolve(true);
-      };
+  }
+  onsuccess(DBRequest) {
+    return __async(this, null, function* () {
+      return new Promise((resolve, reject) => {
+        DBRequest.onsuccess = (e) => {
+          const DB = e.target.result;
+          DB.onversionchange = () => DB.close();
+          __DB__[this.name] = DB;
+          this._version = DB.version;
+          this._tableList = Array.from(DB.objectStoreNames);
+          resolve(true);
+        };
+      });
     });
-  });
+  }
 }
 class IDBTable {
   constructor(dbName, tableName, tableSetting) {
@@ -1562,14 +1634,28 @@ class IDBTable {
   }
   insert(value, key) {
     return __async(this, null, function* () {
-      let IDBrequest = this.store.add(value, key);
-      return yield CURDHandler.call(this, IDBrequest);
+      if (this.keypath && (yield this.findByKeypath(value[this.keypath])).length) {
+        return false;
+      }
+      yield this.CURDHandler(this.store.add(value, key));
+      return true;
     });
   }
-  remove(keyPath) {
+  findByKeypathAndRemove(keyPath) {
     return __async(this, null, function* () {
-      let IDBrequest = this.store.delete(keyPath);
-      return yield CURDHandler.call(this, IDBrequest);
+      return yield this.CURDHandler(this.store.delete(keyPath));
+    });
+  }
+  findByIndexAndRemove(findOption) {
+    return __async(this, null, function* () {
+      if (!this.keypath)
+        throw false;
+      const value = yield this.findByIndex(findOption);
+      for (const item of value) {
+        const keypath = item[this.keypath];
+        yield this.CURDHandler(this.store.delete(keypath));
+      }
+      return true;
     });
   }
   update(query, update, key) {
@@ -1578,31 +1664,40 @@ class IDBTable {
       for (const item in update) {
         changeProperties(value, update[item], item);
       }
-      let IDBrequest = this.store.put(value, key);
-      yield CURDHandler.call(this, IDBrequest);
+      yield this.CURDHandler(this.store.put(value, key));
       return value;
     });
   }
-  updateByKeypath(query, update) {
+  findByKeypathAndUpdate(query, update) {
     return __async(this, null, function* () {
       let value = (yield this.findByKeypath(query))[0];
       for (const item in update) {
         changeProperties(value, update[item], item);
       }
-      let IDBrequest = this.store.put(value);
-      yield CURDHandler.call(this, IDBrequest);
+      yield this.CURDHandler(this.store.put(value));
       return value;
     });
   }
-  findByKeypath(query) {
+  findByIndexAndUpdate(query, update) {
     return __async(this, null, function* () {
-      let IDBrequest;
-      if (typeof query == "string") {
-        IDBrequest = this.store.get(query);
-      } else {
-        IDBrequest = query.index ? this.store.index(query.index).getAll(query.query, query.count) : this.store.get(query.query);
+      let value = (yield this.findByIndex(query))[0];
+      for (const item in update) {
+        changeProperties(value, update[item], item);
       }
-      const result = yield CURDHandler.call(this, IDBrequest);
+      yield this.CURDHandler(this.store.put(value));
+      return value;
+    });
+  }
+  findByKeypath(keyPathValue) {
+    return __async(this, null, function* () {
+      const result = yield this.CURDHandler(this.store.get(keyPathValue));
+      return Array.isArray(result) ? result : [result];
+    });
+  }
+  findByIndex(findOption) {
+    return __async(this, null, function* () {
+      const IDBrequest = findOption.count == 1 ? this.store.index(findOption.index).get(findOption.query) : this.store.index(findOption.index).getAll(findOption.query, findOption.count);
+      const result = yield this.CURDHandler(IDBrequest);
       return Array.isArray(result) ? result : [result];
     });
   }
@@ -1635,7 +1730,7 @@ class IDBTable {
       });
     });
   }
-  findAll(index2) {
+  findAll(key) {
     return __async(this, null, function* () {
       const cursorFinder = this.store.openCursor();
       return new Promise((resolve, reject) => {
@@ -1643,11 +1738,11 @@ class IDBTable {
         cursorFinder.onerror = () => {
           reject("\u67E5\u8BE2\u5931\u8D25");
         };
-        if (index2) {
+        if (key) {
           cursorFinder.onsuccess = (e) => {
             let cursor = e.target.result;
             if (cursor) {
-              if (cursor.value[index2]) {
+              if (cursor.value[key]) {
                 result.push(cursor.value);
               }
               cursor.continue();
@@ -1671,29 +1766,34 @@ class IDBTable {
   }
   count(key) {
     return __async(this, null, function* () {
-      let IDBrequest = this.store.count(key);
-      return yield CURDHandler.call(this, IDBrequest);
+      return yield this.CURDHandler(this.store.count(key));
     });
   }
   clear() {
     return __async(this, null, function* () {
-      let IDBrequest = this.store.clear();
-      let result = yield CURDHandler.call(this, IDBrequest);
+      let result = yield this.CURDHandler(this.store.clear());
       return result ? false : true;
     });
   }
-}
-function CURDHandler(IDBRequest) {
-  return __async(this, null, function* () {
-    return new Promise((resolve, reject) => {
-      IDBRequest.onsuccess = (e) => {
-        resolve(e.target.result);
-      };
-      IDBRequest.onerror = (e) => {
-        reject(e.target.result);
-      };
+  get keypath() {
+    var _a2;
+    return (_a2 = this.tableSetting) == null ? void 0 : _a2.keypath;
+  }
+  get indexs() {
+    return this.tableSetting && this.tableSetting.index ? Object.keys(this.tableSetting.index) : void 0;
+  }
+  CURDHandler(IDBRequest) {
+    return __async(this, null, function* () {
+      return new Promise((resolve, reject) => {
+        IDBRequest.onsuccess = (e) => {
+          resolve(e.target.result);
+        };
+        IDBRequest.onerror = (e) => {
+          reject(e.target.result);
+        };
+      });
     });
-  });
+  }
 }
 function changeProperties(changed, changedTo, methods) {
   switch (methods) {
@@ -1744,7 +1844,7 @@ function throttle(callback, delay = 500, style = true) {
 const browerList = ["edge", "opera", "chrome", "safari", "firefox"];
 function userBrowers() {
   const regexp = new RegExp("((?<opera>OPR)|(?<safari>Safari)|(?<chrome>Chrome)|(?<edge>Edg)|(?<ie>NET)|(?<firefox>Firefox))\\/(?<version>(\\d|\\.)*)", "g");
-  const result = { main: "" };
+  const result = { main: "edge" };
   const matchAll = navigator.userAgent.matchAll(regexp);
   for (const { groups } of matchAll) {
     result[Object.keys(deleteEmpty(groups))[0]] = groups.version;
@@ -1863,4 +1963,4 @@ var index = {
     }
   }
 };
-export { AsyncConstructor, index$4 as LazyLoadBox, LocalFiles, LocalStorage, Message, Random, index$5 as RollText, SDDate, SDIDB, SDMath, index$2 as SplitPage, index$1 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty, isEmpty, isMobile, isSame, iterable, removeItem, throttle, unCapitalize, userBrowers };
+export { AsyncConstructor, index$1 as CheckBox, index$5 as LazyLoadBox, LocalFiles, LocalStorage, Message, Random, index$6 as RollText, SDDate, SDIDB, SDMath, index$3 as SplitPage, index$2 as SwitchButton, vDrag as VDrag, vFill as VFill, vHidden as VHidden, Validator, capitalize, debounce, deepClone, index as default, deleteEmpty, havaEmpty, isEmpty, isMobile, isSame, iterable, removeItem, throttle, unCapitalize, userBrowers };

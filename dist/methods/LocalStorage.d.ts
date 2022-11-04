@@ -1,5 +1,5 @@
 import type { Precision } from "./SDDate";
-import type { StringKeys, PickByType } from "../utils/typings";
+import type { StringKeys, PickByType } from "../typings/utils";
 declare type AllowType = boolean | string | number | bigint | object | null | undefined | RegExp;
 declare type AllowKeys<T extends object> = StringKeys<PickByType<T, AllowType>>;
 declare const _localStorage: unique symbol;

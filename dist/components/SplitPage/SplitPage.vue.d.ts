@@ -1,4 +1,4 @@
-import type { NumberString } from "../../utils/typings";
+import type { NumberString } from "../../typings/utils";
 declare const _sfc_main: import("vue").DefineComponent<{}, {
     props: {
         modelValue?: any[] | undefined;

@@ -24,8 +24,7 @@ export default class Random {
     static number(range: [min: number, max: number], precision = 0) {
         const [min, max] = range;
         let random = Math.random() * (max - min + 1) + min;
-        random = SDMath.floor(random, precision);
-        return random;
+        return SDMath.floor(random, precision);
     }
 
     /**
@@ -35,11 +34,21 @@ export default class Random {
         return arr[Random.number([start, end])];
     }
 
+    /** 从数组中随机获取多个不重复项 */
+    static arrayMulti<T>(arr: T[], len: number) {
+        const newArr: T[] = [...arr];
+        for (let i = newArr.length - 1; i > 0; i--) {
+            const random = this.number([0, i]);
+            [newArr[i], newArr[random]] = [newArr[random], newArr[i]];
+        }
+        return newArr.slice(0, len);
+    }
+
     /**
      * 从字符串中获取指定数量的随机字并组成字符串
      */
     static pick(range: string, len: number = 1): string {
-        const arr = [];
+        const arr: string[] = [];
         for (let i = 0; i < len; i++) {
             arr.push(range[Random.number([0, range.length])]);
         }

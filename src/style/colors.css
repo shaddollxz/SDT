@@ -1,12 +1,34 @@
 :root {
     --color-text-theme: orange;
 
-    --color-primary: #238636;
-    --color-primary-bland: #2ea043;
-    --color-primary-text: #bce1c3;
-    --color-error: #f56c6c;
-    --color-error-bland: #ff9191;
-    --color-error-text: #ffdada;
+    --color-blue: #337ecc;
+    --color-blue-1: #409eff;
+    --color-blue-3: #79bbff;
+    --color-blue-5: #a0cfff;
+    --color-blue-7: #c6e2ff;
+    --color-blue-8: #d9ecff;
+    --color-blue-9: #ecf5ff;
+    --color-green: #529b2e;
+    --color-green-1: #67c23a;
+    --color-green-3: #95d475;
+    --color-green-5: #b3e19d;
+    --color-green-7: #d1edc4;
+    --color-green-8: #e1f3d8;
+    --color-green-9: #f0f9eb;
+    --color-orange: #b88230;
+    --color-orange-1: #e6a23c;
+    --color-orange-3: #eebe77;
+    --color-orange-5: #f3d19e;
+    --color-orange-7: #f8e3c5;
+    --color-orange-8: #faecd8;
+    --color-orange-9: #fdf6ec;
+    --color-red: #c45656;
+    --color-red-1: #f56c6c;
+    --color-red-3: #f89898;
+    --color-red-5: #fab6b6;
+    --color-red-7: #fcd3d3;
+    --color-red-8: #fde2e2;
+    --color-red-9: #fef0f0;
 
     --color-text-default: #adbac7;
     --color-border: #444c56;

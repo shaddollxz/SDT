@@ -1,4 +1,4 @@
-import type { NumberString } from "../../utils/typings";
+import type { NumberString } from "../../typings/utils";
 export declare class BtnList {
     max: number;
     limit: number;

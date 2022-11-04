@@ -3,6 +3,8 @@ import type { Ref } from "vue";
 declare const _sfc_main: import("vue").DefineComponent<{}, {
     props: {
         modelValue?: number | undefined;
+        defaultValue?: number | undefined;
+        draggable: boolean;
     };
     emit: {
         (name: "update:modelValue", n: number): void;

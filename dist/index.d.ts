@@ -3,7 +3,7 @@ declare const _default: {
     install(app: App): void;
 };
 export default _default;
-export { RollText, LazyLoadBox, SplitPage, SwitchButton } from "./components";
+export { RollText, LazyLoadBox, SplitPage, SwitchButton, CheckBox } from "./components";
 export { VFill, VHidden, VDrag } from "./directives";
 export type { VDragType } from "./directives";
 export { default as Message } from "./components/Message";
@@ -25,5 +25,4 @@ export { default as SDMath } from "./methods/SDMath";
 export { default as throttle } from "./methods/throttle";
 export { default as userBrowers } from "./methods/userBrowers";
 export { default as Validator } from "./methods/Validator";
-export * from "./utils/typings";
-import "./globalComponents";
+export * from "./typings/utils";import "./globalComponents";

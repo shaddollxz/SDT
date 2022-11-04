@@ -1,6 +1,6 @@
 import SDDate from "./SDDate";
 import type { Precision } from "./SDDate";
-import type { StringKeys, PickByType } from "../utils/typings";
+import type { StringKeys, PickByType } from "../typings/utils";
 import { isNull, isRegExp } from "../utils/typeCheck";
 
 const enum Type {

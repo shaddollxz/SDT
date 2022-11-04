@@ -1,4 +1,4 @@
-import type { BaseType } from "./typings";
+import type { BaseType } from "../typings/utils";
 
 export const isNumber = (arg: unknown): arg is number => typeof arg == "number";
 export const isString = (arg: unknown): arg is string => typeof arg == "string";

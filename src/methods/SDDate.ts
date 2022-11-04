@@ -1,5 +1,13 @@
 type SDDateConstructorArgs = string | number | Date;
-type GetTimeFuncName = "FullYear" | "month" | "Date" | "Hours" | "Minutes" | "Seconds" | "Day" | "Milliseconds";
+type GetTimeFuncName =
+    | "FullYear"
+    | "month"
+    | "Date"
+    | "Hours"
+    | "Minutes"
+    | "Seconds"
+    | "Day"
+    | "Milliseconds";
 type GetTimeFuncs = `get${GetTimeFuncName}`;
 type TimeTupl = [string, number];
 const TimeTableList = ["YYYY", "MM", "W", "DD", "hh", "mm", "ss", "ms"] as const;
@@ -29,7 +37,10 @@ export default class SDDate extends Date {
      * @description 可以支持YYYY MM MMM DD HH hh mm ss ms TT W 几种时间类型，MMM指用文字返回月份 hh指用12小时制返回小时
      * @example const time = date.format("/YYYY/-/MM/-/DD/ /HH/:/mm/:/ss/./ms/ /TT/ 周/W/")
      */
-    format(formatStr: string = "/YYYY/-/MM/-/DD/ /HH/:/mm/:/ss/./ms/ /TT/ 周/W/", useChinese: boolean = true) {
+    format(
+        formatStr: string = "/YYYY/-/MM/-/DD/ /HH/:/mm/:/ss/./ms/ /TT/ 周/W/",
+        useChinese: boolean = true
+    ) {
         //* 上下午单独判断 不然如果在小时之前或没有小时会无法判断出
         formatStr = formatStr.replace(
             /\/TT\//g,
@@ -220,4 +231,17 @@ function transformTimeNumber(timeNumber: number, precision: Precision = "mm", fo
 
 const transformChinese = ["天", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"];
 const transformEnglish_Week = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
-const transformEnglish_Month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+const transformEnglish_Month = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec",
+];

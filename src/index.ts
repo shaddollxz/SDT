@@ -2,7 +2,6 @@ import type { App } from "vue";
 
 import * as directives from "./directives";
 import * as components from "./components";
-// import "./globalComponents";
 
 // 默认导出全局的组件和指令
 const plugins = { ...directives, ...components };
@@ -15,7 +14,7 @@ export default {
 };
 
 // 按需导出全局组件或指令
-export { RollText, LazyLoadBox, SplitPage, SwitchButton } from "./components";
+export { RollText, LazyLoadBox, SplitPage, SwitchButton, CheckBox } from "./components";
 export { VFill, VHidden, VDrag } from "./directives";
 
 // 导出组件或指令的类型
@@ -43,5 +42,3 @@ export { default as SDMath } from "./methods/SDMath";
 export { default as throttle } from "./methods/throttle";
 export { default as userBrowers } from "./methods/userBrowers";
 export { default as Validator } from "./methods/Validator";
-
-export * from "./utils/typings";
