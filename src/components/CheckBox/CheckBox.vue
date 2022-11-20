@@ -12,13 +12,14 @@ interface Emits {
     (n: "update:modelValue", v: boolean): void;
     (n: "onCheck", v: boolean): void;
 }
+// vue会把没有传入的布尔值做false处理 这里手动定义
 const props = withDefaults(defineProps<Props>(), {
     checked: false,
     modelValue: undefined,
 });
 const emit = defineEmits<Emits>();
 
-const isCheck = ref(props.checked ? props.checked : false);
+const isCheck = ref(!!props.checked);
 const state = computed(() => (props.modelValue === undefined ? isCheck.value : props.modelValue));
 
 function setState() {

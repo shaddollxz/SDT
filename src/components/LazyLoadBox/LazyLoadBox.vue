@@ -5,7 +5,9 @@
         :style="{ animationDuration: duration + 's' }"
         ref="observer"
     >
-        <slot></slot>
+        <template v-if="isRender">
+            <slot></slot>
+        </template>
     </div>
 </template>
 
@@ -19,32 +21,36 @@ export default defineComponent({
 interface Props {
     duration?: number;
     direction?: "top" | "bottom" | "left" | "right";
-    isReHidden?: boolean;
+    reHidden?: boolean;
+    lazyRender?: boolean;
 }
 interface Emits {
     (n: "onShow"): void;
+    (n: "onReHidden"): void;
 }
 const props = withDefaults(defineProps<Props>(), {
     duration: 0.5,
     direction: "bottom",
-    isReHidden: false,
 });
 const emit = defineEmits<Emits>();
 
 const observer = shallowRef<HTMLElement | null>(null);
 const animeClass = ref("");
+const isRender = ref(!props.lazyRender);
 
 let io = new IntersectionObserver(([e]) => {
     if (e.isIntersecting) {
         // 出现在屏幕上
         emit("onShow");
+        isRender.value = true;
         animeClass.value = `${props.direction}`;
         // 如果设置会重新隐藏将不会解除监听
-        if (!props.isReHidden) {
+        if (!props.reHidden) {
             io.unobserve(e.target);
         }
     } else {
         animeClass.value = "";
+        emit("onReHidden");
     }
 });
 onMounted(() => io.observe(observer.value!));

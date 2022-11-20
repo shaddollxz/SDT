@@ -29,11 +29,7 @@ export type Values<T extends object> = T extends { [K in keyof T]: infer U } ? U
 export type TupleToUnion<T extends any[]> = T extends Array<infer U> ? U : never;
 
 /** 获取对象的字符串类型键 */
-export type StringKeys<T extends object> = T extends { [K in infer R]?: any }
-    ? R extends string
-        ? R
-        : never
-    : never;
+export type StringKeys<T extends object> = Extract<keyof T, string>;
 
 /** 将对象的数组属性转换为数组元素和数组 */
 export type SeparationArrayProperty<T extends object, V = any> = {

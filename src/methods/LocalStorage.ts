@@ -1,5 +1,7 @@
 import SDDate from "./SDDate";
 import type { Precision } from "./SDDate";
+import updateProperties from "./updateProperties";
+import type { UpdatePropertiesOptions } from "./updateProperties";
 import type { StringKeys, PickByType } from "../typings/utils";
 import { isNull, isRegExp } from "../utils/typeCheck";
 
@@ -46,6 +48,19 @@ export default class LocalStorage<T extends Record<string, any> = any> {
     }
     setLimitItem<K extends AllowKeys<T>>(key: K, value: T[K], limit: number, precision: Precision) {
         this[_localStorage].setItem(key, JSON.stringify(setLimit(pack(value), limit, precision)));
+    }
+
+    // prettier-ignore
+    updateObjectItem<K extends StringKeys<PickByType<T, object>>>(key: K, updateOption: UpdatePropertiesOptions<T[K]>) {
+        const item = this.getItem(key as AllowKeys<T>);
+        if (item) {
+            // @ts-ignore 不知道为啥打包时报错
+            const updatedItem = updateProperties(item, updateOption);
+            this.setItem(key as AllowKeys<T>, updatedItem);
+            return updatedItem;
+        } else {
+            return null;
+        }
     }
 
     private readCache(key: string): unknown {

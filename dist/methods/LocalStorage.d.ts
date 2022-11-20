@@ -1,4 +1,5 @@
 import type { Precision } from "./SDDate";
+import type { UpdatePropertiesOptions } from "./updateProperties";
 import type { StringKeys, PickByType } from "../typings/utils";
 declare type AllowType = boolean | string | number | bigint | object | null | undefined | RegExp;
 declare type AllowKeys<T extends object> = StringKeys<PickByType<T, AllowType>>;
@@ -15,6 +16,7 @@ export default class LocalStorage<T extends Record<string, any> = any> {
     removeItem(key: AllowKeys<T>): void;
     setItem<K extends AllowKeys<T>>(key: K, value: T[K]): void;
     setLimitItem<K extends AllowKeys<T>>(key: K, value: T[K], limit: number, precision: Precision): void;
+    updateObjectItem<K extends StringKeys<PickByType<T, object>>>(key: K, updateOption: UpdatePropertiesOptions<T[K]>): T[Extract<keyof PickByType<T, AllowType>, string>] | null;
     private readCache;
     getItem<K extends AllowKeys<T>>(key: K): T[K] | null;
     refresh<K extends AllowKeys<T>>(key: K, limit: number, precision: Precision): T[K] | null;

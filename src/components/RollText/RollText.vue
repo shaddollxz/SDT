@@ -93,14 +93,14 @@ function backAnime() {
 
 <style lang="scss" scoped>
 .rollText {
+    display: flex;
     position: relative;
     overflow: hidden;
-    display: flex;
     .move {
-        width: max-content;
         display: flex;
         align-items: center;
         position: relative;
+        width: max-content;
         .text {
             width: max-content;
             white-space: nowrap;
@@ -120,7 +120,7 @@ function backAnime() {
         }
     }
     .roll {
-        transform: translateZ(0); //? 开启硬件加速
+        transform: translateZ(0); // 开启硬件加速
         animation: move 5s linear infinite;
     }
 }

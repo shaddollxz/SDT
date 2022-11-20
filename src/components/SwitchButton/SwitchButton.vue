@@ -1,43 +1,50 @@
 <template>
     <div class="switchButton" :class="{ open: modelValue }">
-        <div
-            :class="{ chosed: !modelValue, notChosed: modelValue }"
-            @click="emit('update:modelValue', false), emit('onStatuChange', false)"
-        >
+        <div :class="{ chosed: !modelValue, notChosed: modelValue }" @click="() => statuChange(false)">
             <slot name="left"></slot>
         </div>
-        <div class="center" @click="statuChange">
+        <div class="center" @click="() => statuChange()">
             <div></div>
         </div>
-        <div
-            :class="{ chosed: modelValue, notChosed: !modelValue }"
-            @click="emit('update:modelValue', true), emit('onStatuChange', true)"
-        >
+        <div :class="{ chosed: modelValue, notChosed: !modelValue }" @click="() => statuChange(true)">
             <slot name="right"></slot>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 export default defineComponent({
     name: "switchButton",
 });
 </script>
 <script setup lang="ts">
 interface Props {
-    modelValue: boolean;
+    modelValue?: boolean;
+    defaultValue?: boolean;
 }
 interface Emit {
     (e: "update:modelValue", v: boolean): void;
     (e: "onStatuChange", v: boolean): void;
 }
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+    modelValue: undefined,
+    defaultValue: false,
+});
 const emit = defineEmits<Emit>();
 
-function statuChange() {
-    emit("update:modelValue", !props.modelValue);
-    emit("onStatuChange", !props.modelValue);
+const isChosed = ref(!!props.defaultValue);
+
+function statuChange(newValue?: boolean) {
+    const currentState = props.modelValue == undefined ? isChosed.value : props.modelValue;
+    if (newValue == currentState) return;
+    if (props.modelValue == undefined) {
+        emit("onStatuChange", !currentState);
+        isChosed.value = !currentState;
+    } else {
+        emit("onStatuChange", !currentState);
+        emit("update:modelValue", !currentState);
+    }
 }
 </script>
 

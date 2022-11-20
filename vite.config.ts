@@ -13,10 +13,7 @@ plugins.push(
         async afterBuild() {
             const indexDir = path.resolve(outDir, "./index.d.ts");
             const dts = await fs.readFile(indexDir, "utf-8");
-            await fs.writeFile(
-                indexDir,
-                dts + 'export * from "./typings/utils";\rimport "./globalComponents";\r'
-            );
+            await fs.writeFile(indexDir, dts + 'import "./globalComponents";\r');
         },
     })
 );
